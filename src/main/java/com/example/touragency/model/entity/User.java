@@ -1,5 +1,7 @@
 package com.example.touragency.model.entity;
 
+import java.util.Objects;
+
 public class User extends Entity {
     private String firstname;
     private String lastname;
@@ -31,6 +33,7 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
+                "id='"+ getId() + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", phone='" + phone + '\'' +
@@ -42,6 +45,19 @@ public class User extends Entity {
                 '}';
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return getId() == entity.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstname, lastname, phone, email, status, login, password, role);
+    }
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;

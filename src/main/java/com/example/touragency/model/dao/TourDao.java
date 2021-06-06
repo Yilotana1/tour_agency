@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface TourDao extends GenericDao<Tour>{
 
+    Tour findById(int id) throws DaoException;
+
+    Tour findByName(String name) throws DaoException;
+
     List<Tour> findByCategory(TourCategory category) throws DaoException;
 
     List<Tour> findByPrice(BigDecimal price) throws DaoException;

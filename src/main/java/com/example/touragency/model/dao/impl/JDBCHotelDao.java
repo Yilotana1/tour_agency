@@ -1,7 +1,7 @@
 package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.HotelDao;
-import com.example.touragency.model.dao.mapper.HotelMapper;
+import com.example.touragency.model.dao.mapper.entity.HotelMapper;
 import com.example.touragency.model.entity.Hotel;
 
 import java.sql.*;
@@ -26,7 +26,7 @@ public class JDBCHotelDao implements HotelDao {
             statement.setString(1, hotel.getName());
             statement.setString(2, hotel.getCity());
             statement.setString(3, hotel.getAddress());
-            statement.setInt(4, hotel.getType());
+            statement.setInt(4, hotel.getStars());
             statement.setString(5, hotel.getAdminPhone());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class JDBCHotelDao implements HotelDao {
             statement.setString(1, hotel.getName());
             statement.setString(2, hotel.getCity());
             statement.setString(3, hotel.getAddress());
-            statement.setInt(4, hotel.getType());
+            statement.setInt(4, hotel.getStars());
             statement.setString(5, hotel.getAdminPhone());
             statement.executeUpdate();
         } catch (SQLException e) {

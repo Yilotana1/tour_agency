@@ -1,7 +1,7 @@
 package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.OrderDao;
-import com.example.touragency.model.dao.mapper.OrderMapper;
+import com.example.touragency.model.dao.mapper.entity.OrderMapper;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.exceptions.DaoException;
 

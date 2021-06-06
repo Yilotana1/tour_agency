@@ -1,7 +1,7 @@
 package com.example.touragency.model.entity;
 
 public enum UserStatus {
-    BLOCKED, NON_BLOCKED;
+    NON_BLOCKED, BLOCKED;
 
     private final int id = this.ordinal() + 1;
 

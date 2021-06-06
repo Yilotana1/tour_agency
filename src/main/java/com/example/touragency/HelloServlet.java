@@ -2,9 +2,19 @@ package com.example.touragency;
 
 import com.example.touragency.model.dao.*;
 import com.example.touragency.model.dao.Factory.DaoFactory;
-import com.example.touragency.model.entity.Discount;
+import com.example.touragency.model.dao.beans.TourHotelBean;
+import com.example.touragency.model.entity.Tour;
+import com.example.touragency.model.entity.TourCategory;
+import com.example.touragency.model.entity.User;
+import com.example.touragency.model.exceptions.DaoException;
+import com.example.touragency.model.exceptions.ServiceException;
+import com.example.touragency.model.service.OrderService;
+import com.example.touragency.model.service.TourService;
+import com.example.touragency.model.service.impl.ClientServiceImpl;
+import com.example.touragency.model.service.impl.TourServiceImpl;
 
 import java.io.*;
+import java.util.List;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -13,34 +23,65 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "My name is Anatoliy";
+        message = "My name is Anatoliy\n\n\n";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+        response.setContentType("text/plain");
 
-        DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao();
-        discountDao.delete(1);
-//        tour.setName("HELLO WORLD!");
-//        tourDao.update(tour);
-//        Tour tour = Tour.createTour(7, "PORNHUB",
-//                "Hungary", new BigDecimal("5.357"), 10, 4, 7, Calendar.getInstance(), Calendar.getInstance(), TourCategory.EXCURSION,
-//                TourStatus.BURNING, 3, 3, "Lviv", "FWQE");
-//        message = String.valueOf(tour.getStatus().getId());
-//        tourDao.create(tour);
-//        message = tour.toString();
-//        tour.setLogin("GRISHA_UBIYCA");
-//        userDao.update(user);
+        try {
+            TourService service = new TourServiceImpl();
+            TourHotelBean tourHotelBean = service.getTourById(4);
+            Tour tour = tourHotelBean.getTour();
+            tourHotelBean.getTour().setMaxPlaces(70);
+            tour.setName("XXX");
+            service.addTour(tour);
 
-//        List<User> list = userDao.findAll();
-//        for (User user : list) {
-//            message += user.toString() + System.lineSeparator() + System.lineSeparator() + System.lineSeparator();
+        } catch (ServiceException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+//        TourHotelBeanDao tourHotelBeanDao = DaoFactory.getInstance().createTourHotelBeanDao();
+//        try {
+//            List<TourHotelBean> beans = tourHotelBeanDao.findByCategory(TourCategory.EXCURSION);
+//            for (TourHotelBean bean:
+//                 beans) {
+//                message += bean.toString() + "\n\n\n\n";
+//            }
+//        } catch (DaoException throwables) {
+//            throwables.printStackTrace();
 //        }
-        // Hello
+
+
+//        ClientService service = new ClientServiceImpl();
+//        List<User> list = service.getClientsWithOrders();
+//        String s = "";
+//
+//        for (User user: list) {
+//            s += user.toString() + "\n\n\n";
+//        }
+//
+//        message = s;
+
+//        TourServiceImpl service = new TourServiceImpl();
+//        try {
+//            List<TourHotelBean> tours = service.getToursByHotelStarsLessThan(4);
+//            String s = "";
+//            for (TourHotelBean bean:
+//                 tours) {
+//                s += bean.toString() + "\n\n\n";
+//            }
+//            message = s;
+//        } catch (ServiceException throwables) {
+//            throwables.printStackTrace();
+//        }
+
+
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
+//        out.println("<html><body>");
+        out.println(message);
+//        out.println("</body></html>");
     }
 
     public void destroy() {

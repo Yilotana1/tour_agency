@@ -1,7 +1,7 @@
 package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.DiscountDao;
-import com.example.touragency.model.dao.mapper.DiscountMapper;
+import com.example.touragency.model.dao.mapper.entity.DiscountMapper;
 import com.example.touragency.model.entity.Discount;
 
 import java.sql.*;

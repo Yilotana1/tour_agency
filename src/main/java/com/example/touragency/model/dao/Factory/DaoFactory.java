@@ -10,6 +10,8 @@ public abstract class DaoFactory {
         public abstract OrderDao createOrderDao();
         public abstract HotelDao createHotelDao();
         public abstract DiscountDao createDiscountDao();
+        public abstract OrderClientBeanDao createOrderClientBeanDao();
+        public abstract TourHotelBeanDao createTourHotelBeanDao();
 
 
         public static DaoFactory getInstance(){

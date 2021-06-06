@@ -13,7 +13,7 @@ public interface Fields {
     String USER_LOGIN = "login";
     String USER_PASSWORD = "password";
     String USER_STATUS_ID = "status_id";
-    String USER_ROLE_ID = "status_id";
+    String USER_ROLE_ID = "role_id";
 
     //Tour
     String TOUR_NAME = "name";
@@ -41,7 +41,7 @@ public interface Fields {
     String HOTEL_NAME = "name";
     String HOTEL_CITY = "city";
     String HOTEL_ADDRESS = "address";
-    String HOTEL_TYPE = "type";
+    String HOTEL_STARS = "stars";
     String HOTEL_ADMIN_PHONE = "admin_phone";
 
 
@@ -51,9 +51,24 @@ public interface Fields {
     String DISCOUNT_MAX_PERCENT= "max_percent";
 
 
+    //OrderClientMapper
+    String BEAN_USER_ID = "user.id";
+    String BEAN_USER_FIRSTNAME = "user.firstname";
+    String BEAN_USER_LASTNAME = "user.lastname";
+    String BEAN_USER_PHONE = "user.phone";
+    String BEAN_USER_EMAIL = "user.email";
+    String BEAN_USER_LOGIN = "user.login";
+    String BEAN_USER_PASSWORD = "user.password";
+    String BEAN_USER_STATUS_ID = "user.status_id";
+    String BEAN_USER_ROLE_ID = "user.role_id";
 
 
-
-
+    //TourHotelMapper
+    String BEAN_HOTEL_ID = "hotel.id";
+    String BEAN_HOTEL_NAME = "hotel.name";
+    String BEAN_HOTEL_STARS = "hotel.stars";
+    String BEAN_HOTEL_CITY = "hotel.city";
+    String BEAN_HOTEL_ADDRESS = "hotel.address";
+    String BEAN_HOTEL_ADMIN_PHONE = "hotel.admin_phone";
 
 }

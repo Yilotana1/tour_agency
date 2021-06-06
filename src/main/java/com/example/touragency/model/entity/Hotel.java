@@ -5,20 +5,20 @@ public class Hotel extends Entity {
     private String name;
     private String city;
     private String address;
-    private int type;
+    private int stars;
     private String adminPhone;
 
     private Hotel() {
     }
 
     public static Hotel createHotel(int id, String name, String city,
-                                   String address, int type, String adminPhone) {
+                                   String address, int stars, String adminPhone) {
         Hotel hotel = new Hotel();
         hotel.setId(id);
         hotel.setName(name);
         hotel.setCity(city);
         hotel.setAddress(address);
-        hotel.setType(type);
+        hotel.setStars(stars);
         hotel.setAdminPhone(adminPhone);
         return hotel;
     }
@@ -30,7 +30,7 @@ public class Hotel extends Entity {
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
-                ", type=" + type +
+                ", type=" + stars +
                 ", adminPhone='" + adminPhone + '\'' +
                 '}';
     }
@@ -48,8 +48,8 @@ public class Hotel extends Entity {
         this.address = address;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 
     public void setAdminPhone(String adminPhone) {
@@ -68,8 +68,8 @@ public class Hotel extends Entity {
         return address;
     }
 
-    public int getType() {
-        return type;
+    public int getStars() {
+        return stars;
     }
 
     public String getAdminPhone() {

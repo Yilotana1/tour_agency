@@ -1,7 +1,7 @@
 package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.TourDao;
-import com.example.touragency.model.dao.mapper.TourMapper;
+import com.example.touragency.model.dao.mapper.entity.TourMapper;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.TourCategory;
 import com.example.touragency.model.exceptions.DaoException;
@@ -37,7 +37,7 @@ public class JDBCTourDao implements TourDao {
             statement.setInt(9, tour.getCategory().getId());
             statement.setInt(10, tour.getStatus().getId());
             statement.setInt(11, tour.getHotelId());
-            statement.setString(13, tour.getCity());
+            statement.setString(12, tour.getCity());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,6 +61,24 @@ public class JDBCTourDao implements TourDao {
         }
         return null;
     }
+
+    @Override
+    public Tour findByName(String name) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_BY_NAME);
+        ) {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return new TourMapper().extractFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("cannot find tour by id");
+        }
+        return null;
+    }
+
 
     @Override
     public List<Tour> findByCategory(TourCategory category) throws DaoException {

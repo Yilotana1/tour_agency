@@ -15,7 +15,7 @@ public class Tour extends Entity {
     private Calendar endDate;
     private TourCategory category;
     private TourStatus status;
-    private int hotel_id;
+    private int hotelId;
     private String city;
 
 
@@ -25,7 +25,7 @@ public class Tour extends Entity {
     public static Tour createTour(int id, String name, String country, BigDecimal price,
                                   int maxPlaces, int minPlaces, int takenPlaces,
                                   Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
-                                  int hotel_id, String city) {
+                                  int hotelId, String city) {
         Tour tour = new Tour();
         tour.setId(id);
         tour.setName(name);
@@ -38,7 +38,7 @@ public class Tour extends Entity {
         tour.setEndDate(endDate);
         tour.setCategory(category);
         tour.setStatus(status);
-        tour.setHotelId(hotel_id);
+        tour.setHotelId(hotelId);
         tour.setCity(city);
         return tour;
     }
@@ -57,7 +57,7 @@ public class Tour extends Entity {
                 ", \nendDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endDate.getTime()) +
                 ", \ncategory=" + category +
                 ", \nstatus=" + status +
-                ", \nhotel=" + hotel_id +
+                ", \nhotel=" + hotelId +
                 ", \ncity=" + city +
                 '}';
     }
@@ -103,8 +103,8 @@ public class Tour extends Entity {
         this.status = status;
     }
 
-    public void setHotelId(int hotel_id) {
-        this.hotel_id = hotel_id;
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public void setCity(String city) {
@@ -153,7 +153,7 @@ public class Tour extends Entity {
     }
 
     public int getHotelId() {
-        return hotel_id;
+        return hotelId;
     }
 
     public String getCity() {

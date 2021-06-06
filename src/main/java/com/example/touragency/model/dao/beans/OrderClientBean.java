@@ -16,6 +16,14 @@ public class OrderClientBean {
         return orderClientBean;
     }
 
+    @Override
+    public String toString() {
+        return "OrderClientBean{" +
+                "order=" + order +
+                ", client=" + client +
+                '}';
+    }
+
     public void setOrder(Order order) {
         this.order = order;
     }

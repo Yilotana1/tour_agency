@@ -1,6 +1,8 @@
 package com.example.touragency.model.dao.Factory;
 
-import com.example.touragency.model.dao.Connection.ConnectionPoolHolder;
+import com.example.touragency.ConnectionPoolHolder;
+import com.example.touragency.model.dao.OrderClientBeanDao;
+import com.example.touragency.model.dao.TourHotelBeanDao;
 import com.example.touragency.model.dao.impl.*;
 
 import javax.sql.DataSource;
@@ -39,5 +41,15 @@ public class JDBCDaoFactory extends DaoFactory {
 
     @Override
     public JDBCDiscountDao createDiscountDao() { return new JDBCDiscountDao(getConnection()); }
+
+    @Override
+    public OrderClientBeanDao createOrderClientBeanDao() {
+        return new JDBCOrderClientBeanDao(getConnection());
+    }
+
+    @Override
+    public TourHotelBeanDao createTourHotelBeanDao() {
+        return new JDBCTourHotelBeanDao(getConnection());
+    }
 
 }
