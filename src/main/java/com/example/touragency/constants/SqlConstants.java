@@ -40,6 +40,7 @@ public interface SqlConstants {
 
     String SQL_FIND_ALL_TOUR = "SELECT * FROM tour";
 
+
     String SQL_INSERT_TOUR = "INSERT INTO tour ("
             + Fields.TOUR_NAME + ", " + Fields.TOUR_COUNTRY + ", " +  Fields.TOUR_PRICE + ", " + Fields.TOUR_MAX_PLACES + ", "
             + Fields.TOUR_MIN_PLACES + ", " + Fields.TOUR_TAKEN_PLACES + ", " + Fields.TOUR_START_DATE + ", "
@@ -67,11 +68,11 @@ public interface SqlConstants {
     String SQL_FIND_ALL_ORDERS = "SELECT * FROM tour_order;";
 
     String SQL_INSERT_ORDER = "INSERT INTO tour_order ("
-            + Fields.ORDER_DATE + ", " + Fields.ORDER_STATUS_ID + ", " +  Fields.ORDER_CLIENT_ID + ", " + Fields.ORDER_PRICE
-            + ") VALUES (?, ?, ?, ?);";
+            + Fields.ORDER_DATE + ", " + Fields.ORDER_TOUR_ID + ", " + Fields.ORDER_STATUS_ID + ", " +  Fields.ORDER_CLIENT_ID + ", " + Fields.ORDER_PRICE
+            + ") VALUES (?, ?, ?, ?, ?);";
 
     String SQL_UPDATE_ORDER = "UPDATE tour_order SET "
-            + Fields.ORDER_DATE + "=?, " + Fields.ORDER_STATUS_ID + "=?, " + Fields.ORDER_CLIENT_ID + "=?, "
+            + Fields.ORDER_DATE + "=?, " + Fields.ORDER_TOUR_ID + "=?, " + Fields.ORDER_STATUS_ID + "=?, " + Fields.ORDER_CLIENT_ID + "=?, "
             + Fields.ORDER_PRICE + "=?" + " WHERE " + Fields.ID + "=?;";
 
     String SQL_DELETE_ORDER = "DELETE FROM tour_order WHERE " + Fields.ID + "=?;";
@@ -148,6 +149,19 @@ public interface SqlConstants {
 
     String SQL_FIND_ORDER_CLIENT_BY_STATUS = "SELECT * FROM tour_order LEFT JOIN user ON tour_order." + Fields.ORDER_STATUS_ID
             + " = order_status." + Fields.ID + " WHERE tour_order." + Fields.ORDER_STATUS_ID + "=?;";
+
+
+
+
+    //OrderTourBean
+    String SQL_FIND_ALL_ORDER_TOUR = "SELECT * FROM tour_order LEFT JOIN tour ON tour_order." + Fields.ORDER_TOUR_ID
+            + " = tour." + Fields.ID;
+
+    String SQL_FIND_ORDER_TOUR_BY_ID = "SELECT * FROM tour_order LEFT JOIN tour ON tour_order." + Fields.ORDER_TOUR_ID
+            + " = tour." + Fields.ID + " WHERE tour_order." + Fields.ID + "=?;";
+
+//    String SQL_FIND_ORDER__BY_STATUS = "SELECT * FROM tour_order LEFT JOIN user ON tour_order." + Fields.ORDER_STATUS_ID
+//            + " = order_status." + Fields.ID + " WHERE tour_order." + Fields.ORDER_STATUS_ID + "=?;";
 
 
 }

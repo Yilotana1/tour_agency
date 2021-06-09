@@ -2,6 +2,7 @@ package com.example.touragency.model.dao.Factory;
 
 import com.example.touragency.ConnectionPoolHolder;
 import com.example.touragency.model.dao.OrderClientBeanDao;
+import com.example.touragency.model.dao.OrderTourBeanDao;
 import com.example.touragency.model.dao.TourHotelBeanDao;
 import com.example.touragency.model.dao.impl.*;
 
@@ -50,6 +51,11 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public TourHotelBeanDao createTourHotelBeanDao() {
         return new JDBCTourHotelBeanDao(getConnection());
+    }
+
+    @Override
+    public OrderTourBeanDao createOrderTourBeanDao() {
+        return new JDBCOrderTourBeanDao(getConnection());
     }
 
 }

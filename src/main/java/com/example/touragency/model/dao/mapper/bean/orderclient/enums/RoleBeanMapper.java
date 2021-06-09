@@ -1,4 +1,4 @@
-package com.example.touragency.model.dao.mapper.bean.order.client.bean;
+package com.example.touragency.model.dao.mapper.bean.orderclient.enums;
 
 import com.example.touragency.constants.Fields;
 import com.example.touragency.model.dao.mapper.EntityMapper;
@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class BeanRoleMapper implements EntityMapper<Role> {
+public class RoleBeanMapper implements EntityMapper<Role> {
 
 
     @Override

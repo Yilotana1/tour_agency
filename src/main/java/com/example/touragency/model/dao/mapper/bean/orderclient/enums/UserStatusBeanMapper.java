@@ -1,4 +1,4 @@
-package com.example.touragency.model.dao.mapper.bean.order.client.bean;
+package com.example.touragency.model.dao.mapper.bean.orderclient.enums;
 
 import com.example.touragency.constants.Fields;
 import com.example.touragency.model.dao.mapper.EntityMapper;
@@ -7,7 +7,7 @@ import com.example.touragency.model.entity.UserStatus;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BeanUserStatusMapper implements EntityMapper<UserStatus> {
+public class UserStatusBeanMapper implements EntityMapper<UserStatus> {
 
     @Override
     public UserStatus extractFromResultSet(ResultSet rs) throws SQLException {

@@ -1,4 +1,4 @@
-package com.example.touragency.model.dao.mapper.bean.order.client.bean;
+package com.example.touragency.model.dao.mapper.bean.orderclient;
 
 import com.example.touragency.model.dao.beans.OrderClientBean;
 import com.example.touragency.model.dao.mapper.EntityMapper;
@@ -15,7 +15,7 @@ public class OrderClientBeanMapper implements EntityMapper<OrderClientBean> {
     @Override
     public OrderClientBean extractFromResultSet(ResultSet rs) throws SQLException {
         Order order = new OrderMapper().extractFromResultSet(rs);
-        User client = new BeanUserMapper().extractFromResultSet(rs);
+        User client = new UserBeanMapper().extractFromResultSet(rs);
         return OrderClientBean.createOrderClientBean(order, client);
     }
 }

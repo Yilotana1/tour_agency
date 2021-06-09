@@ -1,11 +1,11 @@
 package com.example.touragency.model.dao.impl;
 
-import com.example.touragency.model.dao.OrderClientBeanDao;
-import com.example.touragency.model.dao.beans.OrderClientBean;
-import com.example.touragency.model.dao.mapper.bean.orderclient.UserBeanMapper;
+import com.example.touragency.model.dao.OrderTourBeanDao;
+import com.example.touragency.model.dao.beans.OrderTourBean;
+import com.example.touragency.model.dao.mapper.bean.ordertour.enums.TourBeanMapper;
 import com.example.touragency.model.dao.mapper.entity.OrderMapper;
 import com.example.touragency.model.entity.Order;
-import com.example.touragency.model.entity.User;
+import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.exceptions.DaoException;
 
 import java.sql.*;
@@ -14,11 +14,11 @@ import java.util.List;
 
 import static com.example.touragency.constants.SqlConstants.*;
 
-public class JDBCOrderClientBeanDao implements OrderClientBeanDao {
+public class JDBCOrderTourBeanDao implements OrderTourBeanDao {
 
     private final Connection connection;
 
-    public JDBCOrderClientBeanDao(Connection connection) {
+    public JDBCOrderTourBeanDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -28,15 +28,15 @@ public class JDBCOrderClientBeanDao implements OrderClientBeanDao {
     }
 
     @Override
-    public OrderClientBean findById(int id) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_CLIENT_BY_ID);
+    public OrderTourBean findById(int id) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_TOUR_BY_ID);
         ) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Order order = new OrderMapper().extractFromResultSet(rs);
-                User client = new UserBeanMapper().extractFromResultSet(rs);
-                return OrderClientBean.createOrderClientBean(order, client);
+                Tour tour = new TourBeanMapper().extractFromResultSet(rs);
+                return OrderTourBean.createOrderTourBean(order, tour);
             }
 
         } catch (SQLException e) {
@@ -47,15 +47,15 @@ public class JDBCOrderClientBeanDao implements OrderClientBeanDao {
     }
 
     @Override
-    public List<OrderClientBean> findAll() throws DaoException {
-        List<OrderClientBean> list = new ArrayList<>();
+    public List<OrderTourBean> findAll() throws DaoException {
+        List<OrderTourBean> list = new ArrayList<>();
 
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery(SQL_FIND_ALL_ORDER_CLIENT);
+            ResultSet rs = statement.executeQuery(SQL_FIND_ALL_ORDER_TOUR);
             while (rs.next()) {
-                list.add(OrderClientBean.createOrderClientBean(
+                list.add(OrderTourBean.createOrderTourBean(
                         new OrderMapper().extractFromResultSet(rs),
-                        new UserBeanMapper().extractFromResultSet(rs)));
+                        new TourBeanMapper().extractFromResultSet(rs)));
             }
 
         } catch (SQLException e) {
@@ -66,7 +66,12 @@ public class JDBCOrderClientBeanDao implements OrderClientBeanDao {
     }
 
     @Override
-    public void update(OrderClientBean entity) throws DaoException {
+    public void create(OrderTourBean entity) throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void update(OrderTourBean entity) throws DaoException {
         throw new UnsupportedOperationException();
     }
 
@@ -76,12 +81,7 @@ public class JDBCOrderClientBeanDao implements OrderClientBeanDao {
     }
 
     @Override
-    public void create(OrderClientBean entity) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void close() throws SQLException {
-        connection.close();
+
     }
 }

@@ -53,8 +53,8 @@ public class Tour extends Entity {
                 ", \nmaxPlaces=" + maxPlaces +
                 ", \nminPlaces=" + minPlaces +
                 ", \ntakenPlaces=" + takenPlaces +
-                ", \nstartDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startDate.getTime()) +
-                ", \nendDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endDate.getTime()) +
+                ", \nstartDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate.getTime()) +
+                ", \nendDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate.getTime()) +
                 ", \ncategory=" + category +
                 ", \nstatus=" + status +
                 ", \nhotel=" + hotelId +

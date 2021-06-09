@@ -1,5 +1,6 @@
 package com.example.touragency.constants;
 
+
 public interface Fields {
 
     //Entity
@@ -27,8 +28,6 @@ public interface Fields {
     String TOUR_CATEGORY_ID = "category_id";
     String TOUR_STATUS_ID = "status_id";
     String TOUR_HOTEL_ID = "hotel_id";
-    String TOUR_GUIDE_ID = "guide_id";
-    String TOUR_DESCRIPTION = "description";
     String TOUR_CITY = "city";
 
     //Order
@@ -36,6 +35,7 @@ public interface Fields {
     String ORDER_STATUS_ID = "status_id";
     String ORDER_CLIENT_ID = "client_id";
     String ORDER_PRICE = "price";
+    String ORDER_TOUR_ID = "tour_id";
 
     //Hotel
     String HOTEL_NAME = "name";
@@ -51,7 +51,7 @@ public interface Fields {
     String DISCOUNT_MAX_PERCENT= "max_percent";
 
 
-    //OrderClientMapper
+    //Bean user
     String BEAN_USER_ID = "user.id";
     String BEAN_USER_FIRSTNAME = "user.firstname";
     String BEAN_USER_LASTNAME = "user.lastname";
@@ -63,12 +63,33 @@ public interface Fields {
     String BEAN_USER_ROLE_ID = "user.role_id";
 
 
-    //TourHotelMapper
+    //Bean user
     String BEAN_HOTEL_ID = "hotel.id";
     String BEAN_HOTEL_NAME = "hotel.name";
     String BEAN_HOTEL_STARS = "hotel.stars";
     String BEAN_HOTEL_CITY = "hotel.city";
     String BEAN_HOTEL_ADDRESS = "hotel.address";
     String BEAN_HOTEL_ADMIN_PHONE = "hotel.admin_phone";
+
+
+
+
+    //Bean tour
+    String BEAN_TOUR_ID = "tour.id";
+    String BEAN_TOUR_NAME = "tour.name";
+    String BEAN_TOUR_COUNTRY = "tour.country";
+    String BEAN_TOUR_PRICE = "tour.price";
+    String BEAN_TOUR_MAX_PLACES = "tour.max_places";
+    String BEAN_TOUR_MIN_PLACES = "tour.min_places";
+    String BEAN_TOUR_TAKEN_PLACES = "tour.taken_places";
+    String BEAN_TOUR_START_DATE = "tour.start_date";
+    String BEAN_TOUR_END_DATE = "tour.end_date";
+    String BEAN_TOUR_HOTEL_ID = "tour.hotel_id";
+    String BEAN_TOUR_CITY = "tour.city";
+    String BEAN_TOUR_STATUS_ID = "tour.status_id";
+    String BEAN_TOUR_CATEGORY_ID = "tour.category_id";
+
+
+
 
 }

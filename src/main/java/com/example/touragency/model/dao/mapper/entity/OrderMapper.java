@@ -14,7 +14,8 @@ public class OrderMapper implements EntityMapper<Order> {
     @Override
     public Order extractFromResultSet(ResultSet rs) throws SQLException {
 
-        return Order.createOrder(rs.getInt(Fields.ID), Tools.getCalendarFromDate(rs.getDate(Fields.ORDER_DATE)),
+        return Order.createOrder(rs.getInt(Fields.ID), rs.getInt(Fields.ORDER_TOUR_ID),
+                Tools.getCalendarFromDate(rs.getDate(Fields.ORDER_DATE)),
                 new OrderStatusMapper().extractFromResultSet(rs), rs.getInt(Fields.ORDER_CLIENT_ID),
                 rs.getBigDecimal(Fields.ORDER_PRICE));
     }

@@ -86,7 +86,7 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
-            tour.setCountry(name);
+            tour.setName(name);
             tourDao.update(tour);
 
         } catch (SQLException throwables) {
@@ -112,6 +112,12 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
+            int minPlaces = tour.getMinPlaces();
+
+            if (maxPlaces < minPlaces) {
+                throw new ServiceException("Cannot set maxPlaces less than maxPlaces");
+            }
+
             tour.setMaxPlaces(maxPlaces);
             tourDao.update(tour);
 
@@ -125,7 +131,13 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
-            tour.setMaxPlaces(minPlaces);
+            int maxPlaces = tour.getMaxPlaces();
+
+            if (minPlaces > maxPlaces) {
+                throw new ServiceException("Cannot set minPlaces more than maxPlaces");
+            }
+
+            tour.setMinPlaces(minPlaces);
             tourDao.update(tour);
 
         } catch (SQLException throwables) {
@@ -138,6 +150,12 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
+            Calendar endDate = tour.getEndDate();
+
+            if (startDate.after(endDate)){
+                throw new ServiceException("startDate cannot be after endDate");
+            }
+
             tour.setStartDate(startDate);
             tourDao.update(tour);
 
@@ -151,7 +169,14 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
-            tour.setStartDate(endDate);
+
+            Calendar startDate = tour.getEndDate();
+
+            if (endDate.before(startDate)){
+                throw new ServiceException("endDate cannot be before startDate");
+            }
+
+            tour.setEndDate(endDate);
             tourDao.update(tour);
 
         } catch (SQLException throwables) {
@@ -173,7 +198,7 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
     }
 
     @Override
-    public void changeTourHotel(int id, int hotelId) throws ServiceException {
+    public void changeTourHotelId(int id, int hotelId) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -186,7 +211,7 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
     }
 
     @Override
-    public void changeCity(int id, String city) throws ServiceException {
+    public void changeTourCity(int id, String city) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -238,7 +263,7 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
 
     @Override
     public TourHotelBean getTourById(int id) throws ServiceException {
-        try (TourHotelBeanDao tourHotelBeanDao = daoFactory.createTourHotelBeanDao()){
+        try (TourHotelBeanDao tourHotelBeanDao = daoFactory.createTourHotelBeanDao()) {
             return tourHotelBeanDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -248,7 +273,7 @@ public class TourServiceImpl implements TourService, Comparator<TourHotelBean> {
 
     @Override
     public TourHotelBean getTourByName(String name) throws ServiceException {
-        try (TourHotelBeanDao tourHotelBeanDao = daoFactory.createTourHotelBeanDao()){
+        try (TourHotelBeanDao tourHotelBeanDao = daoFactory.createTourHotelBeanDao()) {
             return tourHotelBeanDao.findByName(name);
         } catch (SQLException throwables) {
             throwables.printStackTrace();

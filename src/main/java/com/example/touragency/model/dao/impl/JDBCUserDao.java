@@ -20,6 +20,11 @@ public class JDBCUserDao implements UserDao {
         this.connection = connection;
     }
 
+
+    public Connection getConnection() {
+        return connection;
+    }
+
     @Override
     public void create(User user) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER);

@@ -38,9 +38,9 @@ public interface TourService {
 
     void changeTourCategory(int id, TourCategory category) throws ServiceException;
 
-    void changeTourHotel(int id, int hotel_id) throws ServiceException;
+    void changeTourHotelId(int id, int hotel_id) throws ServiceException;
 
-    void changeCity(int id, String name) throws ServiceException;
+    void changeTourCity(int id, String name) throws ServiceException;
 
     void changeTourStatus(int id, TourStatus status) throws ServiceException;
 

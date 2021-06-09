@@ -1,4 +1,4 @@
-package com.example.touragency.model.dao.mapper.bean.tour.hotel.bean;
+package com.example.touragency.model.dao.mapper.bean.tourhotel;
 
 import com.example.touragency.constants.Fields;
 import com.example.touragency.model.dao.mapper.EntityMapper;
@@ -7,7 +7,7 @@ import com.example.touragency.model.entity.Hotel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BeanHotelMapper implements EntityMapper<Hotel> {
+public class HotelBeanMapper implements EntityMapper<Hotel> {
     @Override
     public Hotel extractFromResultSet(ResultSet rs) throws SQLException {
         return Hotel.createHotel(rs.getInt(Fields.BEAN_HOTEL_ID), rs.getString(Fields.BEAN_HOTEL_NAME),

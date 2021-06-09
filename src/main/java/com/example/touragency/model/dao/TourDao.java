@@ -1,5 +1,6 @@
 package com.example.touragency.model.dao;
 
+import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.TourCategory;
 import com.example.touragency.model.exceptions.DaoException;
@@ -20,4 +21,7 @@ public interface TourDao extends GenericDao<Tour>{
     List<Tour> findByPeople(int peopleNumber) throws DaoException;
 
     List<Tour> findByHotelId(int hotelId) throws DaoException;
+
+
+
 }

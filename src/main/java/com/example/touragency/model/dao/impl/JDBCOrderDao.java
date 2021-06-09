@@ -3,6 +3,7 @@ package com.example.touragency.model.dao.impl;
 import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.dao.mapper.entity.OrderMapper;
 import com.example.touragency.model.entity.Order;
+import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.exceptions.DaoException;
 
 import java.sql.*;
@@ -19,13 +20,19 @@ public class JDBCOrderDao implements OrderDao {
         this.connection = connection;
     }
 
+
+    public Connection getConnection() {
+        return connection;
+    }
+
     @Override
     public void create(Order order) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_ORDER)) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
-            statement.setInt(2, order.getStatus().getId());
-            statement.setInt(3, order.getClientId());
-            statement.setBigDecimal(4, order.getPrice());
+            statement.setInt(2, order.getTourId());
+            statement.setInt(3, order.getStatus().getId());
+            statement.setInt(4, order.getClientId());
+            statement.setBigDecimal(5, order.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,10 +80,11 @@ public class JDBCOrderDao implements OrderDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER)
         ) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
-            statement.setInt(2, order.getStatus().getId());
-            statement.setInt(3, order.getClientId());
-            statement.setBigDecimal(4, order.getPrice());
-            statement.setInt(5, order.getId());
+            statement.setInt(2, order.getTourId());
+            statement.setInt(3, order.getStatus().getId());
+            statement.setInt(4, order.getClientId());
+            statement.setBigDecimal(5, order.getPrice());
+            statement.setInt(6, order.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,6 +108,5 @@ public class JDBCOrderDao implements OrderDao {
     public void close() throws SQLException {
         connection.close();
     }
-
 
 }

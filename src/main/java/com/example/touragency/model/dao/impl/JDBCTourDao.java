@@ -2,6 +2,7 @@ package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.TourDao;
 import com.example.touragency.model.dao.mapper.entity.TourMapper;
+import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.TourCategory;
 import com.example.touragency.model.exceptions.DaoException;
@@ -20,6 +21,11 @@ public class JDBCTourDao implements TourDao {
 
     public JDBCTourDao(Connection connection) {
         this.connection = connection;
+    }
+
+
+    public Connection getConnection() {
+        return connection;
     }
 
     @Override
@@ -149,9 +155,6 @@ public class JDBCTourDao implements TourDao {
     }
 
 
-
-
-
     @Override
     public List<Tour> findAll() throws DaoException {
         List<Tour> list = new ArrayList<>();
@@ -170,7 +173,7 @@ public class JDBCTourDao implements TourDao {
     }
 
     @Override
-    public void update(Tour tour) throws DaoException{
+    public void update(Tour tour) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TOUR);
         ) {
             statement.setString(1, tour.getName());
@@ -184,8 +187,8 @@ public class JDBCTourDao implements TourDao {
             statement.setInt(9, tour.getCategory().getId());
             statement.setInt(10, tour.getStatus().getId());
             statement.setInt(11, tour.getHotelId());
-            statement.setString(13, tour.getCity());
-            statement.setInt(15, tour.getId());
+            statement.setString(12, tour.getCity());
+            statement.setInt(13, tour.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

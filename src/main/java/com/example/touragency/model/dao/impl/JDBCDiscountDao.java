@@ -19,6 +19,11 @@ public class JDBCDiscountDao implements DiscountDao {
         this.connection = connection;
     }
 
+
+    public Connection getConnection() {
+        return connection;
+    }
+
     @Override
     public void create(Discount discount) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_DISCOUNT);

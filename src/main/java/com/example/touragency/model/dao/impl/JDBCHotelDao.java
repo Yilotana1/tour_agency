@@ -19,6 +19,11 @@ public class JDBCHotelDao implements HotelDao {
         this.connection = connection;
     }
 
+
+    public Connection getConnection() {
+        return connection;
+    }
+
     @Override
     public void create(Hotel hotel) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL);

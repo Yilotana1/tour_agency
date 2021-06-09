@@ -2,7 +2,7 @@ package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.TourHotelBeanDao;
 import com.example.touragency.model.dao.beans.TourHotelBean;
-import com.example.touragency.model.dao.mapper.bean.tour.hotel.bean.BeanHotelMapper;
+import com.example.touragency.model.dao.mapper.bean.tourhotel.HotelBeanMapper;
 import com.example.touragency.model.dao.mapper.entity.TourMapper;
 import com.example.touragency.model.entity.Hotel;
 import com.example.touragency.model.entity.Tour;
@@ -24,6 +24,10 @@ public class JDBCTourHotelBeanDao implements TourHotelBeanDao {
     }
 
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     @Override
     public TourHotelBean findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_HOTEL_BY_ID);
@@ -32,7 +36,7 @@ public class JDBCTourHotelBeanDao implements TourHotelBeanDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Tour tour = new TourMapper().extractFromResultSet(rs);
-                Hotel hotel = new BeanHotelMapper().extractFromResultSet(rs);
+                Hotel hotel = new HotelBeanMapper().extractFromResultSet(rs);
                 return TourHotelBean.createTourHotelBean(tour, hotel);
             }
 
@@ -53,7 +57,7 @@ public class JDBCTourHotelBeanDao implements TourHotelBeanDao {
             while (rs.next()) {
                 list.add(TourHotelBean.createTourHotelBean(
                         new TourMapper().extractFromResultSet(rs),
-                        new BeanHotelMapper().extractFromResultSet(rs)));
+                        new HotelBeanMapper().extractFromResultSet(rs)));
             }
 
         } catch (SQLException e) {
@@ -71,7 +75,7 @@ public class JDBCTourHotelBeanDao implements TourHotelBeanDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Tour tour = new TourMapper().extractFromResultSet(rs);
-                Hotel hotel = new BeanHotelMapper().extractFromResultSet(rs);
+                Hotel hotel = new HotelBeanMapper().extractFromResultSet(rs);
                 return TourHotelBean.createTourHotelBean(tour, hotel);
             }
 
@@ -92,7 +96,7 @@ public class JDBCTourHotelBeanDao implements TourHotelBeanDao {
             while (rs.next()) {
                 list.add(TourHotelBean.createTourHotelBean(
                         new TourMapper().extractFromResultSet(rs),
-                        new BeanHotelMapper().extractFromResultSet(rs)));
+                        new HotelBeanMapper().extractFromResultSet(rs)));
             }
 
         } catch (SQLException e) {
