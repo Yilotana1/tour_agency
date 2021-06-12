@@ -1,5 +1,8 @@
 package com.example.touragency.model.entity;
 
+import com.example.touragency.model.entity.enums.TourCategory;
+import com.example.touragency.model.entity.enums.TourStatus;
+
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,6 +11,9 @@ public class Tour extends Entity {
     private String name;
     private String country;
     private BigDecimal price;
+
+
+    private Hotel hotel;
     private int maxPlaces;
     private int minPlaces;
     private int takenPlaces;
@@ -15,7 +21,6 @@ public class Tour extends Entity {
     private Calendar endDate;
     private TourCategory category;
     private TourStatus status;
-    private int hotelId;
     private String city;
 
 
@@ -25,7 +30,7 @@ public class Tour extends Entity {
     public static Tour createTour(int id, String name, String country, BigDecimal price,
                                   int maxPlaces, int minPlaces, int takenPlaces,
                                   Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
-                                  int hotelId, String city) {
+                                  Hotel hotel, String city) {
         Tour tour = new Tour();
         tour.setId(id);
         tour.setName(name);
@@ -38,30 +43,54 @@ public class Tour extends Entity {
         tour.setEndDate(endDate);
         tour.setCategory(category);
         tour.setStatus(status);
-        tour.setHotelId(hotelId);
+        tour.setHotel(hotel);
         tour.setCity(city);
         return tour;
     }
 
 
+//    @Override
+//    public String toString() {
+//        return "Tour{" +
+//                "name='" + name + '\'' +
+//                ", country='" + country + '\'' +
+//                ", price=" + price +
+//                ", hotelId=" + hotelId +
+//                ", hotelName='" + hotelName + '\'' +
+//                ", hotelStars=" + hotelStars +
+//                ", maxPlaces=" + maxPlaces +
+//                ", minPlaces=" + minPlaces +
+//                ", takenPlaces=" + takenPlaces +
+//                ", startDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate.getTime()) +
+//                ", endDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate.getTime()) +
+//                ", category=" + category +
+//                ", status=" + status +
+//                ", city='" + city + '\'' +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Tour{" +
-                ", \nname='" + name + '\'' +
-                ", \ncountry=" + country +
-                ", \nprice=" + price +
-                ", \nmaxPlaces=" + maxPlaces +
-                ", \nminPlaces=" + minPlaces +
-                ", \ntakenPlaces=" + takenPlaces +
-                ", \nstartDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate.getTime()) +
-                ", \nendDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate.getTime()) +
-                ", \ncategory=" + category +
-                ", \nstatus=" + status +
-                ", \nhotel=" + hotelId +
-                ", \ncity=" + city +
+                "name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", price=" + price +
+                ", hotel=" + hotel.toString() +
+                ", maxPlaces=" + maxPlaces +
+                ", minPlaces=" + minPlaces +
+                ", takenPlaces=" + takenPlaces +
+                ", startDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate.getTime()) +
+                ", endDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate.getTime()) +
+                ", category=" + category +
+                ", status=" + status +
+                ", city='" + city + '\'' +
                 '}';
     }
 
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -103,13 +132,11 @@ public class Tour extends Entity {
         this.status = status;
     }
 
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
-    }
 
     public void setCity(String city) {
         this.city = city;
     }
+
 
 
     public String getName() {
@@ -152,8 +179,8 @@ public class Tour extends Entity {
         return status;
     }
 
-    public int getHotelId() {
-        return hotelId;
+    public Hotel getHotel() {
+        return hotel;
     }
 
     public String getCity() {

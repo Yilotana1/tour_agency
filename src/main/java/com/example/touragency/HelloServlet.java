@@ -1,24 +1,15 @@
 package com.example.touragency;
 
-import com.example.touragency.model.dao.*;
-import com.example.touragency.model.dao.Factory.DaoFactory;
-import com.example.touragency.model.dao.beans.OrderTourBean;
-import com.example.touragency.model.dao.beans.TourHotelBean;
 import com.example.touragency.model.entity.*;
-import com.example.touragency.model.exceptions.DaoException;
+import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.exceptions.ServiceException;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.TourService;
-import com.example.touragency.model.service.impl.ClientServiceImpl;
+import com.example.touragency.model.service.UserService;
 import com.example.touragency.model.service.impl.OrderServiceImpl;
 import com.example.touragency.model.service.impl.TourServiceImpl;
 
 import java.io.*;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -34,18 +25,14 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
 
-
-        DaoFactory daoFactory = DaoFactory.getInstance();
         try {
-            User user = daoFactory.createUserDao().findById(1);
-            Tour tour = daoFactory.createTourDao().findById(1);
             OrderService service = new OrderServiceImpl();
-            service.cancelOrder(service.getOrderById(1));
-        } catch (DaoException | ServiceException e) {
-            e.printStackTrace();
+            service.applyForOrder("private full day tour", "Alex5");
+
+
+        } catch (ServiceException throwables) {
+            throwables.printStackTrace();
         }
-
-
 
 
 //        DaoFactory daoFactory = DaoFactory.getInstance();
@@ -72,7 +59,6 @@ public class HelloServlet extends HttpServlet {
 //            }
 //            price = price.multiply(BigDecimal.valueOf(discountPercent));
 //            message += "prco " + price;
-
 
 
 //            try {
@@ -117,13 +103,14 @@ public class HelloServlet extends HttpServlet {
 //        }
 
 
-            PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
 //        out.println("<html><body>");
-            out.println(message);
+        out.println(message);
 //        out.println("</body></html>");
 //        } catch (SQLException throwables) {
 //            throwables.printStackTrace();
 //        }
+
     }
 
     public void destroy() {

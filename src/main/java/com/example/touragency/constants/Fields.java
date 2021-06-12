@@ -7,89 +7,56 @@ public interface Fields {
     String ID = "id";
 
     //User
-    String USER_FIRSTNAME = "firstname";
-    String USER_LASTNAME = "lastname";
-    String USER_PHONE = "phone";
-    String USER_EMAIL = "email";
-    String USER_LOGIN = "login";
-    String USER_PASSWORD = "password";
-    String USER_STATUS_ID = "status_id";
-    String USER_ROLE_ID = "role_id";
+    String USER_ID = Tables.USER + "." + Fields.ID;
+    String USER_FIRSTNAME = Tables.USER + ".firstname";
+    String USER_LASTNAME = Tables.USER + ".lastname";
+    String USER_PHONE = Tables.USER + ".phone";
+    String USER_EMAIL = Tables.USER + ".email";
+    String USER_LOGIN = Tables.USER + ".login";
+    String USER_PASSWORD = Tables.USER + ".password";
+    String USER_STATUS_ID = Tables.USER + ".status_id";
+    String USER_ROLE_ID = Tables.USER + ".role_id";
 
     //Tour
-    String TOUR_NAME = "name";
-    String TOUR_COUNTRY = "country";
-    String TOUR_PRICE = "price";
-    String TOUR_MAX_PLACES = "max_places";
-    String TOUR_MIN_PLACES = "min_places";
-    String TOUR_TAKEN_PLACES = "taken_places";
-    String TOUR_START_DATE = "start_date";
-    String TOUR_END_DATE = "end_date";
-    String TOUR_CATEGORY_ID = "category_id";
-    String TOUR_STATUS_ID = "status_id";
-    String TOUR_HOTEL_ID = "hotel_id";
-    String TOUR_CITY = "city";
+    String TOUR_ID = Tables.TOUR + "." + Fields.ID;
+    String TOUR_NAME = Tables.TOUR + ".name";
+    String TOUR_COUNTRY = Tables.TOUR + ".country";
+    String TOUR_PRICE = Tables.TOUR + ".price";
+    String TOUR_MAX_PLACES = Tables.TOUR + ".max_places";
+    String TOUR_MIN_PLACES = Tables.TOUR + ".min_places";
+    String TOUR_TAKEN_PLACES = Tables.TOUR + ".taken_places";
+    String TOUR_START_DATE = Tables.TOUR + ".start_date";
+    String TOUR_END_DATE = Tables.TOUR + ".end_date";
+    String TOUR_CATEGORY_ID = Tables.TOUR + ".category_id";
+    String TOUR_STATUS_ID = Tables.TOUR + ".status_id";
+    String TOUR_HOTEL_ID = Tables.TOUR + ".hotel_id";
+    String TOUR_CITY = Tables.TOUR + ".city";
 
     //Order
-    String ORDER_DATE = "date";
-    String ORDER_STATUS_ID = "status_id";
-    String ORDER_CLIENT_ID = "client_id";
-    String ORDER_PRICE = "price";
-    String ORDER_TOUR_ID = "tour_id";
+    String ORDER_ID = Tables.ORDER + "." + Fields.ID;
+    String ORDER_DATE = Tables.ORDER + ".date";
+    String ORDER_STATUS_ID = Tables.ORDER + ".status_id";
+    String ORDER_CLIENT_ID = Tables.ORDER + ".client_id";
+    String ORDER_PRICE = Tables.ORDER + ".price";
+    String ORDER_TOUR_COUNT = Tables.ORDER + ".tour_count";
 
     //Hotel
-    String HOTEL_NAME = "name";
-    String HOTEL_CITY = "city";
-    String HOTEL_ADDRESS = "address";
-    String HOTEL_STARS = "stars";
-    String HOTEL_ADMIN_PHONE = "admin_phone";
+    String HOTEL_ID = Tables.HOTEL + "." + Fields.ID;
+    String HOTEL_NAME = Tables.HOTEL + ".name";
+    String HOTEL_CITY = Tables.HOTEL + ".city";
+    String HOTEL_ADDRESS = Tables.HOTEL + ".address";
+    String HOTEL_STARS = Tables.HOTEL + ".stars";
+    String HOTEL_ADMIN_PHONE = Tables.HOTEL + ".admin_phone";
 
 
 
     //Discount
-    String DISCOUNT_PERCENT = "percent";
-    String DISCOUNT_MAX_PERCENT= "max_percent";
+    String DISCOUNT_ID = Tables.DISCOUNT + "." + Fields.ID;
+    String DISCOUNT_PERCENT = Tables.DISCOUNT + ".percent";
+    String DISCOUNT_MAX_PERCENT= Tables.DISCOUNT + ".max_percent";
 
-
-    //Bean user
-    String BEAN_USER_ID = "user.id";
-    String BEAN_USER_FIRSTNAME = "user.firstname";
-    String BEAN_USER_LASTNAME = "user.lastname";
-    String BEAN_USER_PHONE = "user.phone";
-    String BEAN_USER_EMAIL = "user.email";
-    String BEAN_USER_LOGIN = "user.login";
-    String BEAN_USER_PASSWORD = "user.password";
-    String BEAN_USER_STATUS_ID = "user.status_id";
-    String BEAN_USER_ROLE_ID = "user.role_id";
-
-
-    //Bean user
-    String BEAN_HOTEL_ID = "hotel.id";
-    String BEAN_HOTEL_NAME = "hotel.name";
-    String BEAN_HOTEL_STARS = "hotel.stars";
-    String BEAN_HOTEL_CITY = "hotel.city";
-    String BEAN_HOTEL_ADDRESS = "hotel.address";
-    String BEAN_HOTEL_ADMIN_PHONE = "hotel.admin_phone";
-
-
-
-
-    //Bean tour
-    String BEAN_TOUR_ID = "tour.id";
-    String BEAN_TOUR_NAME = "tour.name";
-    String BEAN_TOUR_COUNTRY = "tour.country";
-    String BEAN_TOUR_PRICE = "tour.price";
-    String BEAN_TOUR_MAX_PLACES = "tour.max_places";
-    String BEAN_TOUR_MIN_PLACES = "tour.min_places";
-    String BEAN_TOUR_TAKEN_PLACES = "tour.taken_places";
-    String BEAN_TOUR_START_DATE = "tour.start_date";
-    String BEAN_TOUR_END_DATE = "tour.end_date";
-    String BEAN_TOUR_HOTEL_ID = "tour.hotel_id";
-    String BEAN_TOUR_CITY = "tour.city";
-    String BEAN_TOUR_STATUS_ID = "tour.status_id";
-    String BEAN_TOUR_CATEGORY_ID = "tour.category_id";
-
-
-
+    //Tour_has_order
+    String ORDER_HAS_TOUR_TOUR_ID = Tables.ORDER_HAS_TOUR + ".tour_id";
+    String ORDER_HAS_TOUR_ORDER_ID = Tables.ORDER_HAS_TOUR + ".order_id";
 
 }

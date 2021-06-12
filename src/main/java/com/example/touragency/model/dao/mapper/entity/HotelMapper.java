@@ -1,7 +1,6 @@
 package com.example.touragency.model.dao.mapper.entity;
 
 import com.example.touragency.constants.Fields;
-import com.example.touragency.model.dao.mapper.EntityMapper;
 import com.example.touragency.model.entity.Hotel;
 
 import java.sql.ResultSet;

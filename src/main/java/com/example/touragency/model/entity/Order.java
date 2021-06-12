@@ -1,55 +1,47 @@
 package com.example.touragency.model.entity;
 
+import com.example.touragency.model.entity.enums.OrderStatus;
+
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Order extends Entity {
 
-    private int tourId;
+    private User client;
+    private int tourNumber;
     private Calendar date;
     private OrderStatus status;
-    private int client_id;
     private BigDecimal price;
 
     private Order(){}
 
-    public static Order createOrder(int id, int tourId, Calendar date, OrderStatus status, int client_id, BigDecimal price) {
+    public static Order createOrder(int id, Calendar date, OrderStatus status,
+                                    User client, BigDecimal price, int tourNumber) {
         Order order = new Order();
         order.setId(id);
-        order.setTourId(tourId);
         order.setDate(date);
         order.setStatus(status);
-        order.setClientId(client_id);
+        order.setClient(client);
         order.setPrice(price);
+        order.setTourNumber(tourNumber);
         return order;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "tourId=" + tourId +
+                "tourNumber=" + tourNumber +
                 ", date=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date.getTime()) +
                 ", status=" + status +
-                ", client_id=" + client_id +
+                ", clientLogin=" +  client.getLogin() +
                 ", price=" + price +
                 '}';
     }
 
-    public void setTourId(int tourId) {
-        this.tourId = tourId;
-    }
 
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
-    public void setClientId(int client_id) {
-        this.client_id = client_id;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public void setClient(User client) {
+        this.client = client;
     }
 
     public void setPrice(BigDecimal price) {
@@ -57,8 +49,16 @@ public class Order extends Entity {
     }
 
 
-    public int getTourId() {
-        return tourId;
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setTourNumber(int tourNumber) {
+        this.tourNumber = tourNumber;
+    }
+
+    public int getTourNumber() {
+        return tourNumber;
     }
 
     public Calendar getDate() {
@@ -69,11 +69,16 @@ public class Order extends Entity {
         return status;
     }
 
-    public int getClientId() {
-        return client_id;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
+
+    public User getClient() {
+        return client;
+    }
+
+    private void setDate(Calendar date) {
+        this.date = date;
+    }
+
 }

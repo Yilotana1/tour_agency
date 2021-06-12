@@ -1,4 +1,4 @@
-package com.example.touragency.model.dao.mapper;
+package com.example.touragency.model.dao.mapper.entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

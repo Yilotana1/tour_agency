@@ -4,7 +4,7 @@ import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.entity.Discount;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.User;
-import com.example.touragency.model.entity.UserStatus;
+import com.example.touragency.model.entity.enums.UserStatus;
 import com.example.touragency.model.exceptions.DaoException;
 
 import java.math.BigDecimal;
@@ -28,7 +28,7 @@ public class ServiceTools {
     public static long countClientOrders(OrderDao orderDao, User client) {
         try {
             return orderDao.findAll().stream()
-                    .filter(order -> order.getClientId() == client.getId()).count();
+                    .filter(order -> order.getClient().getId() == client.getId()).count();
         } catch (DaoException throwables) {
             throwables.printStackTrace();
         }

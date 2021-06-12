@@ -1,4 +1,4 @@
-package com.example.touragency.model.entity;
+package com.example.touragency.model.entity.enums;
 
 public enum Role {
     CLIENT, ADMIN, MANAGER;

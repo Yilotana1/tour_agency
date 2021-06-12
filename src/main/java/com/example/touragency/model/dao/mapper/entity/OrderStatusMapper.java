@@ -1,8 +1,7 @@
-package com.example.touragency.model.dao.mapper.enums;
+package com.example.touragency.model.dao.mapper.entity;
 
 import com.example.touragency.constants.Fields;
-import com.example.touragency.model.dao.mapper.EntityMapper;
-import com.example.touragency.model.entity.OrderStatus;
+import com.example.touragency.model.entity.enums.OrderStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

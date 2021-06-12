@@ -1,9 +1,6 @@
 package com.example.touragency.model.dao.mapper.entity;
 
 import com.example.touragency.constants.Fields;
-import com.example.touragency.model.dao.mapper.EntityMapper;
-import com.example.touragency.model.dao.mapper.enums.RoleMapper;
-import com.example.touragency.model.dao.mapper.enums.UserStatusMapper;
 import com.example.touragency.model.entity.User;
 
 import java.sql.ResultSet;

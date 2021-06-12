@@ -1,7 +1,7 @@
-package com.example.touragency.model.entity;
+package com.example.touragency.model.entity.enums;
 
-public enum UserStatus {
-    NON_BLOCKED, BLOCKED;
+public enum TourStatus {
+    BURNING, NON_BURNING;
 
     private final int id = this.ordinal() + 1;
 

@@ -79,6 +79,7 @@ public class JDBCHotelDao implements HotelDao {
             statement.setString(3, hotel.getAddress());
             statement.setInt(4, hotel.getStars());
             statement.setString(5, hotel.getAdminPhone());
+            statement.setInt(6, hotel.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

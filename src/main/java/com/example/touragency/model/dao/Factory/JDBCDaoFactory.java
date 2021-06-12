@@ -1,9 +1,7 @@
 package com.example.touragency.model.dao.Factory;
 
 import com.example.touragency.ConnectionPoolHolder;
-import com.example.touragency.model.dao.OrderClientBeanDao;
-import com.example.touragency.model.dao.OrderTourBeanDao;
-import com.example.touragency.model.dao.TourHotelBeanDao;
+import com.example.touragency.model.dao.*;
 import com.example.touragency.model.dao.impl.*;
 
 import javax.sql.DataSource;
@@ -28,8 +26,18 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
+    public UserDao createUserDao(Connection connection) {
+         return new JDBCUserDao(connection);
+    }
+
+    @Override
     public JDBCTourDao createTourDao() {
         return new JDBCTourDao(getConnection());
+    }
+
+    @Override
+    public TourDao createTourDao(Connection connection) {
+        return new JDBCTourDao(connection);
     }
 
     @Override
@@ -38,24 +46,27 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public JDBCHotelDao createHotelDao() { return new JDBCHotelDao(getConnection()); }
-
-    @Override
-    public JDBCDiscountDao createDiscountDao() { return new JDBCDiscountDao(getConnection()); }
-
-    @Override
-    public OrderClientBeanDao createOrderClientBeanDao() {
-        return new JDBCOrderClientBeanDao(getConnection());
+    public OrderDao createOrderDao(Connection connection) {
+        return new JDBCOrderDao(connection);
     }
 
     @Override
-    public TourHotelBeanDao createTourHotelBeanDao() {
-        return new JDBCTourHotelBeanDao(getConnection());
+    public JDBCHotelDao createHotelDao() {
+        return new JDBCHotelDao(getConnection());
     }
 
     @Override
-    public OrderTourBeanDao createOrderTourBeanDao() {
-        return new JDBCOrderTourBeanDao(getConnection());
+    public HotelDao createHotelDao(Connection connection) {
+        return new JDBCHotelDao(connection);
     }
 
+    @Override
+    public JDBCDiscountDao createDiscountDao() {
+        return new JDBCDiscountDao(getConnection());
+    }
+
+    @Override
+    public DiscountDao createDiscountDao(Connection connection) {
+        return new JDBCDiscountDao(connection);
+    }
 }

@@ -2,10 +2,14 @@ package com.example.touragency.model.dao;
 
 import com.example.touragency.model.exceptions.DaoException;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public interface GenericDao<T> extends AutoCloseable {
+
+    Connection getConnection() throws SQLException;
+
     void create(T entity) throws DaoException;
 
     T findById(int id) throws DaoException;

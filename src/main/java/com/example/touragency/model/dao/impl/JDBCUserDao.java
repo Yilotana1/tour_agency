@@ -39,6 +39,7 @@ public class JDBCUserDao implements UserDao {
             statement.setInt(8, user.getStatus().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DaoException("Cannot create this user");
         }
     }
@@ -55,6 +56,7 @@ public class JDBCUserDao implements UserDao {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DaoException("Cannot find user by this id");
         }
         return null;

@@ -1,5 +1,8 @@
 package com.example.touragency.model.entity;
 
+import com.example.touragency.model.entity.enums.Role;
+import com.example.touragency.model.entity.enums.UserStatus;
+
 import java.util.Objects;
 
 public class User extends Entity {

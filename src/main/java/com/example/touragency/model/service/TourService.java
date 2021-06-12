@@ -1,9 +1,8 @@
 package com.example.touragency.model.service;
 
-import com.example.touragency.model.dao.beans.TourHotelBean;
 import com.example.touragency.model.entity.Tour;
-import com.example.touragency.model.entity.TourCategory;
-import com.example.touragency.model.entity.TourStatus;
+import com.example.touragency.model.entity.enums.TourCategory;
+import com.example.touragency.model.entity.enums.TourStatus;
 import com.example.touragency.model.exceptions.ServiceException;
 
 import java.math.BigDecimal;
@@ -13,10 +12,22 @@ import java.util.List;
 public interface TourService {
 
 
+    List<Tour> getToursSortedByStatus() throws ServiceException;
 
-    void addTour(String name, String country, BigDecimal price, int maxPlaces, int minPlaces,
-                 int takenPlaces, Calendar startDate, Calendar endDate, TourCategory category,
-                 TourStatus status, int hotel_id, String city) throws ServiceException;
+    Tour getTourById(int id) throws ServiceException;
+    Tour getTourByName(String name) throws ServiceException;
+
+    List<Tour> getToursWithPriceLessThan(BigDecimal price) throws ServiceException;
+
+    List<Tour> getToursWithPriceMoreThan(BigDecimal price) throws ServiceException;
+    List<Tour> getToursWithPeopleMoreThan(int maxPlaces) throws ServiceException;
+
+    List<Tour> getToursWithPeopleLessThan(int maxPlaces) throws ServiceException;
+    List<Tour> getToursWithHotelStarsMoreThan(int stars) throws ServiceException;
+
+    List<Tour> getToursWithHotelStarsLessThan(int stars) throws ServiceException;
+    List<Tour> getToursByCategory(TourCategory category) throws ServiceException;
+
 
     void addTour(Tour tour) throws ServiceException;
 
@@ -38,44 +49,10 @@ public interface TourService {
 
     void changeTourCategory(int id, TourCategory category) throws ServiceException;
 
-    void changeTourHotelId(int id, int hotel_id) throws ServiceException;
+    void changeTourHotel(int id, String hotelName) throws ServiceException;
 
     void changeTourCity(int id, String name) throws ServiceException;
 
     void changeTourStatus(int id, TourStatus status) throws ServiceException;
-
-
-
-
-    List<TourHotelBean> getAllTours() throws ServiceException;
-
-    List<TourHotelBean> getToursByCategory(TourCategory category) throws ServiceException;
-
-
-    TourHotelBean getTourById(int id) throws ServiceException;
-
-    TourHotelBean getTourByName(String name) throws ServiceException;
-
-
-
-    List<TourHotelBean> getToursByPriceMoreThan(BigDecimal price) throws ServiceException;
-
-    List<TourHotelBean> getToursByPriceLessThan(BigDecimal price) throws ServiceException;
-
-
-    List<TourHotelBean> getToursByPeopleMoreThan(int peopleNumber) throws ServiceException;
-
-    List<TourHotelBean> getToursByPeopleLessThan(int peopleNumber) throws ServiceException;
-
-
-    List<TourHotelBean> getToursByHotelStarsMoreThan(int type) throws ServiceException;
-
-    List<TourHotelBean> getToursByHotelStarsLessThan(int type) throws ServiceException;
-
-
-
-
-
-
 
 }

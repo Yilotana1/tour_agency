@@ -1,4 +1,4 @@
-package com.example.touragency.model.entity;
+package com.example.touragency.model.entity.enums;
 
 public enum OrderStatus {
     OPENED, PAID, CANCELED;

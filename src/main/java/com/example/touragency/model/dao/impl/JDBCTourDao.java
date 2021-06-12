@@ -2,9 +2,8 @@ package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.model.dao.TourDao;
 import com.example.touragency.model.dao.mapper.entity.TourMapper;
-import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.Tour;
-import com.example.touragency.model.entity.TourCategory;
+import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.exceptions.DaoException;
 
 import java.math.BigDecimal;
@@ -19,14 +18,16 @@ public class JDBCTourDao implements TourDao {
 
     private final Connection connection;
 
+    @Override
+    public Connection getConnection() {
+        return connection;
+    }
+
     public JDBCTourDao(Connection connection) {
         this.connection = connection;
     }
 
 
-    public Connection getConnection() {
-        return connection;
-    }
 
     @Override
     public void create(Tour tour) throws DaoException {
@@ -42,7 +43,7 @@ public class JDBCTourDao implements TourDao {
             statement.setDate(8, new Date(tour.getEndDate().getTimeInMillis()));
             statement.setInt(9, tour.getCategory().getId());
             statement.setInt(10, tour.getStatus().getId());
-            statement.setInt(11, tour.getHotelId());
+            statement.setInt(11, tour.getHotel().getId());
             statement.setString(12, tour.getCity());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -85,13 +86,31 @@ public class JDBCTourDao implements TourDao {
         return null;
     }
 
+    @Override
+    public List<Tour> findByOrderId(int id) throws DaoException {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_ORDER_ID);
+        ) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("cannot find all tours");
+        }
+        return list;
+    }
+
 
     @Override
     public List<Tour> findByCategory(TourCategory category) throws DaoException {
         List<Tour> list = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-        ) {
-            ResultSet rs = statement.executeQuery(SQL_FIND_TOUR_BY_CATEGORY);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_CATEGORY)) {
+            statement.setInt(1, category.getId());
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
@@ -106,9 +125,9 @@ public class JDBCTourDao implements TourDao {
     @Override
     public List<Tour> findByPrice(BigDecimal price) throws DaoException {
         List<Tour> list = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-        ) {
-            ResultSet rs = statement.executeQuery(SQL_FIND_TOUR_BY_PRICE);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_PRICE)) {
+            statement.setBigDecimal(1 ,price);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
@@ -123,9 +142,9 @@ public class JDBCTourDao implements TourDao {
     @Override
     public List<Tour> findByPeople(int peopleNumber) throws DaoException {
         List<Tour> list = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-        ) {
-            ResultSet rs = statement.executeQuery(SQL_FIND_TOUR_BY_PEOPLE);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_PEOPLE)) {
+            statement.setInt(1, peopleNumber);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
@@ -140,9 +159,9 @@ public class JDBCTourDao implements TourDao {
     @Override
     public List<Tour> findByHotelId(int hotelId) throws DaoException {
         List<Tour> list = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-        ) {
-            ResultSet rs = statement.executeQuery(SQL_FIND_TOUR_BY_HOTEL);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_HOTEL_ID)) {
+            statement.setInt(1, hotelId);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
@@ -160,7 +179,7 @@ public class JDBCTourDao implements TourDao {
         List<Tour> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
         ) {
-            ResultSet rs = statement.executeQuery(SQL_FIND_ALL_TOUR);
+            ResultSet rs = statement.executeQuery(SQL_FIND_ALL_TOURS);
             while (rs.next()) {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
@@ -186,7 +205,7 @@ public class JDBCTourDao implements TourDao {
             statement.setDate(8, new Date(tour.getEndDate().getTimeInMillis()));
             statement.setInt(9, tour.getCategory().getId());
             statement.setInt(10, tour.getStatus().getId());
-            statement.setInt(11, tour.getHotelId());
+            statement.setInt(11, tour.getHotel().getId());
             statement.setString(12, tour.getCity());
             statement.setInt(13, tour.getId());
             statement.executeUpdate();
