@@ -37,7 +37,7 @@ public class JDBCUserDao implements UserDao {
             statement.setString(6, user.getPhone());
             statement.setInt(7, user.getRole().getId());
             statement.setInt(8, user.getStatus().getId());
-            statement.executeUpdate();
+            statement.executeUpdate();;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("Cannot create this user");
@@ -61,6 +61,11 @@ public class JDBCUserDao implements UserDao {
         }
         return null;
     }
+
+
+
+
+
 
 
     @Override
@@ -116,4 +121,22 @@ public class JDBCUserDao implements UserDao {
         connection.close();
     }
 
-}
+    @Override
+    public User findUserByLogin(String login) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+        ) {
+            statement.setString(1, login);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new UserMapper().extractFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("Cannot find user by this id");
+        }
+        return null;
+    }
+    }
+

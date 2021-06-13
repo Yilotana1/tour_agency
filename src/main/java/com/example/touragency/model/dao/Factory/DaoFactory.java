@@ -7,20 +7,20 @@ import java.sql.Connection;
 public abstract class DaoFactory {
         private static DaoFactory daoFactory;
 
-        public abstract UserDao createUserDao();
-        public abstract UserDao createUserDao(Connection connection);
+    public abstract UserDao createUserDao();
+    public abstract UserDao createUserDao(Connection connection);
 
-        public abstract TourDao createTourDao();
-        public abstract TourDao createTourDao(Connection connection);
+    public abstract TourDao createTourDao();
+    public abstract TourDao createTourDao(Connection connection);
 
-        public abstract OrderDao createOrderDao();
-        public abstract OrderDao createOrderDao(Connection connection);
+    public abstract OrderDao createOrderDao();
+    public abstract OrderDao createOrderDao(Connection connection);
 
-        public abstract HotelDao createHotelDao();
-        public abstract HotelDao createHotelDao(Connection connection);
+    public abstract HotelDao createHotelDao();
+    public abstract HotelDao createHotelDao(Connection connection);
 
-        public abstract DiscountDao createDiscountDao();
-        public abstract DiscountDao createDiscountDao(Connection connection);
+    public abstract DiscountDao createDiscountDao();
+    public abstract DiscountDao createDiscountDao(Connection connection);
 
 
 

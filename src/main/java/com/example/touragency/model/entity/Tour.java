@@ -48,26 +48,25 @@ public class Tour extends Entity {
         return tour;
     }
 
-
-//    @Override
-//    public String toString() {
-//        return "Tour{" +
-//                "name='" + name + '\'' +
-//                ", country='" + country + '\'' +
-//                ", price=" + price +
-//                ", hotelId=" + hotelId +
-//                ", hotelName='" + hotelName + '\'' +
-//                ", hotelStars=" + hotelStars +
-//                ", maxPlaces=" + maxPlaces +
-//                ", minPlaces=" + minPlaces +
-//                ", takenPlaces=" + takenPlaces +
-//                ", startDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate.getTime()) +
-//                ", endDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate.getTime()) +
-//                ", category=" + category +
-//                ", status=" + status +
-//                ", city='" + city + '\'' +
-//                '}';
-//    }
+    public static Tour createTour(String name, String country, BigDecimal price,
+                                  int maxPlaces, int minPlaces, int takenPlaces,
+                                  Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
+                                  Hotel hotel, String city) {
+        Tour tour = new Tour();
+        tour.setName(name);
+        tour.setCountry(country);
+        tour.setPrice(price);
+        tour.setMaxPlaces(maxPlaces);
+        tour.setMinPlaces(minPlaces);
+        tour.setTakenPlaces(takenPlaces);
+        tour.setStartDate(startDate);
+        tour.setEndDate(endDate);
+        tour.setCategory(category);
+        tour.setStatus(status);
+        tour.setHotel(hotel);
+        tour.setCity(city);
+        return tour;
+    }
 
 
     @Override

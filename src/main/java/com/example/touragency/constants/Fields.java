@@ -22,9 +22,9 @@ public interface Fields {
     String TOUR_NAME = Tables.TOUR + ".name";
     String TOUR_COUNTRY = Tables.TOUR + ".country";
     String TOUR_PRICE = Tables.TOUR + ".price";
-    String TOUR_MAX_PLACES = Tables.TOUR + ".max_places";
-    String TOUR_MIN_PLACES = Tables.TOUR + ".min_places";
-    String TOUR_TAKEN_PLACES = Tables.TOUR + ".taken_places";
+    String TOUR_MAX_TICKETS = Tables.TOUR + ".max_tickets";
+    String TOUR_MIN_TICKETS = Tables.TOUR + ".min_tickets";
+    String TOUR_TAKEN_TICKETS = Tables.TOUR + ".taken_tickets";
     String TOUR_START_DATE = Tables.TOUR + ".start_date";
     String TOUR_END_DATE = Tables.TOUR + ".end_date";
     String TOUR_CATEGORY_ID = Tables.TOUR + ".category_id";

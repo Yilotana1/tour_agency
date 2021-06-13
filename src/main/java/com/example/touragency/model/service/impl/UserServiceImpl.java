@@ -17,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
+
+
+
     @Override
     public List<User> getAllUsers() throws ServiceException{
         try (UserDao userDao = daoFactory.createUserDao()) {

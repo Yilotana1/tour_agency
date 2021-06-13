@@ -12,19 +12,27 @@ public interface OrderService {
 
     List<Order> getAllOrders() throws ServiceException;
 
+    List<Order> getOpenedOrders() throws ServiceException;
+
+    List<Order> getPaidOrders() throws ServiceException;
+
+    List<Order> getCanceledOrders() throws ServiceException;
+
+
+
     Order getOrderById(int id) throws ServiceException;
 
 
-    void applyForOrder(String tourName, String clientLogin) throws ServiceException;
+    void applyForOrder(List<String> tourNames, String clientLogin) throws ServiceException;
 
 
-    void confirmOrderPaid(Order order) throws ServiceException;
+    void confirmOrderPaid(int id) throws ServiceException;
 
 
-    void cancelOrder(Order order) throws ServiceException;
+    void cancelOrder(int id) throws ServiceException;
 
 
-    void removeOrder(Order order) throws ServiceException;
+    void removeOrder(int id) throws ServiceException;
 
 
 }

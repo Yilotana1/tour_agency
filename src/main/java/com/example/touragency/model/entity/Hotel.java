@@ -23,6 +23,17 @@ public class Hotel extends Entity {
         return hotel;
     }
 
+    public static Hotel createHotel(String name, String city,
+                                    String address, int stars, String adminPhone) {
+        Hotel hotel = new Hotel();
+        hotel.setName(name);
+        hotel.setCity(city);
+        hotel.setAddress(address);
+        hotel.setStars(stars);
+        hotel.setAdminPhone(adminPhone);
+        return hotel;
+    }
+
 
     @Override
     public String toString() {

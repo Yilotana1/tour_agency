@@ -16,6 +16,13 @@ public class Discount extends Entity {
         return discount;
     }
 
+    public static Discount createDiscount(int percent, int maxPercent) {
+        Discount discount = new Discount();
+        discount.setPercent(percent);
+        discount.setMaxPercent(maxPercent);
+        return discount;
+    }
+
     @Override
     public String toString() {
         return "Discount{" +

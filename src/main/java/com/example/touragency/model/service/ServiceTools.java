@@ -9,6 +9,7 @@ import com.example.touragency.model.exceptions.DaoException;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.List;
 
 public class ServiceTools {
 
@@ -17,7 +18,7 @@ public class ServiceTools {
         return user.getStatus().equals(UserStatus.BLOCKED);
     }
 
-    public static boolean containsFreePlaces(Tour tour) {
+    public static boolean containsFreeTickets(Tour tour) {
         return tour.getMaxPlaces() - tour.getTakenPlaces() > 0;
     }
 
@@ -36,17 +37,21 @@ public class ServiceTools {
     }
 
 
-    public static BigDecimal getPriceWithDiscount(Discount discount, Tour tour, long userOrderNumber) {
-        BigDecimal price = tour.getPrice();
-        if (userOrderNumber != 0) {
-            float discountPercent = (float) (discount.getPercent() * userOrderNumber);
+    public static BigDecimal getPriceWithDiscount(Discount discount, List<Tour> tours) {
+        BigDecimal priceSum = tours.stream()
+                .map(Tour::getPrice)
+                .reduce(BigDecimal::add).get();
+
+        int orderTourNumber = tours.size();
+        if (orderTourNumber != 0) {
+            float discountPercent = (float) (discount.getPercent() * orderTourNumber);
             if (discountPercent < discount.getMaxPercent()) {
-                price = price
-                        .subtract(price.multiply(BigDecimal.valueOf(discountPercent / 100))
-                                .multiply(BigDecimal.valueOf(userOrderNumber)));
+                priceSum = priceSum
+                        .subtract(priceSum.multiply(BigDecimal.valueOf(discountPercent / 100))
+                                .multiply(BigDecimal.valueOf(orderTourNumber)));
             }
         }
-        return price;
+        return priceSum;
     }
 
 }

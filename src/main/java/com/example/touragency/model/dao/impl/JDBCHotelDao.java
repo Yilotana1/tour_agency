@@ -3,6 +3,7 @@ package com.example.touragency.model.dao.impl;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.dao.mapper.entity.HotelMapper;
 import com.example.touragency.model.entity.Hotel;
+import com.example.touragency.model.exceptions.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class JDBCHotelDao implements HotelDao {
     }
 
     @Override
-    public void create(Hotel hotel) {
+    public void create(Hotel hotel) throws DaoException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL);
         ) {
             statement.setString(1, hotel.getName());
@@ -36,6 +37,7 @@ public class JDBCHotelDao implements HotelDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DaoException("Cannot create hotel");
         }
     }
 

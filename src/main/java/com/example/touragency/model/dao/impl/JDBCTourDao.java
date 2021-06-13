@@ -52,6 +52,20 @@ public class JDBCTourDao implements TourDao {
         }
     }
 
+
+    @Override
+    public void addTourToOrder(int tourId, int orderId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_ADD_TOUR_TO_ORDER);
+        ) {
+            statement.setInt(1, orderId);
+            statement.setInt(2, tourId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DaoException("cannot add tour to order_has_tour table");
+        }
+    }
+
     @Override
     public Tour findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_BY_ID);

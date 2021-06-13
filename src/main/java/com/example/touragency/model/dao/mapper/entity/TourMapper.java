@@ -15,8 +15,8 @@ public class TourMapper implements EntityMapper<Tour> {
 
         return Tour.createTour(rs.getInt(Fields.ID), rs.getString(Fields.TOUR_NAME),
                 rs.getString(Fields.TOUR_COUNTRY), rs.getBigDecimal(Fields.TOUR_PRICE),
-                rs.getInt(Fields.TOUR_MAX_PLACES), rs.getInt(Fields.TOUR_MIN_PLACES),
-                rs.getInt(Fields.TOUR_TAKEN_PLACES), Tools.getCalendarFromDate(rs.getDate(Fields.TOUR_START_DATE)),
+                rs.getInt(Fields.TOUR_MAX_TICKETS), rs.getInt(Fields.TOUR_MIN_TICKETS),
+                rs.getInt(Fields.TOUR_TAKEN_TICKETS), Tools.getCalendarFromDate(rs.getDate(Fields.TOUR_START_DATE)),
                 Tools.getCalendarFromDate(rs.getDate(Fields.TOUR_END_DATE)),
                 new TourCategoryMapper().extractFromResultSet(rs), new TourStatusMapper().extractFromResultSet(rs),
                 new HotelMapper().extractFromResultSet(rs), rs.getString(Fields.TOUR_CITY));

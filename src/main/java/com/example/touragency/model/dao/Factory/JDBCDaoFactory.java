@@ -12,16 +12,9 @@ public class JDBCDaoFactory extends DaoFactory {
 
     private final DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
-    private Connection getConnection() {
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
-    public JDBCUserDao createUserDao() {
+    public UserDao createUserDao() {
         return new JDBCUserDao(getConnection());
     }
 
@@ -31,9 +24,10 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public JDBCTourDao createTourDao() {
+    public TourDao createTourDao() {
         return new JDBCTourDao(getConnection());
     }
+
 
     @Override
     public TourDao createTourDao(Connection connection) {
@@ -41,7 +35,7 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public JDBCOrderDao createOrderDao() {
+    public OrderDao createOrderDao() {
         return new JDBCOrderDao(getConnection());
     }
 
@@ -51,9 +45,10 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public JDBCHotelDao createHotelDao() {
+    public HotelDao createHotelDao() {
         return new JDBCHotelDao(getConnection());
     }
+
 
     @Override
     public HotelDao createHotelDao(Connection connection) {
@@ -61,12 +56,21 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public JDBCDiscountDao createDiscountDao() {
+    public DiscountDao createDiscountDao() {
         return new JDBCDiscountDao(getConnection());
     }
 
     @Override
     public DiscountDao createDiscountDao(Connection connection) {
         return new JDBCDiscountDao(connection);
+    }
+
+
+    private Connection getConnection(){
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

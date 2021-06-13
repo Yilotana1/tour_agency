@@ -28,6 +28,18 @@ public class Order extends Entity {
         return order;
     }
 
+    public static Order createOrder(Calendar date, OrderStatus status,
+                                    User client, BigDecimal price, int tourNumber) {
+        Order order = new Order();
+        order.setDate(date);
+        order.setStatus(status);
+        order.setClient(client);
+        order.setPrice(price);
+        order.setTourNumber(tourNumber);
+        return order;
+    }
+
+
     @Override
     public String toString() {
         return "Order{" +
@@ -57,6 +69,11 @@ public class Order extends Entity {
         this.tourNumber = tourNumber;
     }
 
+    private void setDate(Calendar date) {
+        this.date = date;
+    }
+
+
     public int getTourNumber() {
         return tourNumber;
     }
@@ -75,10 +92,6 @@ public class Order extends Entity {
 
     public User getClient() {
         return client;
-    }
-
-    private void setDate(Calendar date) {
-        this.date = date;
     }
 
 }

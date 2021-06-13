@@ -33,6 +33,20 @@ public class User extends Entity {
         return user;
     }
 
+    public static User createUser(String firstname, String lastname, String phone, String email,
+                                  UserStatus status, String login, String password, Role role) {
+        User user = new User();
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setStatus(status);
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setRole(role);
+        return user;
+    }
+
     @Override
     public String toString() {
         return "User{" +

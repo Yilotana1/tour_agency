@@ -15,17 +15,21 @@ public interface TourService {
     List<Tour> getToursSortedByStatus() throws ServiceException;
 
     Tour getTourById(int id) throws ServiceException;
+
     Tour getTourByName(String name) throws ServiceException;
 
     List<Tour> getToursWithPriceLessThan(BigDecimal price) throws ServiceException;
 
     List<Tour> getToursWithPriceMoreThan(BigDecimal price) throws ServiceException;
+
     List<Tour> getToursWithPeopleMoreThan(int maxPlaces) throws ServiceException;
 
     List<Tour> getToursWithPeopleLessThan(int maxPlaces) throws ServiceException;
+
     List<Tour> getToursWithHotelStarsMoreThan(int stars) throws ServiceException;
 
     List<Tour> getToursWithHotelStarsLessThan(int stars) throws ServiceException;
+
     List<Tour> getToursByCategory(TourCategory category) throws ServiceException;
 
 

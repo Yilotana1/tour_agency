@@ -26,7 +26,6 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-
     @Override
     public List<Tour> getToursSortedByStatus() throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {

@@ -7,6 +7,8 @@ public interface SqlConstants {
     //User
     String SQL_FIND_USER_BY_ID = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_ID + "=?;";
 
+    String SQL_FIND_USER_BY_LOGIN = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_LOGIN + "=?;";
+
     String SQL_FIND_ALL_USERS = "SELECT * FROM " + Tables.USER + ";";
 
     String SQL_INSERT_USER = "INSERT INTO " + Tables.USER +"("
@@ -43,7 +45,7 @@ public interface SqlConstants {
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_PRICE + "=?";
 
     String SQL_FIND_TOURS_BY_PEOPLE = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
-            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_MAX_PLACES + "=?";
+            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_MAX_TICKETS + "=?";
 
     String SQL_FIND_TOURS_BY_HOTEL_ID = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.HOTEL_ID + "=?";
@@ -59,15 +61,15 @@ public interface SqlConstants {
 
 
     String SQL_INSERT_TOUR = "INSERT INTO " + Tables.TOUR +  "("
-            + Fields.TOUR_NAME + ", " + Fields.TOUR_COUNTRY + ", " +  Fields.TOUR_PRICE + ", " + Fields.TOUR_MAX_PLACES + ", "
-            + Fields.TOUR_MIN_PLACES + ", " + Fields.TOUR_TAKEN_PLACES + ", " + Fields.TOUR_START_DATE + ", "
+            + Fields.TOUR_NAME + ", " + Fields.TOUR_COUNTRY + ", " +  Fields.TOUR_PRICE + ", " + Fields.TOUR_MAX_TICKETS + ", "
+            + Fields.TOUR_MIN_TICKETS + ", " + Fields.TOUR_TAKEN_TICKETS + ", " + Fields.TOUR_START_DATE + ", "
             + Fields.TOUR_END_DATE + ", " + Fields.TOUR_CATEGORY_ID + ", " + Fields.TOUR_STATUS_ID + ", "
             + Fields.TOUR_HOTEL_ID + ", " + Fields.TOUR_CITY
             + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     String SQL_UPDATE_TOUR = "UPDATE " + Tables.TOUR + " SET "
             + Fields.TOUR_NAME + "=?, " + Fields.TOUR_COUNTRY + "=?, " + Fields.TOUR_PRICE + "=?, "
-            + Fields.TOUR_MAX_PLACES + "=?, " + Fields.TOUR_MIN_PLACES + "=?, " + Fields.TOUR_TAKEN_PLACES
+            + Fields.TOUR_MAX_TICKETS + "=?, " + Fields.TOUR_MIN_TICKETS + "=?, " + Fields.TOUR_TAKEN_TICKETS
             + "=?, " + Fields.TOUR_START_DATE + "=?, " + Fields.TOUR_END_DATE + "=?, " + Fields.TOUR_CATEGORY_ID +
             "=?, " + Fields.TOUR_STATUS_ID + "=?, " + Fields.TOUR_HOTEL_ID + "=?, "
             + Fields.TOUR_CITY + "=?" + " WHERE " + Fields.ID + "=?;";
@@ -138,5 +140,13 @@ public interface SqlConstants {
             + Fields.DISCOUNT_PERCENT + "=?, " + Fields.DISCOUNT_MAX_PERCENT + "=? WHERE " + Fields.DISCOUNT_ID + "=?;";
 
     String SQL_DELETE_DISCOUNT = "DELETE FROM " + Tables.DISCOUNT + " WHERE " + Fields.DISCOUNT_ID + "=?;";
+
+
+
+    //TourHasOrder
+
+    String SQL_ADD_TOUR_TO_ORDER = "INSERTINTO " + Tables.ORDER_HAS_TOUR +
+            " (" + Fields.ORDER_HAS_TOUR_ORDER_ID + ", " + Fields.ORDER_HAS_TOUR_TOUR_ID + ")"
+            + "VALUES (?, ?)";
 
 }
