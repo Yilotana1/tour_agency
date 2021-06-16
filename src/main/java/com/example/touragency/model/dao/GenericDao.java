@@ -10,7 +10,7 @@ public interface GenericDao<T> extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
-    void create(T entity) throws DaoException;
+    int create(T entity) throws DaoException;
 
     T findById(int id) throws DaoException;
 

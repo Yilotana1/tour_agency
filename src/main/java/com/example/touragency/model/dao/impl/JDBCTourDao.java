@@ -1,5 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
+import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.TourDao;
 import com.example.touragency.model.dao.mapper.entity.TourMapper;
 import com.example.touragency.model.entity.Tour;
@@ -30,8 +31,8 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public void create(Tour tour) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_TOUR);
+    public int create(Tour tour) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_TOUR, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, tour.getName());
             statement.setString(2, tour.getCountry());
@@ -46,6 +47,7 @@ public class JDBCTourDao implements TourDao {
             statement.setInt(11, tour.getHotel().getId());
             statement.setString(12, tour.getCity());
             statement.executeUpdate();
+            return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("cannot create this tour");

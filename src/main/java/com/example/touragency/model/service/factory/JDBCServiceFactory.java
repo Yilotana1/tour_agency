@@ -1,16 +1,12 @@
 package com.example.touragency.model.service.factory;
 
 import com.example.touragency.ConnectionPoolHolder;
-import com.example.touragency.model.service.OrderService;
-import com.example.touragency.model.service.TourService;
-import com.example.touragency.model.service.UserService;
-import com.example.touragency.model.service.impl.OrderServiceImpl;
-import com.example.touragency.model.service.impl.TourServiceImpl;
-import com.example.touragency.model.service.impl.UserServiceImpl;
+import com.example.touragency.model.service.*;
+import com.example.touragency.model.service.impl.*;
 
 import java.sql.SQLException;
 
-public class JDBCServiceFactory extends ServiceFactory{
+public class JDBCServiceFactory extends ServiceFactory {
 
     @Override
     public OrderService createOrderService() throws SQLException {
@@ -24,10 +20,19 @@ public class JDBCServiceFactory extends ServiceFactory{
     }
 
 
-
     @Override
     public UserService createUserService() {
         return new UserServiceImpl();
+    }
+
+    @Override
+    public HotelService createHotelService() {
+        return new HotelServiceImpl();
+    }
+
+    @Override
+    public DiscountService createDiscountService() {
+        return new DiscountServiceImpl();
     }
 
 }

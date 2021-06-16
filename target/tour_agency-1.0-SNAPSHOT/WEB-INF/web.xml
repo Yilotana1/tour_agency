@@ -4,8 +4,42 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    
-    
+
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.html</location>
+    </error-page>
+
+    <servlet>
+        <servlet-name>hello</servlet-name>
+        <servlet-class>com.example.touragency.HelloServlet</servlet-class>
+        <init-param>
+            <param-name>Local</param-name>
+            <param-value>Whats up guys</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>hello</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+    <context-param>
+        <param-name>my_param</param-name>
+        <param-value>my_value</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>Surprise</param-name>
+        <param-value>Surprise_value</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>Secret</param-name>
+        <param-value>Secret_value</param-value>
+    </context-param>
+
 
     <resource-ref>
         <description>DB Connection</description>

@@ -9,6 +9,8 @@ public interface SqlConstants {
 
     String SQL_FIND_USER_BY_LOGIN = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_LOGIN + "=?;";
 
+    String SQL_FIND_USER_BY_PHONE = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_PHONE + "=?;";
+
     String SQL_FIND_ALL_USERS = "SELECT * FROM " + Tables.USER + ";";
 
     String SQL_INSERT_USER = "INSERT INTO " + Tables.USER +"("
@@ -108,6 +110,8 @@ public interface SqlConstants {
 
     //Hotel
     String SQL_FIND_HOTEL_BY_ID = "SELECT * FROM " + Tables.HOTEL + " WHERE " + Fields.HOTEL_ID + "=?";
+
+    String SQL_FIND_HOTEL_BY_NAME = "SELECT * FROM " + Tables.HOTEL + " WHERE " + Fields.HOTEL_NAME + "=?";
 
     String SQL_FIND_ALL_HOTELS = "SELECT * FROM " + Tables.HOTEL;
 

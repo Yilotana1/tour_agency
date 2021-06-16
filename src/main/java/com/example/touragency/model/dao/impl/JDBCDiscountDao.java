@@ -1,5 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
+import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.DiscountDao;
 import com.example.touragency.model.dao.mapper.entity.DiscountMapper;
 import com.example.touragency.model.entity.Discount;
@@ -26,12 +27,13 @@ public class JDBCDiscountDao implements DiscountDao {
     }
 
     @Override
-    public void create(Discount discount) throws DaoException{
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_DISCOUNT);
+    public int create(Discount discount) throws DaoException{
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_DISCOUNT, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setInt(1, discount.getPercent());
             statement.setInt(2, discount.getMaxPercent());
             statement.executeUpdate();
+            return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("Cannot create discount in db");

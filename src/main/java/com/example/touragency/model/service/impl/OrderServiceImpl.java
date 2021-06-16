@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
              UserDao userDao = daoFactory.createUserDao(connection)) {
 
             connection.setAutoCommit(false);
-//            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
             User client = userDao.findUserByLogin(clientLogin);
             List<Tour> tours = tourDao.findAll().stream().filter(tour -> tourNames.contains(tour.getName()))
                     .collect(Collectors.toList());
@@ -108,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
             Order order = Order.createOrder(Calendar.getInstance(), OrderStatus.OPENED,
                     client, price, userTourNumber);
 
-            int orderId = orderDao.createAndReturnGeneratedId(order);
+            int orderId = orderDao.create(order);
             for (Tour tour : tours) {
                 tourDao.update(tour);
                 tourDao.addTourToOrder(tour.getId(), orderId);

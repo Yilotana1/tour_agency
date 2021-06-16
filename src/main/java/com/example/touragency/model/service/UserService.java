@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserService {
 
+    User login(String login, String password) throws ServiceException;
+
     List<User> getAllUsers() throws ServiceException;
 
     List<User> getNonBlockedUsers() throws ServiceException;

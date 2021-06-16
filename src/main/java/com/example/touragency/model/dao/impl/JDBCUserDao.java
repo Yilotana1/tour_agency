@@ -1,5 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
+import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.UserDao;
 import com.example.touragency.model.dao.mapper.entity.UserMapper;
 import com.example.touragency.model.entity.User;
@@ -26,8 +27,8 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void create(User user) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER);
+    public int create(User user) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
@@ -37,7 +38,8 @@ public class JDBCUserDao implements UserDao {
             statement.setString(6, user.getPhone());
             statement.setInt(7, user.getRole().getId());
             statement.setInt(8, user.getStatus().getId());
-            statement.executeUpdate();;
+            statement.executeUpdate();
+            return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("Cannot create this user");

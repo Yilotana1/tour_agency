@@ -18,7 +18,18 @@ public class UserServiceImpl implements UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
 
+    @Override
+    public User login(String login, String password) throws ServiceException {
+        try (UserDao userDao = daoFactory.createUserDao()){
+            User user = userDao.findUserByLogin(login);
 
+            if (user.getPassword().equals(password)) return user;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public List<User> getAllUsers() throws ServiceException{

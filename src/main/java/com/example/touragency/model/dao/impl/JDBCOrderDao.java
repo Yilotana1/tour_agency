@@ -1,5 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
+import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.dao.mapper.entity.OrderMapper;
 import com.example.touragency.model.entity.Order;
@@ -26,23 +27,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public void create(Order order) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_ORDER)) {
-            statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
-            statement.setInt(2, order.getStatus().getId());
-            statement.setInt(3, order.getClient().getId());
-            statement.setBigDecimal(4, order.getPrice());
-            statement.setInt(5, order.getTourNumber());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("cannot create this order");
-        }
-
-    }
-
-    @Override
-    public int createAndReturnGeneratedId(Order order) throws DaoException {
+    public int create(Order order) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
             statement.setInt(2, order.getStatus().getId());
@@ -50,16 +35,14 @@ public class JDBCOrderDao implements OrderDao {
             statement.setBigDecimal(4, order.getPrice());
             statement.setInt(5, order.getTourNumber());
             statement.executeUpdate();
-
-            ResultSet keys = statement.getGeneratedKeys();
-            keys.next();
-            return keys.getInt(1);
+            return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("cannot create this order");
         }
 
     }
+
 
     @Override
     public Order findById(int id) throws DaoException{

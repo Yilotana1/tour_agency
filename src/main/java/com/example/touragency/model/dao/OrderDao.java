@@ -11,7 +11,4 @@ import java.sql.Statement;
 
 import static com.example.touragency.constants.SqlConstants.SQL_INSERT_ORDER;
 
-public interface OrderDao extends GenericDao<Order>{
-
-    int createAndReturnGeneratedId(Order order) throws DaoException;
-}
+public interface OrderDao extends GenericDao<Order>{ }

@@ -1,5 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
+import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.dao.mapper.entity.HotelMapper;
 import com.example.touragency.model.entity.Hotel;
@@ -26,8 +27,8 @@ public class JDBCHotelDao implements HotelDao {
     }
 
     @Override
-    public void create(Hotel hotel) throws DaoException{
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL);
+    public int create(Hotel hotel) throws DaoException{
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, hotel.getName());
             statement.setString(2, hotel.getCity());
@@ -35,6 +36,7 @@ public class JDBCHotelDao implements HotelDao {
             statement.setInt(4, hotel.getStars());
             statement.setString(5, hotel.getAdminPhone());
             statement.executeUpdate();
+            return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("Cannot create hotel");
@@ -56,6 +58,23 @@ public class JDBCHotelDao implements HotelDao {
         }
         return null;
     }
+
+    @Override
+    public Hotel findByName(String name) {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_HOTEL_BY_NAME);
+        ) {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return new HotelMapper().extractFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public List<Hotel> findAll() {

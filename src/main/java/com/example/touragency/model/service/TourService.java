@@ -32,6 +32,8 @@ public interface TourService {
 
     List<Tour> getToursByCategory(TourCategory category) throws ServiceException;
 
+    List<Tour> getToursByCountry(String country) throws ServiceException;
+
 
     void addTour(Tour tour) throws ServiceException;
 

@@ -148,6 +148,20 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         return null;
     }
 
+    @Override
+    public List<Tour> getToursByCountry(String country) throws ServiceException {
+        try (TourDao tourDao = daoFactory.createTourDao()) {
+            return tourDao.findAll()
+                    .stream()
+                    .filter(tour -> tour.getCountry().equals(country))
+                    .collect(Collectors.toList());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     @Override
     public void addTour(Tour tour) throws ServiceException {
