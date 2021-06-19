@@ -1,0 +1,46 @@
+package com.example.touragency.controller.commands;
+
+import com.example.touragency.model.entity.User;
+import com.example.touragency.model.entity.enums.Role;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+
+public class CommandUtility {
+
+    static void setUserRole(HttpServletRequest request,
+                            Role role) {
+        HttpSession session = request.getSession();
+        session.setAttribute("role", role);
+    }
+
+    static void removeUserRole(HttpServletRequest request){
+        request.getSession().removeAttribute("role");
+        CommandUtility.setUserRole(request, Role.UNKNOWN);
+    }
+
+    static void deleteFromLoginCache(HttpServletRequest request, String login){
+        HashSet<String> loggedUsers = (HashSet<String>)request.getServletContext().getAttribute("loggedUsers");
+        loggedUsers.remove(login);
+    }
+
+    static boolean userIsLogged(HttpServletRequest request, String login){
+        HashSet<String> loggedUsers = (HashSet<String>) request.getServletContext()
+                .getAttribute("loggedUsers");
+
+        if(loggedUsers.stream().anyMatch(login::equals)){
+            return true;
+        }
+        return false;
+    }
+
+    static void addUserToLoginCache(HttpServletRequest request, String login){
+        HashSet<String> loggedUsers = (HashSet<String>) request.getServletContext()
+                .getAttribute("loggedUsers");
+        loggedUsers.add(login);
+        request.getServletContext()
+                .setAttribute("loggedUsers", loggedUsers);
+
+    }}

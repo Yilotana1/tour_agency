@@ -1,6 +1,5 @@
 package com.example.touragency.model.dao;
 
-import com.example.touragency.model.exceptions.DaoException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,15 +9,15 @@ public interface GenericDao<T> extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
-    int create(T entity) throws DaoException;
+    int create(T entity);
 
-    T findById(int id) throws DaoException;
+    T findById(int id);
 
-    List<T> findAll() throws DaoException;
+    List<T> findAll();
 
-    void update(T entity) throws DaoException;
+    void update(T entity);
 
-    void delete(int id) throws DaoException;
+    void delete(int id);
 
     void close() throws SQLException;
 

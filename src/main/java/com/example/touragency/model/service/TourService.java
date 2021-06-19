@@ -3,7 +3,6 @@ package com.example.touragency.model.service;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.entity.enums.TourStatus;
-import com.example.touragency.model.exceptions.ServiceException;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -12,53 +11,53 @@ import java.util.List;
 public interface TourService {
 
 
-    List<Tour> getToursSortedByStatus() throws ServiceException;
+    List<Tour> getToursSortedByStatus();
 
-    Tour getTourById(int id) throws ServiceException;
+    Tour getTourById(int id);
 
-    Tour getTourByName(String name) throws ServiceException;
+    Tour getTourByName(String name);
 
-    List<Tour> getToursWithPriceLessThan(BigDecimal price) throws ServiceException;
+    List<Tour> getToursWithPriceLessThan(BigDecimal price);
 
-    List<Tour> getToursWithPriceMoreThan(BigDecimal price) throws ServiceException;
+    List<Tour> getToursWithPriceMoreThan(BigDecimal price);
 
-    List<Tour> getToursWithPeopleMoreThan(int maxPlaces) throws ServiceException;
+    List<Tour> getToursWithPeopleMoreThan(int maxPlaces);
 
-    List<Tour> getToursWithPeopleLessThan(int maxPlaces) throws ServiceException;
+    List<Tour> getToursWithPeopleLessThan(int maxPlaces);
 
-    List<Tour> getToursWithHotelStarsMoreThan(int stars) throws ServiceException;
+    List<Tour> getToursWithHotelStarsMoreThan(int stars);
 
-    List<Tour> getToursWithHotelStarsLessThan(int stars) throws ServiceException;
+    List<Tour> getToursWithHotelStarsLessThan(int stars);
 
-    List<Tour> getToursByCategory(TourCategory category) throws ServiceException;
+    List<Tour> getToursByCategory(TourCategory category);
 
-    List<Tour> getToursByCountry(String country) throws ServiceException;
+    List<Tour> getToursByCountry(String country);
 
 
-    void addTour(Tour tour) throws ServiceException;
+    void addTour(Tour tour);
 
-    void removeTour(int id) throws ServiceException;
+    void removeTour(int id);
 
-    void changeTourCountry(int id, String country) throws ServiceException;
+    void changeTourCountry(int id, String country);
 
-    void changeTourName(int id, String name) throws ServiceException;
+    void changeTourName(int id, String name);
 
-    void changeTourPrice(int id, BigDecimal price) throws ServiceException;
+    void changeTourPrice(int id, BigDecimal price);
 
-    void changeTourMaxPlaces(int id, int max_places) throws ServiceException;
+    void changeTourMaxPlaces(int id, int max_places);
 
-    void changeTourMinPlaces(int id, int min_places) throws ServiceException;
+    void changeTourMinPlaces(int id, int min_places);
 
-    void changeTourStart(int id, Calendar startDate) throws ServiceException;
+    void changeTourStart(int id, Calendar startDate);
 
-    void changeTourEnd(int id, Calendar endDate) throws ServiceException;
+    void changeTourEnd(int id, Calendar endDate);
 
-    void changeTourCategory(int id, TourCategory category) throws ServiceException;
+    void changeTourCategory(int id, TourCategory category);
 
-    void changeTourHotel(int id, String hotelName) throws ServiceException;
+    void changeTourHotel(int id, String hotelName);
 
-    void changeTourCity(int id, String name) throws ServiceException;
+    void changeTourCity(int id, String name);
 
-    void changeTourStatus(int id, TourStatus status) throws ServiceException;
+    void changeTourStatus(int id, TourStatus status);
 
 }

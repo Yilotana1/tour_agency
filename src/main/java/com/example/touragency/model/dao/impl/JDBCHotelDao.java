@@ -4,7 +4,6 @@ import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.dao.mapper.entity.HotelMapper;
 import com.example.touragency.model.entity.Hotel;
-import com.example.touragency.model.exceptions.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class JDBCHotelDao implements HotelDao {
     }
 
     @Override
-    public int create(Hotel hotel) throws DaoException{
+    public int create(Hotel hotel) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, hotel.getName());
@@ -39,8 +38,8 @@ public class JDBCHotelDao implements HotelDao {
             return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("Cannot create hotel");
         }
+        return -1;
     }
 
     @Override

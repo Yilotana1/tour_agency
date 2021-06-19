@@ -4,8 +4,6 @@ import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.dao.mapper.entity.OrderMapper;
 import com.example.touragency.model.entity.Order;
-import com.example.touragency.model.entity.Tour;
-import com.example.touragency.model.exceptions.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public int create(Order order) throws DaoException {
+    public int create(Order order) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
             statement.setInt(2, order.getStatus().getId());
@@ -38,14 +36,13 @@ public class JDBCOrderDao implements OrderDao {
             return Tools.getGeneratedId(statement);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("cannot create this order");
         }
-
+        return -1;
     }
 
 
     @Override
-    public Order findById(int id) throws DaoException{
+    public Order findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_ID)
         ) {
             statement.setInt(1, id);
@@ -57,13 +54,12 @@ public class JDBCOrderDao implements OrderDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("cannot find order by this id");
         }
         return null;
     }
 
     @Override
-    public List<Order> findAll() throws DaoException {
+    public List<Order> findAll() {
         List<Order> list = new ArrayList<>();
         try (Statement statement = connection.createStatement()
         ) {
@@ -74,13 +70,12 @@ public class JDBCOrderDao implements OrderDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("cannot find all orders");
         }
         return list;
     }
 
     @Override
-    public void update(Order order) throws DaoException {
+    public void update(Order order) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER)
         ) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
@@ -91,19 +86,17 @@ public class JDBCOrderDao implements OrderDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("cannot update this order");
         }
     }
 
     @Override
-    public void delete(int id) throws DaoException {
+    public void delete(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ORDER)
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DaoException("cannot delete order by this id");
         }
     }
 

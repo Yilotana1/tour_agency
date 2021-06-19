@@ -1,6 +1,5 @@
 package com.example.touragency.model.service.factory;
 
-import com.example.touragency.ConnectionPoolHolder;
 import com.example.touragency.model.service.*;
 import com.example.touragency.model.service.impl.*;
 

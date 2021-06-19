@@ -9,6 +9,8 @@ public interface SqlConstants {
 
     String SQL_FIND_USER_BY_LOGIN = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_LOGIN + "=?;";
 
+    String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_EMAIL + "=?;";
+
     String SQL_FIND_USER_BY_PHONE = "SELECT * FROM " + Tables.USER + " WHERE " + Fields.USER_PHONE + "=?;";
 
     String SQL_FIND_ALL_USERS = "SELECT * FROM " + Tables.USER + ";";

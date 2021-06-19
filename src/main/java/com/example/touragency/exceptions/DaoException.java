@@ -1,4 +1,4 @@
-package com.example.touragency.model.exceptions;
+package com.example.touragency.exceptions;
 
 import java.sql.SQLException;
 

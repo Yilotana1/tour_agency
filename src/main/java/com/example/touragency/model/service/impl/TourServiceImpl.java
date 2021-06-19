@@ -1,6 +1,6 @@
 package com.example.touragency.model.service.impl;
 
-import com.example.touragency.ConnectionPoolHolder;
+import com.example.touragency.model.ConnectionPoolHolder;
 import com.example.touragency.model.Tools;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.HotelDao;
@@ -9,8 +9,6 @@ import com.example.touragency.model.entity.Hotel;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.entity.enums.TourStatus;
-import com.example.touragency.model.exceptions.DaoException;
-import com.example.touragency.model.exceptions.ServiceException;
 import com.example.touragency.model.service.TourService;
 
 import java.math.BigDecimal;
@@ -27,29 +25,29 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public List<Tour> getToursSortedByStatus() throws ServiceException {
+    public List<Tour> getToursSortedByStatus() {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll()
                     .stream().sorted(this)
                     .collect(Collectors.toList());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException("Cannot find tour with this id");
         }
+        return null;
     }
 
     @Override
-    public Tour getTourById(int id) throws ServiceException {
+    public Tour getTourById(int id) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException("Cannot find tour with this id");
         }
+        return null;
     }
 
     @Override
-    public Tour getTourByName(String name) throws ServiceException {
+    public Tour getTourByName(String name) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findByName(name);
 
@@ -60,7 +58,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursWithPriceLessThan(BigDecimal price) throws ServiceException {
+    public List<Tour> getToursWithPriceLessThan(BigDecimal price) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll().stream()
                     .filter(tour -> Tools.decimalCompare(price, tour.getPrice()))
@@ -73,7 +71,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursWithPriceMoreThan(BigDecimal price) throws ServiceException {
+    public List<Tour> getToursWithPriceMoreThan(BigDecimal price) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll().stream()
                     .filter(tour -> Tools.decimalCompare(tour.getPrice(), price))
@@ -86,7 +84,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursWithPeopleMoreThan(int maxPlaces) throws ServiceException {
+    public List<Tour> getToursWithPeopleMoreThan(int maxPlaces) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll().stream()
                     .filter(tour -> tour.getMaxPlaces() >= maxPlaces)
@@ -99,7 +97,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursWithPeopleLessThan(int maxPlaces) throws ServiceException {
+    public List<Tour> getToursWithPeopleLessThan(int maxPlaces) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll().stream()
                     .filter(tour -> tour.getMaxPlaces() <= maxPlaces)
@@ -112,7 +110,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursWithHotelStarsMoreThan(int stars) throws ServiceException {
+    public List<Tour> getToursWithHotelStarsMoreThan(int stars) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll().stream()
                     .filter(tour -> tour.getHotel().getStars() >= stars)
@@ -125,7 +123,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursWithHotelStarsLessThan(int stars) throws ServiceException {
+    public List<Tour> getToursWithHotelStarsLessThan(int stars) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll().stream()
                     .filter(tour -> tour.getHotel().getStars() <= stars)
@@ -138,7 +136,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursByCategory(TourCategory category) throws ServiceException {
+    public List<Tour> getToursByCategory(TourCategory category) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findByCategory(category);
         } catch (SQLException throwables) {
@@ -149,7 +147,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public List<Tour> getToursByCountry(String country) throws ServiceException {
+    public List<Tour> getToursByCountry(String country) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findAll()
                     .stream()
@@ -164,11 +162,9 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
 
     @Override
-    public void addTour(Tour tour) throws ServiceException {
+    public void addTour(Tour tour) {
         try (TourDao tourDao = daoFactory.createTourDao();) {
             tourDao.create(tour);
-
-        } catch (DaoException e) {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -177,19 +173,18 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void removeTour(int id) throws ServiceException {
+    public void removeTour(int id)  {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             tourDao.delete(id);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException("Can't delete this tour");
         }
     }
 
     @Override
-    public void changeTourCountry(int id, String country) throws ServiceException {
+    public void changeTourCountry(int id, String country) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -202,7 +197,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourName(int id, String name) throws ServiceException {
+    public void changeTourName(int id, String name) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -215,7 +210,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourPrice(int id, BigDecimal price) throws ServiceException {
+    public void changeTourPrice(int id, BigDecimal price) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -228,14 +223,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourMaxPlaces(int id, int maxPlaces) throws ServiceException {
+    public void changeTourMaxPlaces(int id, int maxPlaces) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
             int minPlaces = tour.getMinPlaces();
 
             if (maxPlaces < minPlaces) {
-                throw new ServiceException("Cannot set maxPlaces less than maxPlaces");
             }
 
             tour.setMaxPlaces(maxPlaces);
@@ -247,14 +241,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourMinPlaces(int id, int minPlaces) throws ServiceException {
+    public void changeTourMinPlaces(int id, int minPlaces) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
             int maxPlaces = tour.getMaxPlaces();
 
             if (minPlaces > maxPlaces) {
-                throw new ServiceException("Cannot set minPlaces more than maxPlaces");
             }
 
             tour.setMinPlaces(minPlaces);
@@ -266,14 +259,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourStart(int id, Calendar startDate) throws ServiceException {
+    public void changeTourStart(int id, Calendar startDate){
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
             Calendar endDate = tour.getEndDate();
 
             if (startDate.after(endDate)) {
-                throw new ServiceException("startDate cannot be after endDate");
             }
 
             tour.setStartDate(startDate);
@@ -285,7 +277,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourEnd(int id, Calendar endDate) throws ServiceException {
+    public void changeTourEnd(int id, Calendar endDate) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -293,7 +285,6 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             Calendar startDate = tour.getEndDate();
 
             if (endDate.before(startDate)) {
-                throw new ServiceException("endDate cannot be before startDate");
             }
 
             tour.setEndDate(endDate);
@@ -305,7 +296,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourCategory(int id, TourCategory category) throws ServiceException {
+    public void changeTourCategory(int id, TourCategory category) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -318,7 +309,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourHotel(int id, String hotelName) throws ServiceException {
+    public void changeTourHotel(int id, String hotelName){
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);
              HotelDao hotelDao = daoFactory.createHotelDao(tourDao.getConnection())) {
@@ -338,15 +329,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
                 connection.rollback();
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new ServiceException("Connection roolback failed");
             }
             throwables.printStackTrace();
-            throw new ServiceException("Cannot change hotel");
         }
     }
 
     @Override
-    public void changeTourCity(int id, String city) throws ServiceException {
+    public void changeTourCity(int id, String city) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);
@@ -359,7 +348,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeTourStatus(int id, TourStatus status) throws ServiceException {
+    public void changeTourStatus(int id, TourStatus status) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Tour tour = tourDao.findById(id);

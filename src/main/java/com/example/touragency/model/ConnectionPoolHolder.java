@@ -1,4 +1,4 @@
-package com.example.touragency;
+package com.example.touragency.model;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

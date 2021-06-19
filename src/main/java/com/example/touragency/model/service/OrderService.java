@@ -1,38 +1,35 @@
 package com.example.touragency.model.service;
 
 import com.example.touragency.model.entity.Order;
-import com.example.touragency.model.entity.Tour;
-import com.example.touragency.model.entity.User;
-import com.example.touragency.model.exceptions.ServiceException;
 
 import java.util.List;
 
 public interface OrderService {
 
 
-    List<Order> getAllOrders() throws ServiceException;
+    List<Order> getAllOrders();
 
-    List<Order> getOpenedOrders() throws ServiceException;
+    List<Order> getOpenedOrders();
 
-    List<Order> getPaidOrders() throws ServiceException;
+    List<Order> getPaidOrders();
 
-    List<Order> getCanceledOrders() throws ServiceException;
-
-
-
-    Order getOrderById(int id) throws ServiceException;
+    List<Order> getCanceledOrders();
 
 
-    void applyForOrder(List<String> tourNames, String clientLogin) throws ServiceException;
+
+    Order getOrderById(int id);
 
 
-    void confirmOrderPaid(int id) throws ServiceException;
+    void applyForOrder(List<String> tourNames, String clientLogin);
 
 
-    void cancelOrder(int id) throws ServiceException;
+    void confirmOrderPaid(int id);
 
 
-    void removeOrder(int id) throws ServiceException;
+    void cancelOrder(int id);
+
+
+    void removeOrder(int id);
 
 
 }

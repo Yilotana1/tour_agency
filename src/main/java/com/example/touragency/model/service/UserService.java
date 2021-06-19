@@ -1,15 +1,19 @@
 package com.example.touragency.model.service;
 
 import com.example.touragency.model.entity.User;
-import com.example.touragency.model.exceptions.ServiceException;
+import com.example.touragency.exceptions.*;
 
 import java.util.List;
 
 public interface UserService {
 
-    User login(String login, String password) throws ServiceException;
+    User signIn(String login, String password) throws InvalidCredentialsException;
 
-    List<User> getAllUsers() throws ServiceException;
+//    boolean userIsPresent(String login, String email);
+
+    void signUp(User user) throws UserAlreadyExistsException;
+
+    List<User> getAllUsers();
 
     List<User> getNonBlockedUsers() throws ServiceException;
 

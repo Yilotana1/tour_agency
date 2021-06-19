@@ -4,16 +4,14 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <welcome-file-list>
+        <welcome-file>main.jsp</welcome-file>
+    </welcome-file-list>
 
-
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.html</location>
-    </error-page>
 
     <servlet>
-        <servlet-name>hello</servlet-name>
-        <servlet-class>com.example.touragency.HelloServlet</servlet-class>
+        <servlet-name>servlet</servlet-name>
+        <servlet-class>com.example.touragency.controller.HelloServlet</servlet-class>
         <init-param>
             <param-name>Local</param-name>
             <param-value>Whats up guys</param-value>
@@ -21,24 +19,61 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>hello</servlet-name>
-        <url-pattern>/hello</url-pattern>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-    <context-param>
-        <param-name>my_param</param-name>
-        <param-value>my_value</param-value>
-    </context-param>
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 
-    <context-param>
-        <param-name>Surprise</param-name>
-        <param-value>Surprise_value</param-value>
-    </context-param>
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
 
-    <context-param>
-        <param-name>Secret</param-name>
-        <param-value>Secret_value</param-value>
-    </context-param>
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.example.touragency.controller.filters.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>AccessFilter</filter-name>
+        <filter-class>com.example.touragency.controller.filters.AccessFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>com.example.touragency.controller.filters.NoCacheFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <servlet-name>servlet</servlet-name>
+    </filter-mapping>
+
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <servlet-name>servlet</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AccessFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <servlet-name>servlet</servlet-name>
+    </filter-mapping>
 
 
     <resource-ref>

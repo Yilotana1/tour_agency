@@ -1,15 +1,13 @@
 package com.example.touragency.model.service.impl;
 
-import com.example.touragency.ConnectionPoolHolder;
+import com.example.touragency.model.ConnectionPoolHolder;
 import com.example.touragency.model.dao.*;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.entity.*;
 import com.example.touragency.model.entity.enums.OrderStatus;
-import com.example.touragency.model.exceptions.DaoException;
-import com.example.touragency.model.exceptions.ServiceException;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.ServiceTools;
-
+import com.example.touragency.exceptions.*;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<Order> getAllOrders() throws ServiceException {
+    public List<Order> getAllOrders(){
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll();
         } catch (SQLException throwables) {
@@ -33,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOpenedOrders() throws ServiceException {
+    public List<Order> getOpenedOrders(){
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll()
                     .stream()
@@ -46,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getPaidOrders() throws ServiceException {
+    public List<Order> getPaidOrders(){
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll()
                     .stream()
@@ -59,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getCanceledOrders() throws ServiceException {
+    public List<Order> getCanceledOrders() {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll()
                     .stream()
@@ -73,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order getOrderById(int id) throws ServiceException {
+    public Order getOrderById(int id) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findById(id);
         } catch (SQLException throwables) {
@@ -85,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void applyForOrder(List<String> tourNames, String clientLogin) throws ServiceException {
+    public void applyForOrder(List<String> tourNames, String clientLogin)  {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);
              OrderDao orderDao = daoFactory.createOrderDao(connection);
@@ -129,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void confirmOrderPaid(int id) throws ServiceException {
+    public void confirmOrderPaid(int id) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             Order order = orderDao.findById(id);
             order.setStatus(OrderStatus.PAID);
@@ -141,7 +139,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void cancelOrder(int id) throws ServiceException {
+    public void cancelOrder(int id) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (OrderDao orderDao = daoFactory.createOrderDao(connection);
              TourDao tourDao = daoFactory.createTourDao(connection)) {
@@ -167,7 +165,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void removeOrder(int id) throws ServiceException {
+    public void removeOrder(int id) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (OrderDao orderDao = daoFactory.createOrderDao(connection);
              TourDao tourDao = daoFactory.createTourDao(connection)) {

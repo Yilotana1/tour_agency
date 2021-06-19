@@ -3,8 +3,8 @@ package com.example.touragency.model.service.impl;
 import com.example.touragency.model.dao.DiscountDao;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.entity.Discount;
-import com.example.touragency.model.exceptions.ServiceException;
 import com.example.touragency.model.service.DiscountService;
+import com.example.touragency.exceptions.*;
 
 import java.sql.SQLException;
 
@@ -13,7 +13,7 @@ public class DiscountServiceImpl implements DiscountService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public int getPercent() throws ServiceException {
+    public int getPercent()  {
         try(DiscountDao discountDao = daoFactory.createDiscountDao()){
             return discountDao.findById(1).getPercent();
         } catch (SQLException throwables) {
@@ -23,7 +23,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public int getMaxPercent() throws ServiceException {
+    public int getMaxPercent() {
         try(DiscountDao discountDao = daoFactory.createDiscountDao()){
             return discountDao.findById(1).getMaxPercent();
         } catch (SQLException throwables) {

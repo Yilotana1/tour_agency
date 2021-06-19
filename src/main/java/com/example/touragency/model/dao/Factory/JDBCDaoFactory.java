@@ -1,6 +1,6 @@
 package com.example.touragency.model.dao.Factory;
 
-import com.example.touragency.ConnectionPoolHolder;
+import com.example.touragency.model.ConnectionPoolHolder;
 import com.example.touragency.model.dao.*;
 import com.example.touragency.model.dao.impl.*;
 

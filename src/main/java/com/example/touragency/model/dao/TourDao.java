@@ -1,9 +1,7 @@
 package com.example.touragency.model.dao;
 
-import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.TourCategory;
-import com.example.touragency.model.exceptions.DaoException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,23 +9,23 @@ import java.util.List;
 public interface TourDao extends GenericDao<Tour>{
 
 
-    void addTourToOrder(int tourId, int orderId) throws DaoException;
+    void addTourToOrder(int tourId, int orderId);
 
-    Tour findById(int id) throws DaoException;
+    Tour findById(int id);
 
-    Tour findByName(String name) throws DaoException;
+    Tour findByName(String name);
 
 
 
-    List<Tour> findByOrderId(int id) throws DaoException;
+    List<Tour> findByOrderId(int id);
 
-    List<Tour> findByCategory(TourCategory category) throws DaoException;
+    List<Tour> findByCategory(TourCategory category);
 
-    List<Tour> findByPrice(BigDecimal price) throws DaoException;
+    List<Tour> findByPrice(BigDecimal price);
 
-    List<Tour> findByPeople(int peopleNumber) throws DaoException;
+    List<Tour> findByPeople(int peopleNumber);
 
-    List<Tour> findByHotelId(int hotelId) throws DaoException;
+    List<Tour> findByHotelId(int hotelId);
 
 
 
