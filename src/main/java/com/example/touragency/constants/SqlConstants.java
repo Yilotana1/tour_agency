@@ -15,6 +15,19 @@ public interface SqlConstants {
 
     String SQL_FIND_ALL_USERS = "SELECT * FROM " + Tables.USER + ";";
 
+    String SQL_FIND_USERS_BY_LIMIT = "SELECT * FROM " + Tables.USER + " LIMIT ?, ?";
+
+    String SQL_FIND_USERS_BY_LIMIT_CLIENTS_FIRST = "SELECT * FROM " + Tables.USER + " ORDER BY " + Fields.USER_ROLE_ID + " LIMIT ?, ?";
+
+    String SQL_FIND_USERS_BY_LIMIT_MANAGERS_FIRST = "SELECT * FROM " + Tables.USER + " ORDER BY " + Fields.USER_ROLE_ID + " DESC LIMIT ?, ?";
+
+    String SQL_FIND_USERS_BY_LIMIT_NON_BLOCKED_FIRST = "SELECT * FROM " + Tables.USER + " ORDER BY " + Fields.USER_STATUS_ID + " LIMIT ?, ?";
+
+    String SQL_FIND_USERS_BY_LIMIT_BLOCKED_FIRST = "SELECT * FROM " + Tables.USER + " ORDER BY " + Fields.USER_STATUS_ID + " DESC LIMIT ?, ?";
+
+
+    String SQL_FIND_USERS_NUMBER_AS_COUNT = "SELECT COUNT(" + Fields.USER_ID + ") AS count FROM " + Tables.USER;
+
     String SQL_INSERT_USER = "INSERT INTO " + Tables.USER +"("
             + Fields.USER_LOGIN + ", " + Fields.USER_PASSWORD + ", " + Fields.USER_FIRSTNAME + ", "
             + Fields.USER_LASTNAME + ", " + Fields.USER_EMAIL + ", " + Fields.USER_PHONE + ", "

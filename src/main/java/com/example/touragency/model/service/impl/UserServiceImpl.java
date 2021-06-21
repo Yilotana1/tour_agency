@@ -10,6 +10,8 @@ import com.example.touragency.model.service.UserService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,9 +46,12 @@ public class UserServiceImpl implements UserService {
             User user2 = userDao.findUserByEmail(user.getEmail());
             User user3 = userDao.findUserByPhone(user.getPhone());
 
-            if (user1 != null) throw new UserAlreadyExistsException("User with this login already exists in the system", user1);
-            if (user2 != null) throw new UserAlreadyExistsException("User with this email already exists in the system", user2);
-            if (user3 != null) throw new UserAlreadyExistsException("User with this phone already exists in the system", user3);
+            if (user1 != null)
+                throw new UserAlreadyExistsException("User with this login already exists in the system", user1);
+            if (user2 != null)
+                throw new UserAlreadyExistsException("User with this email already exists in the system", user2);
+            if (user3 != null)
+                throw new UserAlreadyExistsException("User with this phone already exists in the system", user3);
 
             userDao.create(user);
 
@@ -54,6 +59,16 @@ public class UserServiceImpl implements UserService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    public int getUserCount() {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.getCount();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
     }
 
 
@@ -65,6 +80,87 @@ public class UserServiceImpl implements UserService {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<User> getUsersPage(int pageId, int pageSize) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getUsersPageClientsFirst(int pageId, int pageSize) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+
+            return userDao.findByLimitClientsFirst(pageId * pageSize - pageSize + 1, pageSize);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getUsersPageManagersFirst(int pageId, int pageSize) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+
+            return userDao.findByLimitManagersFirst(pageId * pageSize - pageSize + 1, pageSize);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getUsersPageNonBlockedFirst(int pageId, int pageSize) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+
+            return userDao.findByLimitNonBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getUsersPageBlockedFirst(int pageId, int pageSize) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+
+            return userDao.findByLimitBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void updateUsers(List<User> users) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userDao.getConnection().setAutoCommit(false);
+            userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
+            for (User user : users) {
+                userDao.update(user);
+            }
+
+            userDao.getConnection().commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userDao.update(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override

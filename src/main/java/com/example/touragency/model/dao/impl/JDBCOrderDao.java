@@ -25,6 +25,11 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
     public int create(Order order) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
@@ -72,6 +77,11 @@ public class JDBCOrderDao implements OrderDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public List<Order> findByLimit(int start, int count) {
+        return null;
     }
 
     @Override

@@ -8,4 +8,17 @@ public enum TourCategory {
     public int getId() {
         return id;
     }
+
+    public static TourCategory getById(int id){
+
+        switch (id){
+            case 1: return EXCURSION;
+            case 2: return SHOPPING;
+            case 3: return REST;
+        }
+
+        return EXCURSION;
+    }
+
+
 }

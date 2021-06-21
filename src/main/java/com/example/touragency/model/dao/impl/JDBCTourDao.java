@@ -23,6 +23,11 @@ public class JDBCTourDao implements TourDao {
         return connection;
     }
 
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
     public JDBCTourDao(Connection connection) {
         this.connection = connection;
     }
@@ -196,6 +201,11 @@ public class JDBCTourDao implements TourDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public List<Tour> findByLimit(int start, int count) {
+        return null;
     }
 
     @Override

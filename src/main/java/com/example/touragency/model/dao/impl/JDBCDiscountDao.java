@@ -26,6 +26,11 @@ public class JDBCDiscountDao implements DiscountDao {
     }
 
     @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
     public int create(Discount discount){
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_DISCOUNT, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -68,6 +73,11 @@ public class JDBCDiscountDao implements DiscountDao {
         } catch (SQLException e) {
         }
         return list;
+    }
+
+    @Override
+    public List<Discount> findByLimit(int start, int count) {
+        return null;
     }
 
     @Override

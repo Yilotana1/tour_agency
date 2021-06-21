@@ -9,11 +9,15 @@ public interface GenericDao<T> extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
+    int getCount();
+
     int create(T entity);
 
     T findById(int id);
 
     List<T> findAll();
+
+    List<T> findByLimit(int start, int count);
 
     void update(T entity);
 

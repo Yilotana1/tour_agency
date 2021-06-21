@@ -39,7 +39,6 @@ public class LoginCommand implements Command {
             e.printStackTrace();
         }
 
-
         if(userIsLogged(request, login)){
             request.setAttribute("error", "It seems like you are already in the system");
             request.getRequestDispatcher("login.jsp").forward(request, response);

@@ -8,4 +8,14 @@ public enum TourStatus {
     public int getId() {
         return id;
     }
+
+    public static TourStatus getById(int id){
+
+        switch (id){
+            case 1: return BURNING;
+            case 2: return NON_BURNING;
+        }
+
+        return BURNING;
+    }
 }

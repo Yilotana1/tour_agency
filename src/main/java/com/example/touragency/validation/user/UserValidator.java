@@ -49,7 +49,7 @@ public class UserValidator {
     public void checkLoginIsValid(String login) throws InvalidLoginException {
         if (login.matches("[A-Za-z\\d_]+")) return;
 
-        throw new InvalidLoginException("Your login should consist only latin characters or digits", login);
+        throw new InvalidLoginException("Your login should not be avoid and consist only latin characters or digits", login);
     }
 
     public void checkUserIsValid(User user) throws InvalidDataException {

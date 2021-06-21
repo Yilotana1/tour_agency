@@ -26,6 +26,11 @@ public class JDBCHotelDao implements HotelDao {
     }
 
     @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
     public int create(Hotel hotel) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -89,6 +94,11 @@ public class JDBCHotelDao implements HotelDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public List<Hotel> findByLimit(int start, int count) {
+        return null;
     }
 
     @Override

@@ -12,8 +12,7 @@ public class LogOutCommand implements Command{
         CommandUtility.removeUserRole(request);
         User user = (User)request.getSession().getAttribute("user");
         CommandUtility.deleteFromLoginCache(request, user.getLogin());
-        request.removeAttribute("user");
-
+        request.getSession().invalidate();
         response.sendRedirect(request.getContextPath() + "/main.jsp");
     }
 }

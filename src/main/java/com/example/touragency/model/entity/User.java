@@ -47,21 +47,29 @@ public class User extends Entity {
         return user;
     }
 
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id='"+ getId() + '\'' +
+//                ", firstname='" + firstname + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", phone='" + phone + '\'' +
+//                ", email='" + email + '\'' +
+//                ", status=" + status +
+//                ", login='" + login + '\'' +
+//                ", password='" + password + '\'' +
+//                ", role=" + role +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "User{" +
-                "id='"+ getId() + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", status=" + status +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
+                "login='" + login + '\'' +
                 ", role=" + role +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -5,6 +5,7 @@ import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.LogOutCommand;
 import com.example.touragency.controller.commands.LoginCommand;
 import com.example.touragency.controller.commands.RegisterCommand;
+import com.example.touragency.controller.commands.admin.ManageUsersCommand;
 
 import java.io.*;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class HelloServlet extends HttpServlet {
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogOutCommand());
         commands.put("register", new RegisterCommand());
+        commands.put("admin/manage_users", new ManageUsersCommand());
 
     }
 

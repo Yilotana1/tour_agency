@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>This page is not available</h1>
+<h1>404</h1>
+<h2>You do not have permission to visit this page</h2>
 </body>
 </html>

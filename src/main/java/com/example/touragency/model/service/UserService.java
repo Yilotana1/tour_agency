@@ -2,6 +2,8 @@ package com.example.touragency.model.service;
 
 import com.example.touragency.model.entity.User;
 import com.example.touragency.exceptions.*;
+import com.example.touragency.model.entity.enums.Role;
+import com.example.touragency.model.entity.enums.UserStatus;
 
 import java.util.List;
 
@@ -9,11 +11,25 @@ public interface UserService {
 
     User signIn(String login, String password) throws InvalidCredentialsException;
 
-//    boolean userIsPresent(String login, String email);
-
     void signUp(User user) throws UserAlreadyExistsException;
 
+    List<User> getUsersPage(int pageId, int pageSize);
+
+    List<User> getUsersPageClientsFirst(int pageId, int pageSize);
+
+    List<User> getUsersPageManagersFirst(int pageId, int pageSize);
+
+    List<User> getUsersPageBlockedFirst(int pageId, int pageSize);
+
+    List<User> getUsersPageNonBlockedFirst(int pageId, int pageSize);
+
+    int getUserCount();
+
     List<User> getAllUsers();
+
+    void updateUsers(List<User> users);
+
+    void updateUser(User user);
 
     List<User> getNonBlockedUsers() throws ServiceException;
 

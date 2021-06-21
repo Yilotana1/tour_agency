@@ -29,5 +29,11 @@
     <input type="submit" value="main">
 </form>
 
+<form action="${pageContext.request.contextPath}/admin/manage_users">
+    <input type="submit" value="manage users">
+</form>
+
+
+
 </body>
 </html>

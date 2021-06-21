@@ -26,6 +26,20 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
+    public int getCount() {
+        try (Statement statement = connection.createStatement();
+        ) {
+            ResultSet rs = statement.executeQuery(SQL_FIND_USERS_NUMBER_AS_COUNT);
+            rs.next();
+            return rs.getInt("count");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
     public int create(User user) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -74,6 +88,26 @@ public class JDBCUserDao implements UserDao {
             }
 
         } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    @Override
+    public List<User> findByLimit(int start, int count) {
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new UserMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
     }
@@ -162,6 +196,86 @@ public class JDBCUserDao implements UserDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<User> findByLimitClientsFirst(int start, int count) {
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_CLIENTS_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new UserMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<User> findByLimitManagersFirst(int start, int count) {
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_MANAGERS_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new UserMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<User> findByLimitNonBlockedFirst(int start, int count) {
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_NON_BLOCKED_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new UserMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<User> findByLimitBlockedFirst(int start, int count) {
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_BLOCKED_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new UserMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
 

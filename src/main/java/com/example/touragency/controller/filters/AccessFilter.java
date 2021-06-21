@@ -1,5 +1,7 @@
 package com.example.touragency.controller.filters;
 
+import com.example.touragency.controller.commands.CommandUtility;
+import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
 
 import javax.servlet.*;
@@ -47,7 +49,9 @@ public class AccessFilter implements Filter {
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + "/logout",
                         filterConfig.getServletContext().getContextPath() + "/main.jsp",
                         filterConfig.getServletContext().getContextPath() + "/admin/admin_page.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/error.jsp"));
+                        filterConfig.getServletContext().getContextPath() + "/error.jsp",
+                        filterConfig.getServletContext().getContextPath() + "/admin/manage_users.jsp",
+                        filterConfig.getServletContext().getContextPath() + "/admin/manage_users"));
     }
 
 
@@ -63,7 +67,12 @@ public class AccessFilter implements Filter {
             userRole = UNKNOWN;
         }
 
-        httpRequest.getSession().setAttribute("PATH", filterConfig.getServletContext().getContextPath());
+        User user = (User)httpRequest.getSession().getAttribute("user");
+        if ( user != null && !(CommandUtility.userIsLogged(httpRequest, user.getLogin())) ){
+            httpRequest.getSession().invalidate();
+            httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/main.jsp");
+            return;
+        }
 
         if (  !(accessMap.get(userRole).contains(httpRequest.getRequestURI()))  ) {
             httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/error.jsp");
