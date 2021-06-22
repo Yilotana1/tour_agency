@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getUserCount() {
+    public int getCount() {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.getCount();
         } catch (SQLException throwables) {
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findAll();
         } catch (SQLException throwables) {
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersPage(int pageId, int pageSize) {
+    public List<User> getPage(int pageId, int pageSize) {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
@@ -93,7 +94,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersPageClientsFirst(int pageId, int pageSize) {
+    public List<User> getPageClientsFirst(int pageId, int pageSize) {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitClientsFirst(pageId * pageSize - pageSize + 1, pageSize);
@@ -105,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersPageManagersFirst(int pageId, int pageSize) {
+    public List<User> getPageManagersFirst(int pageId, int pageSize) {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitManagersFirst(pageId * pageSize - pageSize + 1, pageSize);
@@ -117,7 +118,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersPageNonBlockedFirst(int pageId, int pageSize) {
+    public List<User> getPageNonBlockedFirst(int pageId, int pageSize) {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitNonBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
@@ -128,7 +129,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersPageBlockedFirst(int pageId, int pageSize) {
+    public List<User> getPageBlockedFirst(int pageId, int pageSize) {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
@@ -155,7 +156,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         try (UserDao userDao = daoFactory.createUserDao()) {
             userDao.update(user);
         } catch (SQLException throwables) {
@@ -164,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) throws ServiceException {
+    public User getById(int id){
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findById(id);
         } catch (SQLException throwables) {
@@ -204,72 +205,75 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User getUserByLogin(String login) throws ServiceException {
-        return getAllUsers().stream()
+    public User getByLogin(String login) throws NoSuchElementException {
+        return getAll().stream()
                 .filter(client -> client.getLogin().equals(login))
                 .findFirst().get();
     }
 
     @Override
-    public List<User> getUserByFirstLastName(String firstName, String lastName) throws ServiceException {
-        return getAllUsers().stream()
+    public List<User> getByFirstLastName(String firstName, String lastName) throws ServiceException {
+        return getAll().stream()
                 .filter(client -> client.getFirstname().equals(firstName) || client.getLastname().equals(lastName))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public User getUserByPhone(String phone) throws ServiceException {
-        return getAllUsers().stream()
+    public User getByPhone(String phone) throws ServiceException {
+        return getAll().stream()
                 .filter(client -> client.getPhone().equals(phone))
                 .findFirst().get();
     }
 
     @Override
     public List<User> getBlockedUsers() throws ServiceException {
-        return getAllUsers().stream()
+        return getAll().stream()
                 .filter(user -> user.getStatus().equals(UserStatus.BLOCKED))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<User> getNonBlockedUsers() throws ServiceException {
-        return getAllUsers().stream()
+        return getAll().stream()
                 .filter(user -> user.getStatus().equals(UserStatus.NON_BLOCKED))
                 .collect(Collectors.toList());
     }
 
 
     @Override
-    public void blockUser(int id) throws ServiceException {
-        User client = getUserById(id);
+    public void block(int id) throws ServiceException {
+        User client = getById(id);
         client.setStatus(UserStatus.BLOCKED);
         daoFactory.createUserDao().update(client);
     }
 
     @Override
-    public void blockUser(String login) throws ServiceException {
-        User client = getUserByLogin(login);
+    public void block(String login) throws ServiceException {
+        User client = getByLogin(login);
         client.setStatus(UserStatus.BLOCKED);
         daoFactory.createUserDao().update(client);
     }
 
     @Override
-    public void unBlockUser(int id) throws ServiceException {
-        User client = getUserById(id);
+    public void unBlock(int id) throws ServiceException {
+        User client = getById(id);
         client.setStatus(UserStatus.NON_BLOCKED);
         daoFactory.createUserDao().update(client);
     }
 
     @Override
-    public void unBlockUser(String login) throws ServiceException {
-        User client = getUserByLogin(login);
+    public void unBlock(String login) throws ServiceException {
+        User client = getByLogin(login);
         client.setStatus(UserStatus.NON_BLOCKED);
         daoFactory.createUserDao().update(client);
     }
 
-    public void addUser(User user) {
-        daoFactory.createUserDao().create(user);
+    @Override
+    public int add(User user) {
+        return daoFactory.createUserDao().create(user);
     }
 
+    @Override
+    public void remove(int id) {}
 
 }

@@ -1,8 +1,9 @@
 package com.example.touragency.model.service;
 
 import com.example.touragency.exceptions.*;
+import com.example.touragency.model.entity.Discount;
 
-public interface DiscountService {
+public interface DiscountService extends Service<Discount>{
     int getPercent() throws ServiceException;
 
     int getMaxPercent() throws ServiceException;

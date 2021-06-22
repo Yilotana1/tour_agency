@@ -12,8 +12,8 @@
 </head>
 <body>
 <h1>Welcome to the system ${user.firstname} ${user.lastname}</h1>
-<h3>You are considered as admin</h3>
-<h2>Information about you:</h2><br/>
+<h2 style="color: red">You are joined as ADMIN</h2>
+<h3>Information about you:</h3><br/>
 <b>phone:</b> ${user.phone},<br/>
 <b>email:</b> ${user.email},<br/>
 <b>status:</b> ${user.status},<br/>
@@ -33,7 +33,13 @@
     <input type="submit" value="manage users">
 </form>
 
+<form action="${pageContext.request.contextPath}/admin/manage_orders">
+    <input type="submit" value="manage orders"/>
+</form>
 
+<form action="${pageContext.request.contextPath}/admin/manage_tours">
+    <input type="submit" value="manage tours"/>
+</form>
 
 </body>
 </html>

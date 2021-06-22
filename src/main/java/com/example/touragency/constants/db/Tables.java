@@ -1,4 +1,4 @@
-package com.example.touragency.constants;
+package com.example.touragency.constants.db;
 
 public interface Tables {
 

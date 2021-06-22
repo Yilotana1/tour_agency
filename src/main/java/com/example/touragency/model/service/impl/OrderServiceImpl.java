@@ -8,6 +8,7 @@ import com.example.touragency.model.entity.enums.OrderStatus;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.ServiceTools;
 import com.example.touragency.exceptions.*;
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,9 +20,38 @@ public class OrderServiceImpl implements OrderService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
+    @Override
+    public List<Order> getByClientId(int clientId) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.findOrdersByClientId(clientId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
-    public List<Order> getAllOrders(){
+    public List<Order> getByLogin(String login) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.findOrdersByLogin(login);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int getCount() {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.getCount();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Order> getAll() {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll();
         } catch (SQLException throwables) {
@@ -31,7 +61,38 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOpenedOrders(){
+    public List<Order> getPage(int pageId, int pageSize) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> getPageOpenedFirst(int pageId, int pageSize) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.findOrdersByLimitOpenedFirst(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> getPagePaidFirst(int pageId, int pageSize) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.findOrdersByLimitPaidFirst(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<Order> getOpened() {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll()
                     .stream()
@@ -44,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getPaidOrders(){
+    public List<Order> getPaid() {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll()
                     .stream()
@@ -57,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getCanceledOrders() {
+    public List<Order> getCanceled() {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll()
                     .stream()
@@ -71,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order getOrderById(int id) {
+    public Order getById(int id) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findById(id);
         } catch (SQLException throwables) {
@@ -83,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void applyForOrder(List<String> tourNames, String clientLogin)  {
+    public void applyForOrder(int tourId, int clientId) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);
              OrderDao orderDao = daoFactory.createOrderDao(connection);
@@ -92,25 +153,21 @@ public class OrderServiceImpl implements OrderService {
 
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-            User client = userDao.findUserByLogin(clientLogin);
-            List<Tour> tours = tourDao.findAll().stream().filter(tour -> tourNames.contains(tour.getName()))
-                    .collect(Collectors.toList());
 
-            catchExceptionIfToursNotAvailable(client, tours);
+            User client = userDao.findById(clientId);
+            Tour tour = tourDao.findById(tourId);
 
-            int userTourNumber = tours.size();
+            throwExceptionIfTourIsNotAvailable(client, tour);
+            tour.setTakenPlaces(tour.getTakenPlaces() + 1);
 
-            BigDecimal price = getPriceWithDiscount(tours, discountDao);
-            tours.forEach(tour -> tour.setTakenPlaces(tour.getTakenPlaces() + 1));
+            List<Order> orders = orderDao.findOrdersByClientId(clientId);
+            BigDecimal price = getPriceWithDiscount(orders, discountDao, tour.getPrice());
 
             Order order = Order.createOrder(Calendar.getInstance(), OrderStatus.OPENED,
-                    client, price, userTourNumber);
+                    client, price, tour.getName(), tour.getId());
 
             int orderId = orderDao.create(order);
-            for (Tour tour : tours) {
-                tourDao.update(tour);
-                tourDao.addTourToOrder(tour.getId(), orderId);
-            }
+            tourDao.update(tour);
             connection.commit();
         } catch (Exception throwables) {
             throwables.printStackTrace();
@@ -124,10 +181,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
-
     @Override
-    public void confirmOrderPaid(int id) {
+    public void confirmPaid(int id) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             Order order = orderDao.findById(id);
             order.setStatus(OrderStatus.PAID);
@@ -137,9 +192,18 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public void update(Order order) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            orderDao.update(order);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 
     @Override
-    public void cancelOrder(int id) {
+    public void cancel(int id) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (OrderDao orderDao = daoFactory.createOrderDao(connection);
              TourDao tourDao = daoFactory.createTourDao(connection)) {
@@ -147,11 +211,9 @@ public class OrderServiceImpl implements OrderService {
             Order order = orderDao.findById(id);
             order.setStatus(OrderStatus.CANCELED);
             orderDao.update(order);
-            List<Tour> tours = tourDao.findByOrderId(order.getId());
-            tours.forEach(tour -> tour.setTakenPlaces(tour.getTakenPlaces() - 1));
-            for (Tour tour : tours) {
-                tourDao.update(tour);
-            }
+            Tour tour = tourDao.findById(order.getTourId());
+            tour.setTakenPlaces(tour.getTakenPlaces() - 1);
+            tourDao.update(tour);
             connection.commit();
         } catch (SQLException throwables) {
             try {
@@ -165,62 +227,58 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void removeOrder(int id) {
-        Connection connection = ConnectionPoolHolder.getConnection();
-        try (OrderDao orderDao = daoFactory.createOrderDao(connection);
-             TourDao tourDao = daoFactory.createTourDao(connection)) {
-
-            connection.setAutoCommit(false);
-
-            Order order = orderDao.findById(id);
-            orderDao.delete(order.getId());
-            List<Tour> tours = tourDao.findByOrderId(order.getId());
-            tours.forEach(tour -> tour.setTakenPlaces(tour.getTakenPlaces() - 1));
-            for (Tour tour : tours) tourDao.update(tour);
-
-            connection.commit();
-        } catch (SQLException throwables) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            throwables.printStackTrace();
-        }
+    public int add(Order entity) {
+        return 0;
     }
 
+    @Override
+    public void remove(int id) {}
 
 
+//    @Override
+//    public void removeOrder(int id) {
+//        Connection connection = ConnectionPoolHolder.getConnection();
+//        try (OrderDao orderDao = daoFactory.createOrderDao(connection);
+//             TourDao tourDao = daoFactory.createTourDao(connection)) {
+//
+//            connection.setAutoCommit(false);
+//
+//            Order order = orderDao.findById(id);
+//            orderDao.delete(order.getId());
+//            List<Tour> tours = tourDao.findByOrderId(order.getId());
+//            tours.forEach(tour -> tour.setTakenPlaces(tour.getTakenPlaces() - 1));
+//            for (Tour tour : tours) tourDao.update(tour);
+//
+//            connection.commit();
+//        } catch (SQLException throwables) {
+//            try {
+//                connection.rollback();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//            throwables.printStackTrace();
+//        }
+//    }
 
 
-
-
-
-    private BigDecimal getPriceWithDiscount(List<Tour> tours, DiscountDao discountDao) throws DaoException {
+    private BigDecimal getPriceWithDiscount(List<Order> orders, DiscountDao discountDao, BigDecimal tourPrice) throws DaoException {
         Discount discount = discountDao.findById(1);
-        return ServiceTools.getPriceWithDiscount(discount, tours);
+        return ServiceTools.getPriceWithDiscount(discount, orders, tourPrice);
     }
 
-    private void catchExceptionIfToursNotAvailable(User client, List<Tour> tours) throws ServiceException {
+    private void throwExceptionIfTourIsNotAvailable(User client, Tour tour) throws ServiceException {
         if (ServiceTools.isUserBlocked(client)) throw new ServiceException("User is blocked");
-        if (checkIfToursAreOutDated(tours)) throw new ServiceException("These tours are outdated");
-        if (!checkIfToursContainFreeTickets(tours)) throw new ServiceException("This tour doesn't contain free places");
+        if (tourIsOutDated(tour)) throw new ServiceException("These tours are outdated");
+        if (!tourContainsFreeTickets(tour)) throw new ServiceException("This tour doesn't contain free places");
     }
 
-    private boolean checkIfToursAreOutDated(List<Tour> tours) {
-        for (Tour tour : tours) {
-            if (ServiceTools.isOutDated(tour, Calendar.getInstance())) return true;
-        }
-        return false;
+    private boolean tourIsOutDated(Tour tour) {
+        return ServiceTools.isOutDated(tour, Calendar.getInstance());
     }
 
-    private boolean checkIfToursContainFreeTickets(List<Tour> tours) {
-        for (Tour tour : tours) {
-            if (ServiceTools.containsFreeTickets(tour)) return true;
-        }
-        return false;
+    private boolean tourContainsFreeTickets(Tour tour) {
+        return ServiceTools.containsFreeTickets(tour);
     }
-
 
 
 }

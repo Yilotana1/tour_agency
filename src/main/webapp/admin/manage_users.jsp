@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.example.touragency.model.entity.enums.UserStatus" %>
 <%@ page import="com.example.touragency.model.entity.enums.Role" %>
+<%@ page import="com.example.touragency.controller.commands.Paginator" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -12,16 +13,26 @@
 <html>
 <body>
 
-<h1>Clients</h1>
+<h1>Users</h1>
 
+<br/>
 
-Show first:<br/>
+<form>
+    <input type="text" name="search"/>
+    <input type="submit" value="search"/>
+</form>
+
+<br/>
+
+<b>Show first:</b>
+<br/>
+<br/>
 <table>
     <tr>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_users">
                 <c:if test="${requestScope.order.equals('clients')}">
-                <input style="color: red" type="submit" value="clients"/>
+                    <input style="color: red" type="submit" value="clients"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('clients')}">
                     <input type="submit" value="clients"/>
@@ -64,10 +75,21 @@ Show first:<br/>
         </td>
     </tr>
 </table>
+
+<br/>
 <br/>
 
 <table>
-    <c:forEach var="client" items="${requestScope.clients}">
+    <tr>
+        <th style="color: red"><b>FIRSTNAME</b></th>
+        <th style="color: red"><b>LASTNAME</b></th>
+        <th style="color: red"><b>PHONE</b></th>
+        <th style="color: red"><b>LOGIN</b></th>
+        <th style="color: red"><b>STATUS</b></th>
+        <th style="color: red"><b>EMAIL</b></th>
+        <th style="color: red"><b>ROLE</b></th>
+    </tr>
+    <c:forEach var="client" items="${requestScope.items}">
         <form action="${pageContext.request.contextPath}/admin/manage_users">
             <input type="hidden" name="id" value="${client.id}"/>
             <tr>
@@ -132,7 +154,7 @@ Show first:<br/>
                 <c:if test="${!client.role.equals(Role.ADMIN)}">
                     <th>
                         <input type="hidden" name="order" value="${requestScope.order}">
-                        <input type="hidden" name="page" value="${requestScope.page}">
+                        <input type="hidden" name="${Paginator.PAGE}" value="${requestScope.page}">
                         <input type="submit" value="update"/>
                     </th>
                 </c:if>
@@ -148,15 +170,15 @@ Show first:<br/>
     <tr>
         <th style="border: none">
             <form action="${pageContext.request.contextPath}/admin/manage_users">
-                <input type="hidden" name="previousPage" value="${requestScope.page}"/>
+                <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                 <input type="hidden" name="order" value="${requestScope.order}"/>
                 <input type="submit" value="previous">
             </form>
         </th>
-        <c:forEach begin="1" end="${requestScope.pagesNumber}" step="1" var="i">
+        <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
             <th style="border: none">
                 <form action="${pageContext.request.contextPath}/admin/manage_users">
-                    <input type="hidden" name="page" value="${i}"/>
+                    <input type="hidden" name="${Paginator.PAGE}" value="${i}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
                     <c:if test="${requestScope.page.equals(i)}">
                         <input style="color: red" type="submit" value="${i}">
@@ -171,7 +193,7 @@ Show first:<br/>
         </c:forEach>
         <th style="border: none">
             <form action="${pageContext.request.contextPath}/admin/manage_users">
-                <input type="hidden" name="nextPage" value="${requestScope.page}"/>
+                <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
                 <input type="hidden" name="order" value="${requestScope.order}"/>
                 <input type="submit" value="next">
             </form>
@@ -179,6 +201,9 @@ Show first:<br/>
     </tr>
 </table>
 
+<br/>
+<br/>
+<br/>
 <form action="${pageContext.request.contextPath}/main.jsp">
     <input type="submit" value="main">
 </form>

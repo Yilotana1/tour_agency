@@ -14,7 +14,7 @@ public class HotelServiceImpl implements HotelService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public Hotel getHotelById(int id) {
+    public Hotel getById(int id) {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findById(id);
         } catch (SQLException throwables) {
@@ -24,7 +24,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotel getHotelByName(String name)  {
+    public Hotel getByName(String name)  {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findByName(name);
         } catch (SQLException throwables) {
@@ -34,7 +34,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> getAllHotels()  {
+    public List<Hotel> getAll()  {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findAll();
         } catch (SQLException throwables) {
@@ -44,7 +44,17 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> getHotelsWithStarsMoreThanOrEquals(int stars){
+    public void update(Hotel entity) {
+
+    }
+
+    @Override
+    public List<Hotel> getPage(int pageId, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public List<Hotel> getWithStarsMoreThanOrEquals(int stars){
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findAll()
                     .stream()
@@ -57,7 +67,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> getHotelsWithStarsLessThanOrEquals(int stars){
+    public List<Hotel> getWithStarsLessThanOrEquals(int stars){
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findAll()
                     .stream()
@@ -70,7 +80,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> getHotelsByCity(String city)  {
+    public List<Hotel> getByCity(String city)  {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findAll()
                     .stream()
@@ -83,9 +93,8 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public int addHotel(String name, int stars, String city, String address, String adminPhone) {
+    public int add(Hotel hotel) {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
-            Hotel hotel = Hotel.createHotel(name, city, address, stars, adminPhone);
             return hotelDao.create(hotel);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -94,7 +103,17 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void removeHotel(String name) {
+    public void remove(int id) {
+
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public void remove(String name) {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             hotelDao.delete(hotelDao.findAll()
                     .stream()

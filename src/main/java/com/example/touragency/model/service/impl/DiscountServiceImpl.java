@@ -7,6 +7,7 @@ import com.example.touragency.model.service.DiscountService;
 import com.example.touragency.exceptions.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DiscountServiceImpl implements DiscountService {
 
@@ -55,5 +56,40 @@ public class DiscountServiceImpl implements DiscountService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    public Discount getById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Discount> getAll() {
+        return null;
+    }
+
+    @Override
+    public void update(Discount entity) {
+
+    }
+
+    @Override
+    public List<Discount> getPage(int pageId, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public int add(Discount entity) {
+        return 0;
+    }
+
+    @Override
+    public void remove(int id) {
+
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
     }
 }

@@ -137,6 +137,14 @@ public class Tour extends Entity {
     }
 
 
+    public String getStartDateFormat() {
+
+        return new SimpleDateFormat("yyyy-MM-dd").format(startDate.getTime());
+    }
+
+    public String getEndDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(endDate.getTime());
+    }
 
     public String getName() {
         return name;

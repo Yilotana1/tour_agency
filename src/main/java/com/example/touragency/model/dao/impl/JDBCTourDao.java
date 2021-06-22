@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.touragency.constants.SqlConstants.*;
+import static com.example.touragency.constants.db.sql.Tour.*;
 
 public class JDBCTourDao implements TourDao {
 
@@ -25,13 +25,21 @@ public class JDBCTourDao implements TourDao {
 
     @Override
     public int getCount() {
+        try (Statement statement = connection.createStatement();
+        ) {
+            ResultSet rs = statement.executeQuery(SQL_FIND_TOUR_NUMBER_AS_COUNT);
+            rs.next();
+            return rs.getInt("count");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
     public JDBCTourDao(Connection connection) {
         this.connection = connection;
     }
-
 
 
     @Override
@@ -60,18 +68,6 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public void addTourToOrder(int tourId, int orderId) {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_ADD_TOUR_TO_ORDER);
-        ) {
-            statement.setInt(1, orderId);
-            statement.setInt(2, tourId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public Tour findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_BY_ID);
         ) {
@@ -88,7 +84,7 @@ public class JDBCTourDao implements TourDao {
     }
 
     @Override
-    public Tour findByName(String name){
+    public Tour findByName(String name) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_BY_NAME);
         ) {
             statement.setString(1, name);
@@ -101,23 +97,6 @@ public class JDBCTourDao implements TourDao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public List<Tour> findByOrderId(int id){
-        List<Tour> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_ORDER_ID);
-        ) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                list.add(new TourMapper().extractFromResultSet(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
     }
 
 
@@ -139,10 +118,32 @@ public class JDBCTourDao implements TourDao {
     }
 
     @Override
-    public List<Tour> findByPrice(BigDecimal price)  {
+    public List<Tour> findByLimitCountry(int start, int count, String country) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_COUNTRY);
+        ) {
+
+            statement.setString(1, country);
+            statement.setInt(2, start - 1);
+            statement.setInt(3, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+    @Override
+    public List<Tour> findByPrice(BigDecimal price) {
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_PRICE)) {
-            statement.setBigDecimal(1 ,price);
+            statement.setBigDecimal(1, price);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(new TourMapper().extractFromResultSet(rs));
@@ -155,7 +156,7 @@ public class JDBCTourDao implements TourDao {
     }
 
     @Override
-    public List<Tour> findByPeople(int peopleNumber)  {
+    public List<Tour> findByPeople(int peopleNumber) {
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_PEOPLE)) {
             statement.setInt(1, peopleNumber);
@@ -188,7 +189,7 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public List<Tour> findAll()  {
+    public List<Tour> findAll() {
         List<Tour> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
         ) {
@@ -205,11 +206,209 @@ public class JDBCTourDao implements TourDao {
 
     @Override
     public List<Tour> findByLimit(int start, int count) {
-        return null;
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override
-    public void update(Tour tour)  {
+    public List<Tour> findByLimitBurningFirst(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_BURNING_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitNonBurningFirst(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_NON_BURNING_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitHighHotelStarsFirst(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_HIGH_HOTEL_STARS_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitLowHotelStarsFirst(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_LOW_HOTEL_STARS_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitHighPriceFirst(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_HIGH_PRICE_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitLowPriceFirst(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_LOW_PRICE_FIRST);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitExcursion(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_EXCURSION);
+        ) {
+
+            statement.setInt(1, TourCategory.EXCURSION.getId());
+            statement.setInt(2, start - 1);
+            statement.setInt(3, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitRest(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_REST);
+        ) {
+
+            statement.setInt(1, TourCategory.REST.getId());
+            statement.setInt(2, start - 1);
+            statement.setInt(3, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Tour> findByLimitShopping(int start, int count) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_SHOPPING);
+        ) {
+
+            statement.setInt(1, TourCategory.SHOPPING.getId());
+            statement.setInt(2, start - 1);
+            statement.setInt(3, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public void update(Tour tour) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TOUR);
         ) {
             statement.setString(1, tour.getName());

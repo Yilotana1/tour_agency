@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class JDBCServiceFactory extends ServiceFactory {
 
     @Override
-    public OrderService createOrderService() throws SQLException {
+    public OrderService createOrderService(){
         return new OrderServiceImpl();
     }
 

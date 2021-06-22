@@ -2,4 +2,17 @@ package com.example.touragency.model.dao;
 
 import com.example.touragency.model.entity.Order;
 
-public interface OrderDao extends GenericDao<Order>{ }
+import java.util.List;
+
+public interface OrderDao extends GenericDao<Order>{
+
+    List<Order> findOrdersByClientId(int clientId);
+
+    List<Order> findOrdersByLogin(String login);
+
+    List<Order> findOrdersByLimitOpenedFirst(int start, int count);
+
+    List<Order> findOrdersByLimitPaidFirst(int start, int count);
+
+
+}

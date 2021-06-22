@@ -5,6 +5,8 @@ import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.LogOutCommand;
 import com.example.touragency.controller.commands.LoginCommand;
 import com.example.touragency.controller.commands.RegisterCommand;
+import com.example.touragency.controller.commands.admin.ManageOrdersCommand;
+import com.example.touragency.controller.commands.admin.ManageToursCommand;
 import com.example.touragency.controller.commands.admin.ManageUsersCommand;
 
 import java.io.*;
@@ -28,6 +30,8 @@ public class HelloServlet extends HttpServlet {
         commands.put("logout", new LogOutCommand());
         commands.put("register", new RegisterCommand());
         commands.put("admin/manage_users", new ManageUsersCommand());
+        commands.put("admin/manage_orders", new ManageOrdersCommand());
+        commands.put("admin/manage_tours", new ManageToursCommand());
 
     }
 

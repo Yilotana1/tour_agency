@@ -9,17 +9,35 @@ import java.util.List;
 public interface TourDao extends GenericDao<Tour>{
 
 
-    void addTourToOrder(int tourId, int orderId);
 
     Tour findById(int id);
 
     Tour findByName(String name);
 
-
-
-    List<Tour> findByOrderId(int id);
-
     List<Tour> findByCategory(TourCategory category);
+
+
+    List<Tour> findByLimitCountry(int start, int count, String country);
+
+    List<Tour> findByLimit(int start, int count);
+
+    List<Tour> findByLimitBurningFirst(int start, int count);
+
+    List<Tour> findByLimitNonBurningFirst(int start, int count);
+
+    List<Tour> findByLimitHighHotelStarsFirst(int start, int count);
+
+    List<Tour> findByLimitLowHotelStarsFirst(int start, int count);
+
+    List<Tour> findByLimitHighPriceFirst(int start, int count);
+
+    List<Tour> findByLimitLowPriceFirst(int start, int count);
+
+    List<Tour> findByLimitExcursion(int start, int count);
+
+    List<Tour> findByLimitRest(int start, int count);
+
+    List<Tour> findByLimitShopping(int start, int count);
 
     List<Tour> findByPrice(BigDecimal price);
 

@@ -1,4 +1,4 @@
-package com.example.touragency.constants;
+package com.example.touragency.constants.db;
 
 
 public interface Fields {
@@ -38,7 +38,7 @@ public interface Fields {
     String ORDER_STATUS_ID = Tables.ORDER + ".status_id";
     String ORDER_CLIENT_ID = Tables.ORDER + ".client_id";
     String ORDER_PRICE = Tables.ORDER + ".price";
-    String ORDER_TOUR_COUNT = Tables.ORDER + ".tour_count";
+    String ORDER_TOUR_ID = Tables.ORDER + ".id";
 
     //Hotel
     String HOTEL_ID = Tables.HOTEL + "." + Fields.ID;
@@ -56,7 +56,7 @@ public interface Fields {
     String DISCOUNT_MAX_PERCENT= Tables.DISCOUNT + ".max_percent";
 
     //Tour_has_order
-    String ORDER_HAS_TOUR_TOUR_ID = Tables.ORDER_HAS_TOUR + ".tour_id";
-    String ORDER_HAS_TOUR_ORDER_ID = Tables.ORDER_HAS_TOUR + ".order_id";
+//    String ORDER_HAS_TOUR_TOUR_ID = Tables.ORDER_HAS_TOUR + ".tour_id";
+//    String ORDER_HAS_TOUR_ORDER_ID = Tables.ORDER_HAS_TOUR + ".order_id";
 
 }

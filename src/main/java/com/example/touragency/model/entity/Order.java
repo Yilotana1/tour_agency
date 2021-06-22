@@ -5,11 +5,13 @@ import com.example.touragency.model.entity.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class Order extends Entity {
 
     private User client;
-    private int tourNumber;
+    private String tourName;
+    private int tourId;
     private Calendar date;
     private OrderStatus status;
     private BigDecimal price;
@@ -17,25 +19,27 @@ public class Order extends Entity {
     private Order(){}
 
     public static Order createOrder(int id, Calendar date, OrderStatus status,
-                                    User client, BigDecimal price, int tourNumber) {
+                                    User client, BigDecimal price, String tourName, int tourId) {
         Order order = new Order();
         order.setId(id);
         order.setDate(date);
         order.setStatus(status);
         order.setClient(client);
         order.setPrice(price);
-        order.setTourNumber(tourNumber);
+        order.setTourName(tourName);
+        order.setTourId(tourId);
         return order;
     }
 
     public static Order createOrder(Calendar date, OrderStatus status,
-                                    User client, BigDecimal price, int tourNumber) {
+                                    User client, BigDecimal price, String tourName, int tourId) {
         Order order = new Order();
         order.setDate(date);
         order.setStatus(status);
         order.setClient(client);
         order.setPrice(price);
-        order.setTourNumber(tourNumber);
+        order.setTourName(tourName);
+        order.setTourId(tourId);
         return order;
     }
 
@@ -43,8 +47,8 @@ public class Order extends Entity {
     @Override
     public String toString() {
         return "Order{" +
-                "tourNumber=" + tourNumber +
-                ", date=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date.getTime()) +
+                "tourName=" + tourName +
+                ", date=" + new SimpleDateFormat("yyyy-MM-dd HH").format(date.getTime()) +
                 ", status=" + status +
                 ", clientLogin=" +  client.getLogin() +
                 ", price=" + price +
@@ -60,26 +64,36 @@ public class Order extends Entity {
         this.price = price;
     }
 
+    public void setTourId(int tourId) {
+        this.tourId = tourId;
+    }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public void setTourNumber(int tourNumber) {
-        this.tourNumber = tourNumber;
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
     }
 
     private void setDate(Calendar date) {
         this.date = date;
     }
 
+    public String getTourName() {
+        return tourName;
+    }
 
-    public int getTourNumber() {
-        return tourNumber;
+    public int getTourId() {
+        return tourId;
     }
 
     public Calendar getDate() {
+
         return date;
+    }
+    public String getDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH").format(date.getTime());
     }
 
     public OrderStatus getStatus() {

@@ -4,32 +4,32 @@ import com.example.touragency.model.entity.Order;
 
 import java.util.List;
 
-public interface OrderService {
+public interface OrderService extends Service<Order>{
 
 
-    List<Order> getAllOrders();
+    List<Order> getPageOpenedFirst(int start, int count);
 
-    List<Order> getOpenedOrders();
+    List<Order> getPagePaidFirst(int start, int count);
 
-    List<Order> getPaidOrders();
+    List<Order> getOpened();
 
-    List<Order> getCanceledOrders();
+    List<Order> getPaid();
 
+    List<Order> getCanceled();
 
+    List<Order> getByClientId(int clientId);
 
-    Order getOrderById(int id);
-
-
-    void applyForOrder(List<String> tourNames, String clientLogin);
-
-
-    void confirmOrderPaid(int id);
+    List<Order> getByLogin(String login);
 
 
-    void cancelOrder(int id);
+    void applyForOrder(int tourId, int clientId);
+
+    void confirmPaid(int id);
+
+    void cancel(int id);
 
 
-    void removeOrder(int id);
+//    void removeOrder(int id);
 
 
 }

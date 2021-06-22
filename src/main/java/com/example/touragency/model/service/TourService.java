@@ -3,61 +3,76 @@ package com.example.touragency.model.service;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.entity.enums.TourStatus;
+import com.example.touragency.model.entity.enums.TourStatus;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
-public interface TourService {
+public interface TourService extends Service<Tour>{
 
 
-    List<Tour> getToursSortedByStatus();
+    List<Tour> getSortedByStatus();
 
-    Tour getTourById(int id);
+    Tour getByName(String name);
 
-    Tour getTourByName(String name);
+    List<Tour> getPageCountry(int pageId, int pageSize, String country);
 
-    List<Tour> getToursWithPriceLessThan(BigDecimal price);
+    List<Tour> getPageBurningFirst(int pageId, int pageSize);
 
-    List<Tour> getToursWithPriceMoreThan(BigDecimal price);
+    List<Tour> getPageNonBurningFirst(int pageId, int pageSize);
 
-    List<Tour> getToursWithPeopleMoreThan(int maxPlaces);
+    List<Tour> getPageHighHotelStarsFirst(int pageId, int pageSize);
 
-    List<Tour> getToursWithPeopleLessThan(int maxPlaces);
+    List<Tour> getPageLowHotelStarsFirst(int pageId, int pageSize);
 
-    List<Tour> getToursWithHotelStarsMoreThan(int stars);
+    List<Tour> getPageHighPriceFirst(int pageId, int pageSize);
 
-    List<Tour> getToursWithHotelStarsLessThan(int stars);
+    List<Tour> getPageLowPriceFirst(int pageId, int pageSize);
 
-    List<Tour> getToursByCategory(TourCategory category);
+    List<Tour> getPageExcursion(int pageId, int pageSize);
 
-    List<Tour> getToursByCountry(String country);
+    List<Tour> getPageRest(int pageId, int pageSize);
+
+    List<Tour> getPageShopping(int pageId, int pageSize);
 
 
-    void addTour(Tour tour);
+    List<Tour> getWithPriceLessThan(BigDecimal price);
 
-    void removeTour(int id);
+    List<Tour> getWithPriceMoreThan(BigDecimal price);
 
-    void changeTourCountry(int id, String country);
+    List<Tour> getWithPeopleMoreThan(int maxPlaces);
 
-    void changeTourName(int id, String name);
+    List<Tour> getWithPeopleLessThan(int maxPlaces);
 
-    void changeTourPrice(int id, BigDecimal price);
+    List<Tour> getWithHotelStarsMoreThan(int stars);
 
-    void changeTourMaxPlaces(int id, int max_places);
+    List<Tour> getWithHotelStarsLessThan(int stars);
 
-    void changeTourMinPlaces(int id, int min_places);
+    List<Tour> getByCategory(TourCategory category);
 
-    void changeTourStart(int id, Calendar startDate);
+    List<Tour> getByCountry(String country);
 
-    void changeTourEnd(int id, Calendar endDate);
+    void changeCountry(int id, String country);
 
-    void changeTourCategory(int id, TourCategory category);
+    void changeName(int id, String name);
 
-    void changeTourHotel(int id, String hotelName);
+    void changePrice(int id, BigDecimal price);
 
-    void changeTourCity(int id, String name);
+    void changeMaxPlaces(int id, int max_places);
 
-    void changeTourStatus(int id, TourStatus status);
+    void changeMinPlaces(int id, int min_places);
+
+    void changeStartDate(int id, Calendar startDate);
+
+    void changeEndDate(int id, Calendar endDate);
+
+    void changeCategory(int id, TourCategory category);
+
+    void changeHotel(int id, String hotelName);
+
+    void changeCity(int id, String name);
+
+    void changeStatus(int id, TourStatus status);
 
 }

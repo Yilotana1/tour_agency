@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.touragency.constants.SqlConstants.*;
+import static com.example.touragency.constants.db.sql.Discount.*;
 
 public class JDBCDiscountDao implements DiscountDao {
 

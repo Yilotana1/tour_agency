@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public abstract class ServiceFactory {
     private static ServiceFactory serviceFactory;
 
-    public abstract OrderService createOrderService() throws SQLException;
+    public abstract OrderService createOrderService();
 
     public abstract TourService createTourService();
 

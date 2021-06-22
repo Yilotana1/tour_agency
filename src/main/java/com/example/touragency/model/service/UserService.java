@@ -2,34 +2,29 @@ package com.example.touragency.model.service;
 
 import com.example.touragency.model.entity.User;
 import com.example.touragency.exceptions.*;
-import com.example.touragency.model.entity.enums.Role;
-import com.example.touragency.model.entity.enums.UserStatus;
 
+
+import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends Service<User> {
+
+    @Override
+    void remove(int id);
 
     User signIn(String login, String password) throws InvalidCredentialsException;
 
     void signUp(User user) throws UserAlreadyExistsException;
 
-    List<User> getUsersPage(int pageId, int pageSize);
+    List<User> getPageClientsFirst(int pageId, int pageSize);
 
-    List<User> getUsersPageClientsFirst(int pageId, int pageSize);
+    List<User> getPageManagersFirst(int pageId, int pageSize);
 
-    List<User> getUsersPageManagersFirst(int pageId, int pageSize);
+    List<User> getPageBlockedFirst(int pageId, int pageSize);
 
-    List<User> getUsersPageBlockedFirst(int pageId, int pageSize);
-
-    List<User> getUsersPageNonBlockedFirst(int pageId, int pageSize);
-
-    int getUserCount();
-
-    List<User> getAllUsers();
+    List<User> getPageNonBlockedFirst(int pageId, int pageSize);
 
     void updateUsers(List<User> users);
-
-    void updateUser(User user);
 
     List<User> getNonBlockedUsers() throws ServiceException;
 
@@ -41,22 +36,18 @@ public interface UserService {
 
     List<User> getAllManagers() throws ServiceException;
 
-    User getUserById(int id) throws ServiceException;
+    User getByLogin(String login);
 
-    User getUserByLogin(String login) throws ServiceException;
+    User getByPhone(String phone) throws ServiceException;
 
-    User getUserByPhone(String phone) throws ServiceException;
+    List<User> getByFirstLastName(String firstName, String lastname) throws ServiceException;
 
-    List<User> getUserByFirstLastName(String firstName, String lastname) throws ServiceException;
+    void block(int id) throws ServiceException;
 
-    void blockUser(int id) throws ServiceException;
+    void block(String login) throws ServiceException;
 
-    void blockUser(String login) throws ServiceException;
+    void unBlock(int id) throws ServiceException;
 
-    void unBlockUser(int id) throws ServiceException;
-
-    void unBlockUser(String login) throws ServiceException;
-
-    void addUser(User user);
+    void unBlock(String login) throws ServiceException;
 
 }

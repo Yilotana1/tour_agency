@@ -4,23 +4,17 @@ import com.example.touragency.model.entity.Hotel;
 
 import java.util.List;
 
-public interface HotelService {
+public interface HotelService extends Service<Hotel>{
 
-    Hotel getHotelById(int id);
+    Hotel getByName(String name);
 
-    Hotel getHotelByName(String name);
+    List<Hotel> getWithStarsMoreThanOrEquals(int stars);
 
-    List<Hotel> getAllHotels();
+    List<Hotel> getWithStarsLessThanOrEquals(int stars);
 
-    List<Hotel> getHotelsWithStarsMoreThanOrEquals(int stars);
+    List<Hotel> getByCity(String city);
 
-    List<Hotel> getHotelsWithStarsLessThanOrEquals(int stars);
-
-    List<Hotel> getHotelsByCity(String city);
-
-    int addHotel(String name, int stars, String city, String address, String adminPhone);
-
-    void removeHotel(String name);
+    void remove(String name);
 
     void changeStars(String name, int stars);
 
@@ -28,7 +22,7 @@ public interface HotelService {
 
     void changeAddress(String name, String address);
 
-    void changeAdminPhone (String name, String adminPhone);
+    void changeAdminPhone(String name, String adminPhone);
 
     void changeCity(String name, String city);
 
