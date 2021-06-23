@@ -16,6 +16,9 @@
 
     <style>
 
+        input[type=text] {
+            width: 100px
+        }
 
         th {
             border: 1px solid black;
@@ -36,6 +39,15 @@ Search by country:
     <input type="text" name="country"/>
     <input type="hidden" name="order" value="country"/>
     <input type="submit" value="search"/>
+</form>
+
+<br/>
+
+<span style="color:red"><b>WARNING, if you delete this tour, all orders will be deleted too</b></span>
+<br/>
+<form action="${pageContext.request.contextPath}/admin/manage_tours">
+    <input type="text" name="deleteTour"/>
+    <input type="submit" value="delete"/>
 </form>
 
 <br/>
@@ -207,15 +219,15 @@ Search by country:
 
                 <th>
                     <select name="status">
-                    <c:if test="${tour.status.equals(TourStatus.BURNING)}">
-                        <option selected value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
-                        <option value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
-                    </c:if>
-                    <c:if test="${tour.status.equals(TourStatus.NON_BURNING)}">
-                        <option selected value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
-                        <option value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
-                    </c:if>
-                </select>
+                        <c:if test="${tour.status.equals(TourStatus.BURNING)}">
+                            <option selected value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
+                            <option value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
+                        </c:if>
+                        <c:if test="${tour.status.equals(TourStatus.NON_BURNING)}">
+                            <option selected value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
+                            <option value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
+                        </c:if>
+                    </select>
                 </th>
 
                 <th><input type="submit" value="update"/></th>
@@ -268,6 +280,11 @@ Search by country:
     </tr>
 </table>
 
+<form action="${pageContext.request.contextPath}/admin/create_tour.jsp">
+    <input type="submit" value="create tour">
+</form>
+
+
 <form action="${pageContext.request.contextPath}/main.jsp">
     <input type="submit" value="main">
 </form>
@@ -275,6 +292,8 @@ Search by country:
 <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
     <input type="submit" value="profile">
 </form>
+
+
 
 </body>
 </html>

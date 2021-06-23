@@ -49,6 +49,11 @@
         <url-pattern>/admin/manage_tours</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/admin/create_tour</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>com.example.touragency.controller.filters.EncodingFilter</filter-class>

@@ -55,7 +55,9 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + "/admin/manage_orders",
                         filterConfig.getServletContext().getContextPath() + "/admin/manage_orders.jsp",
                         filterConfig.getServletContext().getContextPath() + "/admin/manage_tours",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_tours.jsp"));
+                        filterConfig.getServletContext().getContextPath() + "/admin/manage_tours.jsp",
+                        filterConfig.getServletContext().getContextPath() + "/admin/create_tour.jsp",
+                        filterConfig.getServletContext().getContextPath() + "/admin/create_tour"));
     }
 
 

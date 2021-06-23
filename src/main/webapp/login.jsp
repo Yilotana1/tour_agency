@@ -8,6 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
+    <style>
+        fieldset{
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
 

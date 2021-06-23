@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 public class TourServiceImpl implements TourService, Comparator<Tour> {
 
 
+    public static final int INITIAL_TAKEN_TICKETS = 0;
+
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
@@ -358,6 +360,48 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         return null;
     }
 
+    @Override
+    public void create(String name, String country, BigDecimal price,
+                       int maxTickets, int minTickets,
+                       Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
+                       String hotelName, String city) throws ServiceException {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        try (TourDao tourDao = daoFactory.createTourDao(connection);
+             HotelDao hotelDao = daoFactory.createHotelDao(connection)) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
+            Hotel hotel = hotelDao.findByName(hotelName);
+            if (hotel == null) throw new ServiceException("This hotel doesn't exist in the system");
+            if (tourDao.findByName(name) != null) throw new ServiceException("Tour with this name already exists");
+            Tour tour = Tour.createTour(name, country, price, maxTickets,
+                    minTickets, INITIAL_TAKEN_TICKETS, startDate, endDate,
+                    category, status, hotel, city);
+
+            tourDao.create(tour);
+
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void deleteByName(String name) throws ServiceException {
+        try (TourDao tourDao = daoFactory.createTourDao()) {
+            tourDao.getConnection().setAutoCommit(false);
+            tourDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
+            Tour tour = tourDao.findByName(name);
+            if (tour == null) throw new ServiceException("Tour with this name doesn't exist");
+            tourDao.delete(tour.getId());
+            tourDao.getConnection().commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     @Override
     public int add(Tour tour) {

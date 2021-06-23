@@ -64,10 +64,6 @@ public class TourValidator {
             throw new InvalidTicketsException("Max tickets cannot be less than min tickets or taken tickets", maxTickets);
         }
 
-        if (iMinTickets > iTakenTickets) {
-            throw new InvalidTicketsException("Min tickets cannot be more than max tickets or less than taken tickets", minTickets);
-        }
-
     }
 
     public void checkDatesAreValid(String startDateF, String endDateF) throws InvalidDateException{
@@ -78,8 +74,8 @@ public class TourValidator {
             throw new InvalidDateException("Start-date cannot be after end-date", new SimpleDateFormat("yyyy-MM-dd").format(startDate.getTime()));
         }
 
-        if (startDate.after(Calendar.getInstance())){
-            throw new InvalidDateException("Start-date cannot be after current date", new SimpleDateFormat("yyyy-MM-dd").format(startDate.getTime()));
+        if (startDate.before(Calendar.getInstance())){
+            throw new InvalidDateException("Start-date cannot be before current date", new SimpleDateFormat("yyyy-MM-dd").format(startDate.getTime()));
         }
 
 

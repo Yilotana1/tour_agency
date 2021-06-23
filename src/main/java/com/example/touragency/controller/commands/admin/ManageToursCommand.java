@@ -31,6 +31,7 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
 
         try {
             updateTourFromRequest(request, tourService);
+            deleteTourFromRequest(request, tourService);
         } catch (ServiceException | InvalidDataException e) {
             e.printStackTrace();
             request.setAttribute("error", e.getMessage());
@@ -41,6 +42,12 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
 
     }
 
+
+    private void deleteTourFromRequest(HttpServletRequest request, TourService tourService) throws ServiceException {
+        String tourName = request.getParameter("deleteTour");
+        if (tourName == null) return;
+        tourService.deleteByName(tourName);
+    }
 
     private void updateTourFromRequest(HttpServletRequest request,
                                        TourService tourService) throws ServiceException, InvalidDataException {

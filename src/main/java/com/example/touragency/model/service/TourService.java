@@ -19,9 +19,16 @@ public interface TourService extends Service<Tour>{
 
     Tour getByName(String name);
 
-    public void update(int id, String name, String country, BigDecimal price, int maxTickets, int minTickets,
+    void create(String name, String country, BigDecimal price,
+                int maxTickets, int minTickets,
+                Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
+                String hotelName, String city) throws ServiceException;
+
+    void update(int id, String name, String country, BigDecimal price, int maxTickets, int minTickets,
                            int takenTickets, Calendar startDate, Calendar endDate, TourCategory category,
                            TourStatus status, String hotelName, String city) throws ServiceException;
+
+    void deleteByName(String name) throws ServiceException;
 
     List<Tour> getPageCountry(int pageId, int pageSize, String country);
 

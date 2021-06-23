@@ -43,7 +43,7 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public int create(Tour tour) {
+    public int create(Tour tour)  {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_TOUR, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, tour.getName());
@@ -60,8 +60,8 @@ public class JDBCTourDao implements TourDao {
             statement.setString(12, tour.getCity());
             statement.executeUpdate();
             return Tools.getGeneratedId(statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return -1;
     }

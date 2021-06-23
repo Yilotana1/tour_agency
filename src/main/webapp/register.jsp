@@ -9,6 +9,12 @@
 <html>
 <head>
     <title>Register</title>
+
+    <style>
+        fieldset{
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
 <fieldset>
