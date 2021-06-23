@@ -1,5 +1,7 @@
 package com.example.touragency.validation.user.exceptions;
 
+import com.example.touragency.validation.InvalidDataException;
+
 public class InvalidLoginException extends InvalidDataException {
 
 

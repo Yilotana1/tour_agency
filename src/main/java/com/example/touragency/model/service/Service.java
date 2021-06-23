@@ -1,5 +1,7 @@
 package com.example.touragency.model.service;
 
+import com.example.touragency.exceptions.ServiceException;
+
 import java.util.List;
 
 public interface Service<T> {
@@ -8,7 +10,9 @@ public interface Service<T> {
 
     List<T> getAll();
 
-    void update(T entity);
+    void update() throws ServiceException;
+
+    void update(T entity) throws ServiceException;
 
     List<T> getPage(int pageId, int pageSize);
 

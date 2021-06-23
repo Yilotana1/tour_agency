@@ -1,7 +1,9 @@
 package com.example.touragency.controller.commands.admin;
 
+import com.example.touragency.Tools;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.enums.OrderStatus;
 import com.example.touragency.model.service.OrderService;
@@ -31,13 +33,12 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
 
 
     private void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) {
-        String orderId = request.getParameter("id");
+        String id = request.getParameter("id");
 
-        if (orderId != null) {
+        if (id != null) {
 
-            Order order = orderService.getById(Integer.parseInt(orderId));
-            order.setStatus(OrderStatus.getById(Integer.parseInt(request.getParameter("status"))));
-            orderService.update(order);
+            OrderStatus status = OrderStatus.getById(Integer.parseInt(request.getParameter("status")));
+            orderService.changeStatus(Integer.parseInt(id), status);
         }
     }
 
@@ -69,10 +70,10 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
         List<Order> orders = orderService.getPage(page, maxPageSize);
         switch (orderBy) {
             case "opened":
-                orders = ((OrderService)orderService).getPageOpenedFirst(page, maxPageSize);
+                orders = ((OrderService) orderService).getPageOpenedFirst(page, maxPageSize);
                 break;
             case "paid":
-                orders = ((OrderService)orderService).getPagePaidFirst(page, maxPageSize);
+                orders = ((OrderService) orderService).getPagePaidFirst(page, maxPageSize);
                 break;
         }
         return orders;

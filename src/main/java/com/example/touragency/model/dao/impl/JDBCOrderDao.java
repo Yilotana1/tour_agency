@@ -1,6 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
-import com.example.touragency.model.Tools;
+import com.example.touragency.Tools;
 import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.dao.mapper.entity.OrderMapper;
 import com.example.touragency.model.entity.Order;

@@ -69,6 +69,11 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    public void update() throws ServiceException {
+
+    }
+
+    @Override
     public void update(Discount entity) {
 
     }

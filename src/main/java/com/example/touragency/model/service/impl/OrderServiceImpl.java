@@ -60,6 +60,38 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+
+    public void changeStatus(int id, OrderStatus status){
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            orderDao.getConnection().setAutoCommit(false);
+            orderDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+            Order order  = orderDao.findById(id);
+            order.setStatus(status);
+            orderDao.update(order);
+            orderDao.getConnection().commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
+//    public void update(int id, User client, String tourName, int tourId,
+//                       Calendar date, OrderStatus status, BigDecimal price) {
+//
+//        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+//            Order order = Order.createOrder(id, date, status, client, price, tourName, tourId);
+//            orderDao.update(order);
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//    }
+
+
+    @Override
+    public void update() throws ServiceException {
+
+    }
+
     @Override
     public List<Order> getPage(int pageId, int pageSize) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
@@ -232,7 +264,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void remove(int id) {}
+    public void remove(int id) {
+    }
 
 
 //    @Override

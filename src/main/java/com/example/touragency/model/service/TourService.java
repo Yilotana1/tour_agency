@@ -1,11 +1,14 @@
 package com.example.touragency.model.service;
 
+import com.example.touragency.exceptions.ServiceException;
+import com.example.touragency.model.dao.TourDao;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.entity.enums.TourStatus;
 import com.example.touragency.model.entity.enums.TourStatus;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.util.Calendar;
 import java.util.List;
 
@@ -15,6 +18,10 @@ public interface TourService extends Service<Tour>{
     List<Tour> getSortedByStatus();
 
     Tour getByName(String name);
+
+    public void update(int id, String name, String country, BigDecimal price, int maxTickets, int minTickets,
+                           int takenTickets, Calendar startDate, Calendar endDate, TourCategory category,
+                           TourStatus status, String hotelName, String city) throws ServiceException;
 
     List<Tour> getPageCountry(int pageId, int pageSize, String country);
 

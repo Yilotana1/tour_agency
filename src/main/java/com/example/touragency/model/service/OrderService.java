@@ -1,6 +1,7 @@
 package com.example.touragency.model.service;
 
 import com.example.touragency.model.entity.Order;
+import com.example.touragency.model.entity.enums.OrderStatus;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public interface OrderService extends Service<Order>{
 
     List<Order> getByLogin(String login);
 
+    void changeStatus(int id, OrderStatus status);
 
     void applyForOrder(int tourId, int clientId);
 

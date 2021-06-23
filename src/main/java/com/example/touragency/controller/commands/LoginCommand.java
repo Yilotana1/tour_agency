@@ -8,7 +8,7 @@ import com.example.touragency.exceptions.*;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.service.factory.ServiceFactory;
 import com.example.touragency.validation.user.UserValidator;
-import com.example.touragency.validation.user.exceptions.InvalidDataException;
+import com.example.touragency.validation.InvalidDataException;
 
 import static com.example.touragency.controller.commands.CommandUtility.*;
 import static com.example.touragency.model.entity.enums.Role.*;

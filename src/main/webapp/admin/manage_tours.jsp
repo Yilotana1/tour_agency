@@ -169,50 +169,51 @@ Search by country:
 
     <c:forEach var="tour" items="${requestScope.items}">
         <form action="${pageContext.request.contextPath}/admin/manage_tours">
-
+            <input type="hidden" name="id" value="${tour.id}">
             <tr>
-                <th><input type="text" name="tour_name" value="${tour.name}"/></th>
-                <th><input type="text" name="tour_country" value="${tour.country}"/></th>
-                <th><input type="text" name="tour_city" value="${tour.city}"/></th>
-                <th><input type="text" name="tour_price" value="${tour.price}"/></th>
+                <th><input type="text" name="name" value="${tour.name}"/></th>
+                <th><input type="text" name="country" value="${tour.country}"/></th>
+                <th><input type="text" name="city" value="${tour.city}"/></th>
+                <th><input type="text" name="price" value="${tour.price}"/></th>
                 <th>
-                    <input type="text" name="tour_hotel_name" value="${tour.hotel.name}"/>
-                    <input type="hidden" name="tour_hotel_id" value="${tour.hotel.id}"/>
+                    <input type="text" name="hotelName" value="${tour.hotel.name}"/>
+                    <input type="hidden" name="hotelId" value="${tour.hotel.id}"/>
                 </th>
-                <th><input type="text" name="tour_maxPlaces" value="${tour.maxPlaces}"/></th>
-                <th><input type="text" name="tour_minPlaces" value="${tour.minPlaces}"/></th>
-                <th>${tour.takenPlaces}</th>
-                <th><input type="date" name="tour_startDate" value="${tour.startDateFormat}"/></th>
-                <th><input type="date" name="tour_endDate" value="${tour.endDateFormat}"/></th>
+                <th><input type="text" name="maxTickets" value="${tour.maxPlaces}"/></th>
+                <th><input type="text" name="minTickets" value="${tour.minPlaces}"/></th>
+                <th><input type="hidden" name="takenTickets" value="${tour.takenPlaces}"/>${tour.takenPlaces}</th>
+                <th><input type="date" name="startDate" value="${tour.startDateFormat}"/></th>
+                <th><input type="date" name="endDate" value="${tour.endDateFormat}"/></th>
 
                 <th>
-                    <select>
+                    <select name="category">
                         <c:if test="${tour.category.equals(TourCategory.EXCURSION)}">
-                            <option selected>${TourCategory.EXCURSION}</option>
-                            <option>${TourCategory.REST}</option>
-                            <option>${TourCategory.SHOPPING}</option>
+                            <option selected value="${TourCategory.EXCURSION.id}">${TourCategory.EXCURSION}</option>
+                            <option value="${TourCategory.REST.id}">${TourCategory.REST}</option>
+                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.SHOPPING}</option>
                         </c:if>
                         <c:if test="${tour.category.equals(TourCategory.REST)}">
-                            <option selected>${TourCategory.REST}</option>
-                            <option>${TourCategory.EXCURSION}</option>
-                            <option>${TourCategory.SHOPPING}</option>
+                            <option selected value="${TourCategory.REST.id}">${TourCategory.REST}</option>
+                            <option value="${TourCategory.EXCURSION.id}">${TourCategory.EXCURSION}</option>
+                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.SHOPPING}</option>
                         </c:if>
                         <c:if test="${tour.category.equals(TourCategory.SHOPPING)}">
-                            <option selected>${TourCategory.SHOPPING}</option>
-                            <option>${TourCategory.EXCURSION}</option>
-                            <option>${TourCategory.REST}</option>
+                            <option selected value="${TourCategory.SHOPPING.id}">${TourCategory.SHOPPING}</option>
+                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.EXCURSION}</option>
+                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.REST}</option>
                         </c:if>
                     </select>
                 </th>
 
-                <th><select>
+                <th>
+                    <select name="status">
                     <c:if test="${tour.status.equals(TourStatus.BURNING)}">
-                        <option selected>${TourStatus.BURNING}</option>
-                        <option>${TourStatus.NON_BURNING}</option>
+                        <option selected value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
+                        <option value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
                     </c:if>
                     <c:if test="${tour.status.equals(TourStatus.NON_BURNING)}">
-                        <option selected>${TourStatus.NON_BURNING}</option>
-                        <option>${TourStatus.BURNING}</option>
+                        <option selected value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
+                        <option value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
                     </c:if>
                 </select>
                 </th>
@@ -223,6 +224,9 @@ Search by country:
 
     </c:forEach>
 </table>
+
+<br/>
+<span style="color:red">${requestScope.error}</span>
 
 <br/><br/>
 
@@ -258,7 +262,7 @@ Search by country:
                 <c:if test="${requestScope.order.equals('country')}">
                     <input type="hidden" name="country" value="${requestScope.country}">
                 </c:if>
-                <input type="submit" value="${Paginator.PAGE}">
+                <input type="submit" value="${Paginator.NEXT_PAGE}">
             </form>
         </th>
     </tr>
@@ -271,7 +275,6 @@ Search by country:
 <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
     <input type="submit" value="profile">
 </form>
-
 
 </body>
 </html>

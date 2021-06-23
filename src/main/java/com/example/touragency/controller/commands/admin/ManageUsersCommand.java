@@ -35,24 +35,23 @@ public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<U
     }
 
 
-
-
-
     private void updateUserFromRequest(HttpServletRequest request, UserService userService) {
-        String userId = request.getParameter("id");
+        String id = request.getParameter("id");
 
+        if (id == null) return;
 
-        if (userId != null) {
-            UserStatus status = UserStatus.getById(Integer.parseInt(request.getParameter("status")));
-            Role role = Role.getById(Integer.parseInt(request.getParameter("role")));
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        UserStatus status = UserStatus.getById(Integer.parseInt(request.getParameter("status")));
+        Role role = Role.getById(Integer.parseInt(request.getParameter("role")));
 
-            User user = userService.getById(Integer.parseInt(userId));
-            user.setStatus(status);
-            user.setRole(role);
-            userService.update(user);
-            CommandUtility.deleteFromLoginCache(request, user.getLogin());
+        userService.update(Integer.parseInt(id), firstName, lastName, phone, email, status, login, password, role);
+        CommandUtility.deleteFromLoginCache(request, login);
 
-        }
     }
 
 

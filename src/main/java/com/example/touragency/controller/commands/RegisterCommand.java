@@ -7,7 +7,7 @@ import com.example.touragency.model.entity.enums.UserStatus;
 import com.example.touragency.model.service.UserService;
 import com.example.touragency.model.service.factory.ServiceFactory;
 import com.example.touragency.validation.user.UserValidator;
-import com.example.touragency.validation.user.exceptions.InvalidDataException;
+import com.example.touragency.validation.InvalidDataException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

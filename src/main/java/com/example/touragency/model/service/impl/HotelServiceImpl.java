@@ -1,5 +1,6 @@
 package com.example.touragency.model.service.impl;
 
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.entity.Hotel;
@@ -41,6 +42,11 @@ public class HotelServiceImpl implements HotelService {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void update() throws ServiceException {
+
     }
 
     @Override

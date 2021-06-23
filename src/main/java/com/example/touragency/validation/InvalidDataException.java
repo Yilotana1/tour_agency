@@ -1,4 +1,4 @@
-package com.example.touragency.validation.user.exceptions;
+package com.example.touragency.validation;
 
 public class InvalidDataException extends Exception{
 

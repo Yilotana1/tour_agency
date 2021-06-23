@@ -12,7 +12,7 @@ public class HotelMapper implements EntityMapper<Hotel> {
 
 
 
-        return Hotel.createHotel(rs.getInt(Fields.ID), rs.getString(Fields.HOTEL_NAME),
+        return Hotel.createHotel(rs.getInt(Fields.HOTEL_ID), rs.getString(Fields.HOTEL_NAME),
                 rs.getString(Fields.HOTEL_CITY), rs.getString(Fields.HOTEL_ADDRESS), rs.getInt(Fields.HOTEL_STARS),
                 rs.getString(Fields.HOTEL_ADMIN_PHONE));
     }

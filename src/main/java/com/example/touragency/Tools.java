@@ -1,9 +1,11 @@
-package com.example.touragency.model;
+package com.example.touragency;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.sql.Date;
 
@@ -16,7 +18,19 @@ public class Tools {
         return calendar;
     }
 
-    public static boolean decimalCompare(BigDecimal val1, BigDecimal val2){
+    public static Calendar getCalendarFromString(String date) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+            return calendar;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return Calendar.getInstance();
+    }
+
+
+    public static boolean decimalCompare(BigDecimal val1, BigDecimal val2) {
         return val1.compareTo(val2) >= 0;
     }
 

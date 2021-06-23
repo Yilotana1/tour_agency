@@ -1,6 +1,7 @@
 package com.example.touragency.validation.user;
 
 import com.example.touragency.model.entity.User;
+import com.example.touragency.validation.InvalidDataException;
 import com.example.touragency.validation.user.exceptions.*;
 
 public class UserValidator {

@@ -1,6 +1,6 @@
 package com.example.touragency.model.dao.mapper.entity;
 
-import com.example.touragency.model.Tools;
+import com.example.touragency.Tools;
 import com.example.touragency.constants.db.Fields;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.enums.OrderStatus;

@@ -10,10 +10,7 @@ import com.example.touragency.model.service.UserService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -35,6 +32,22 @@ public class UserServiceImpl implements UserService {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+
+    public void update(int id, String firstName, String lastName, String phone, String email, UserStatus status,
+                       String login, String password, Role role) {
+
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            User user = User.createUser(id, firstName, lastName, phone, email, status, login, password, role);
+            userDao.update(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void update() {
+
     }
 
     @Override
@@ -128,6 +141,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
     @Override
     public List<User> getPageBlockedFirst(int pageId, int pageSize) {
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -165,7 +179,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(int id){
+    public User getById(int id) {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findById(id);
         } catch (SQLException throwables) {
@@ -274,6 +288,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void remove(int id) {}
+    public void remove(int id) {
+    }
 
 }
