@@ -1,14 +1,14 @@
 package com.example.touragency.controller;
 
 
-import com.example.touragency.controller.commands.Command;
-import com.example.touragency.controller.commands.LogOutCommand;
-import com.example.touragency.controller.commands.LoginCommand;
-import com.example.touragency.controller.commands.RegisterCommand;
+import com.example.touragency.controller.commands.*;
 import com.example.touragency.controller.commands.admin.CreateTourCommand;
 import com.example.touragency.controller.commands.admin.ManageOrdersCommand;
 import com.example.touragency.controller.commands.admin.ManageToursCommand;
 import com.example.touragency.controller.commands.admin.ManageUsersCommand;
+import com.example.touragency.controller.commands.client.MyOrdersCommand;
+import com.example.touragency.controller.commands.client.OrderCommand;
+import com.example.touragency.controller.commands.client.OrderFormCommand;
 
 import java.io.*;
 import java.util.HashMap;
@@ -34,6 +34,10 @@ public class HelloServlet extends HttpServlet {
         commands.put("admin/manage_orders", new ManageOrdersCommand());
         commands.put("admin/manage_tours", new ManageToursCommand());
         commands.put("admin/create_tour", new CreateTourCommand());
+        commands.put("", new MainCommand());
+        commands.put("order_form", new OrderFormCommand());
+        commands.put("order", new OrderCommand());
+        commands.put("my_orders", new MyOrdersCommand());
 
     }
 

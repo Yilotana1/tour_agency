@@ -66,8 +66,8 @@ public interface Order {
 
     String SQL_INSERT_ORDER = "INSERT INTO " + Tables.ORDER + "("
             + Fields.ORDER_DATE + ", " + Fields.ORDER_STATUS_ID + ", " + Fields.ORDER_CLIENT_ID + ", "
-            + Fields.ORDER_PRICE + ", " + Fields.TOUR_ID
-            + ") VALUES (?, ?, ?, ?);";
+            + Fields.ORDER_PRICE + ", " + Fields.ORDER_TOUR_ID
+            + ") VALUES (?, ?, ?, ?, ?);";
 
     String SQL_UPDATE_ORDER = "UPDATE " + Tables.ORDER +  " SET "
             + Fields.ORDER_DATE + "=?, " + Fields.ORDER_STATUS_ID + "=?, "

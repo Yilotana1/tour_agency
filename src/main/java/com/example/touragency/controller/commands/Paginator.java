@@ -25,7 +25,7 @@ public class Paginator<Item> {
 
     private final Service<Item> service;
 
-    private int maxPageSize = 3;
+    private int maxPageSize = 4;
 
 
     public Paginator(HttpServletRequest request, Service<Item> service, int maxPageSize) {

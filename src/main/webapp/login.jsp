@@ -40,6 +40,10 @@
     <form action="register.jsp">
         <input type="submit" value="register"/>
     </form>
+
+    <form action="${pageContext.request.contextPath}/">
+        <input type="submit" value="main">
+    </form>
 </fieldset>
 
 

@@ -53,8 +53,8 @@
             <span style="color:red">${requestScope.error}</span>
 
     </form>
-    <form action="main.jsp">
-        <input type="submit" value="main"/>
+    <form action="${pageContext.request.contextPath}/">
+        <input type="submit" value="main">
     </form>
 </fieldset>
 

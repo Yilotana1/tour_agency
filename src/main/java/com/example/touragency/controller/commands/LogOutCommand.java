@@ -13,6 +13,6 @@ public class LogOutCommand implements Command{
         User user = (User)request.getSession().getAttribute("user");
         CommandUtility.deleteFromLoginCache(request, user.getLogin());
         request.getSession().invalidate();
-        response.sendRedirect(request.getContextPath() + "/main.jsp");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }

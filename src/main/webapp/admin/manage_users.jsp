@@ -92,6 +92,12 @@
     <c:forEach var="client" items="${requestScope.items}">
         <form action="${pageContext.request.contextPath}/admin/manage_users">
             <input type="hidden" name="id" value="${client.id}"/>
+            <input type="hidden" name="firstname" value="${client.firstname}"/>
+            <input type="hidden" name="lastname" value="${client.lastname}"/>
+            <input type="hidden" name="phone" value="${client.phone}"/>
+            <input type="hidden" name="login" value="${client.login}"/>
+            <input type="hidden" name="password" value="${client.password}"/>
+            <input type="hidden" name="email" value="${client.email}"/>
             <tr>
                 <th>${client.firstname}</th>
                 <th>${client.lastname}</th>
@@ -204,7 +210,7 @@
 <br/>
 <br/>
 <br/>
-<form action="${pageContext.request.contextPath}/main.jsp">
+<form action="${pageContext.request.contextPath}/">
     <input type="submit" value="main">
 </form>
 

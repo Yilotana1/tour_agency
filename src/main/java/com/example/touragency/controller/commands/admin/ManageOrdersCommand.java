@@ -1,9 +1,7 @@
 package com.example.touragency.controller.commands.admin;
 
-import com.example.touragency.Tools;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.Paginator;
-import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.enums.OrderStatus;
 import com.example.touragency.model.service.OrderService;

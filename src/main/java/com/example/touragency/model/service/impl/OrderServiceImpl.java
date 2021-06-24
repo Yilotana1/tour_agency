@@ -176,7 +176,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void applyForOrder(int tourId, int clientId) {
+    public void applyForOrder(int tourId, int clientId) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);
              OrderDao orderDao = daoFactory.createOrderDao(connection);
@@ -198,10 +198,10 @@ public class OrderServiceImpl implements OrderService {
             Order order = Order.createOrder(Calendar.getInstance(), OrderStatus.OPENED,
                     client, price, tour.getName(), tour.getId());
 
-            int orderId = orderDao.create(order);
+            orderDao.create(order);
             tourDao.update(tour);
             connection.commit();
-        } catch (Exception throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             try {
                 connection.rollback();
@@ -301,12 +301,12 @@ public class OrderServiceImpl implements OrderService {
 
     private void throwExceptionIfTourIsNotAvailable(User client, Tour tour) throws ServiceException {
         if (ServiceTools.isUserBlocked(client)) throw new ServiceException("User is blocked");
-        if (tourIsOutDated(tour)) throw new ServiceException("These tours are outdated");
-        if (!tourContainsFreeTickets(tour)) throw new ServiceException("This tour doesn't contain free places");
+        if (tourIsOutDated(tour)) throw new ServiceException("This tour is outdated");
+        if (!tourContainsFreeTickets(tour)) throw new ServiceException("This tour doesn't have available tickets");
     }
 
     private boolean tourIsOutDated(Tour tour) {
-        return ServiceTools.isOutDated(tour, Calendar.getInstance());
+        return ServiceTools.isOutDated(tour);
     }
 
     private boolean tourContainsFreeTickets(Tour tour) {

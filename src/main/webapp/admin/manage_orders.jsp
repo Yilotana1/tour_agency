@@ -86,105 +86,99 @@ Search by client login:
     </tr>
 
     <c:forEach var="order" items="${requestScope.items}">
-        <form action="${pageContext.request.contextPath}/admin/manage_orders">
+    <form action="${pageContext.request.contextPath}/admin/manage_orders">
 
 
-            <tr>
-                <th>${order.id}</th>
-                <th>${order.tourName}</th>
-                <th>${order.client.firstname}</th>
-                <th>${order.client.lastname}</th>
-                <th>${order.client.login}</th>
-                <th>${order.client.phone}</th>
-                <th>${order.client.email}</th>
-                <th>${order.dateFormat}</th>
-                <th>${order.price}</th>
-                <th>
-                    <select name="status">
-                        <c:if test="${order.status.equals(OrderStatus.OPENED)}">
-                            <option selected="selected" value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
-                            <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
-                            <option value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
-                        </c:if>
-                        <c:if test="${order.status.equals(OrderStatus.PAID)}">
-                            <option selected="selected" value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
-                            <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
-                            <option value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
-                        </c:if>
-                        <c:if test="${order.status.equals(OrderStatus.CANCELED)}">
-                            <option selected="selected" value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
-                            <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
-                            <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
-                        </c:if>
-                    </select>
-                    <input type="hidden" name="id" value="${order.id}">
-                </th>
-                <th><input type="submit" value="update"/>
-                    <input type="hidden" name="order" value="${requestScope.order}">
-                    <input type="hidden" name="${Paginator.PAGE}" value="${requestScope.page}">
-                </th>
-            </tr>
+        <tr>
+            <th>${order.id}</th>
+            <th>${order.tourName}</th>
+            <th>${order.client.firstname}</th>
+            <th>${order.client.lastname}</th>
+            <th>${order.client.login}</th>
+            <th>${order.client.phone}</th>
+            <th>${order.client.email}</th>
+            <th>${order.dateFormat}</th>
+            <th>${order.price}</th>
+            <th>
+                <select name="status">
+                    <c:if test="${order.status.equals(OrderStatus.OPENED)}">
+                        <option selected="selected" value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
+                        <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
+                        <option value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
+                    </c:if>
+                    <c:if test="${order.status.equals(OrderStatus.PAID)}">
+                        <option selected="selected" value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
+                        <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
+                        <option value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
+                    </c:if>
+                    <c:if test="${order.status.equals(OrderStatus.CANCELED)}">
+                        <option selected="selected"
+                                value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
+                        <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
+                        <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
+                    </c:if>
+                </select>
+                <input type="hidden" name="id" value="${order.id}">
+            </th>
+            <th><input type="submit" value="update"/>
+                <input type="hidden" name="order" value="${requestScope.order}">
+                <input type="hidden" name="${Paginator.PAGE}" value="${requestScope.page}">
+            </th>
+        </tr>
 
-        </form>
+    </form>
     </c:forEach>
+<table/>
 
-</table>
-<%--<select name="status">--%>
-
-<c:if test="${client.status.equals(UserStatus.NON_BLOCKED)}">
-    <option selected="selected"
-            value="${UserStatus.NON_BLOCKED.id}">${UserStatus.NON_BLOCKED}</option>
-    <option value="${UserStatus.BLOCKED.id}">${UserStatus.BLOCKED}</option>
-</c:if>
-
-<br/>
-
-<table>
-    <tr>
-        <th style="border: none">
-            <form action="${pageContext.request.contextPath}/admin/manage_orders">
-                <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
-                <input type="hidden" name="order" value="${requestScope.order}"/>
-                <input type="submit" value="previous">
-            </form>
-        </th>
-        <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
+    <br/>
+    <br/>
+    <br/>
+    <table>
+        <tr>
             <th style="border: none">
                 <form action="${pageContext.request.contextPath}/admin/manage_orders">
-                    <input type="hidden" name="page" value="${i}"/>
+                    <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
-                    <c:if test="${requestScope.page.equals(i)}">
-                        <input style="color: red" type="submit" value="${i}">
-                    </c:if>
-
-                    <c:if test="${!requestScope.page.equals(i)}">
-                        <input type="submit" value="${i}">
-                    </c:if>
-
+                    <input type="submit" value="previous">
                 </form>
             </th>
-        </c:forEach>
-        <th style="border: none">
-            <form action="${pageContext.request.contextPath}/admin/manage_orders">
-                <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
-                <input type="hidden" name="order" value="${requestScope.order}"/>
-                <input type="submit" value="next">
-            </form>
-        </th>
-    </tr>
-</table>
+            <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
+                <th style="border: none">
+                    <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                        <input type="hidden" name="page" value="${i}"/>
+                        <input type="hidden" name="order" value="${requestScope.order}"/>
+                        <c:if test="${requestScope.page.equals(i)}">
+                            <input style="color: red" type="submit" value="${i}">
+                        </c:if>
 
-<br/>
-<br/>
-<br/>
+                        <c:if test="${!requestScope.page.equals(i)}">
+                            <input type="submit" value="${i}">
+                        </c:if>
 
-<form action="${pageContext.request.contextPath}/main.jsp">
-    <input type="submit" value="main">
-</form>
+                    </form>
+                </th>
+            </c:forEach>
+            <th style="border: none">
+                <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                    <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
+                    <input type="hidden" name="order" value="${requestScope.order}"/>
+                    <input type="submit" value="next">
+                </form>
+            </th>
+        </tr>
+    </table>
 
-<form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
-    <input type="submit" value="profile">
-</form>
+    <br/>
+    <br/>
+    <br/>
+
+    <form action="${pageContext.request.contextPath}/">
+        <input type="submit" value="main">
+    </form>
+
+    <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
+        <input type="submit" value="profile">
+    </form>
 
 
 </body>

@@ -24,11 +24,6 @@ public class LoginCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-//        if (login == null || login.equals("") || password == null || password.equals("")) {
-//            request.setAttribute("error", "You have not entered password or login, please input full information");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
-//            return;
-//        }
         UserValidator validator = UserValidator.createUserValidator();
         try{
            validator.checkLoginIsValid(login);

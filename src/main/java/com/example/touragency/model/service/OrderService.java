@@ -1,5 +1,6 @@
 package com.example.touragency.model.service;
 
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.enums.OrderStatus;
 
@@ -24,7 +25,7 @@ public interface OrderService extends Service<Order>{
 
     void changeStatus(int id, OrderStatus status);
 
-    void applyForOrder(int tourId, int clientId);
+    void applyForOrder(int tourId, int clientId) throws ServiceException;
 
     void confirmPaid(int id);
 

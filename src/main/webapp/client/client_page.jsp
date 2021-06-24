@@ -22,9 +22,13 @@
         <input type="submit" value="logout">
     </form><br/>
 
+
+    <form action="${pageContext.request.contextPath}/my_orders">
+        <input type="submit" value="show my orders"/>
+    </form>
     <br/><br/><br/>
 
-    <form action="${pageContext.request.contextPath}/main.jsp">
+    <form action="${pageContext.request.contextPath}">
         <input type="submit" value="main">
     </form>
 

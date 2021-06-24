@@ -285,7 +285,7 @@ Search by country:
 </form>
 
 
-<form action="${pageContext.request.contextPath}/main.jsp">
+<form action="${pageContext.request.contextPath}/">
     <input type="submit" value="main">
 </form>
 

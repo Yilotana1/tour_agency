@@ -1,5 +1,6 @@
 package com.example.touragency.controller.filters;
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.CommandUtility;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
@@ -22,42 +23,48 @@ public class AccessFilter implements Filter {
     private FilterConfig filterConfig;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
         this.filterConfig = filterConfig;
         accessMap.put(UNKNOWN,
-                Arrays.asList(filterConfig.getServletContext().getContextPath() + "/login",
-                        filterConfig.getServletContext().getContextPath() + "/login.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/main.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/",
-                        filterConfig.getServletContext().getContextPath() + "/error.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/register.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/register"));
+                Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGIN,
+                        filterConfig.getServletContext().getContextPath() + Path.LOGIN_FORM,
+                        filterConfig.getServletContext().getContextPath() + Path.MAIN,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.REGISTER_FORM,
+                        filterConfig.getServletContext().getContextPath() + Path.REGISTER,
+                        filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
+                        filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM));
 
         accessMap.put(CLIENT,
-                Arrays.asList(filterConfig.getServletContext().getContextPath() + "/logout",
-                        filterConfig.getServletContext().getContextPath() + "/main.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/client/client_page.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/error.jsp"));
+                Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
+                        filterConfig.getServletContext().getContextPath() + Path.MAIN,
+                        filterConfig.getServletContext().getContextPath() + Path.CLIENT_PAGE,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
+                        filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
+                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
 
         accessMap.put(MANAGER,
-                Arrays.asList(filterConfig.getServletContext().getContextPath() + "/logout",
-                        filterConfig.getServletContext().getContextPath() + "/main.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/manager/manager_page.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/error.jsp"));
+                Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
+                        filterConfig.getServletContext().getContextPath() + Path.MAIN,
+                        filterConfig.getServletContext().getContextPath() + Path.MANAGER_PAGE,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
+                        filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
+                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
 
         accessMap.put(ADMIN,
-                Arrays.asList(filterConfig.getServletContext().getContextPath() + "/logout",
-                        filterConfig.getServletContext().getContextPath() + "/main.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/admin/admin_page.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/error.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_users.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_users",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_orders",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_orders.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_tours",
-                        filterConfig.getServletContext().getContextPath() + "/admin/manage_tours.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/admin/create_tour.jsp",
-                        filterConfig.getServletContext().getContextPath() + "/admin/create_tour"));
+                Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
+                        filterConfig.getServletContext().getContextPath() + Path.MAIN,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_PAGE,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_USERS,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_ORDERS,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_TOURS,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_CREATE_TOUR,
+                        filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
+                        filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
+                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
     }
 
 
@@ -76,7 +83,7 @@ public class AccessFilter implements Filter {
         User user = (User)httpRequest.getSession().getAttribute("user");
         if ( user != null && !(CommandUtility.userIsLogged(httpRequest, user.getLogin())) ){
             httpRequest.getSession().invalidate();
-            httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/main.jsp");
+            httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/");
             return;
         }
 

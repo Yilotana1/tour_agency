@@ -40,8 +40,8 @@ public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<U
 
         if (id == null) return;
 
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String login = request.getParameter("login");

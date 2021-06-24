@@ -38,7 +38,7 @@ public interface Fields {
     String ORDER_STATUS_ID = Tables.ORDER + ".status_id";
     String ORDER_CLIENT_ID = Tables.ORDER + ".client_id";
     String ORDER_PRICE = Tables.ORDER + ".price";
-    String ORDER_TOUR_ID = Tables.ORDER + ".id";
+    String ORDER_TOUR_ID = Tables.ORDER + ".tour_id";
 
     //Hotel
     String HOTEL_ID = Tables.HOTEL + "." + Fields.ID;

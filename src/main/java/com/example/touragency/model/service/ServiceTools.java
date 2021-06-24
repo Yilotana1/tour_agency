@@ -22,8 +22,8 @@ public class ServiceTools {
         return tour.getMaxPlaces() - tour.getTakenPlaces() > 0;
     }
 
-    public static boolean isOutDated(Tour tour, Calendar currentDate) {
-        return tour.getStartDate().before(currentDate);
+    public static boolean isOutDated(Tour tour) {
+        return tour.getStartDate().before(Calendar.getInstance());
     }
 
     public static long countClientOrders(OrderDao orderDao, User client) {

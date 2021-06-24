@@ -45,7 +45,6 @@ public class JDBCOrderDao implements OrderDao {
             statement.setInt(2, order.getStatus().getId());
             statement.setInt(3, order.getClient().getId());
             statement.setBigDecimal(4, order.getPrice());
-            statement.setString(6, order.getTourName());
             statement.setInt(5, order.getTourId());
 
             statement.executeUpdate();
