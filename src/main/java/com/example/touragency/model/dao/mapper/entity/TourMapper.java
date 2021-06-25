@@ -20,7 +20,6 @@ public class TourMapper implements EntityMapper<Tour> {
                 rs.getString(Fields.TOUR_COUNTRY),
                 rs.getBigDecimal(Fields.TOUR_PRICE),
                 rs.getInt(Fields.TOUR_MAX_TICKETS),
-                rs.getInt(Fields.TOUR_MIN_TICKETS),
                 rs.getInt(Fields.TOUR_TAKEN_TICKETS),
                 Tools.getCalendarFromDate(rs.getDate(Fields.TOUR_START_DATE)),
                 Tools.getCalendarFromDate(rs.getDate(Fields.TOUR_END_DATE)),

@@ -67,12 +67,8 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
     private void checkTourIsCorrect(Tour tour, TourDao tourDao) throws ServiceException {
         Tour tourFromDb = tourDao.findById(tour.getId());
-        if (tour.getMaxPlaces() < tourFromDb.getMinPlaces() || tour.getMaxPlaces() < tourFromDb.getTakenPlaces()) {
+        if (tour.getMaxPlaces() < tourFromDb.getTakenPlaces()) {
             throw new ServiceException("Max-tickets cannot be less than min-tickets or taken tickets");
-        }
-
-        if (tour.getMinPlaces() > tourFromDb.getMaxPlaces()) {
-            throw new ServiceException("Min-tickets cannot be more than max-tickets");
         }
     }
 
@@ -108,7 +104,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void update(int id, String name, String country, BigDecimal price, int maxTickets, int minTickets, int takenTickets,
+    public void update(int id, String name, String country, BigDecimal price, int maxTickets, int takenTickets,
                        Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
                        String hotelName, String city) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
@@ -121,7 +117,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             if (hotel == null) throw new ServiceException("Hotel with specified name doesn't exist in database");
 
             Tour tour = Tour.createTour(id, name, country, price,
-                    maxTickets, minTickets, takenTickets,
+                    maxTickets, takenTickets,
                     startDate, endDate, category, status,
                     hotel, city);
 
@@ -362,8 +358,8 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
     @Override
     public void create(String name, String country, BigDecimal price,
-                       int maxTickets, int minTickets,
-                       Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
+                       int maxTickets, Calendar startDate, Calendar endDate,
+                       TourCategory category, TourStatus status,
                        String hotelName, String city) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);
@@ -375,7 +371,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             if (hotel == null) throw new ServiceException("This hotel doesn't exist in the system");
             if (tourDao.findByName(name) != null) throw new ServiceException("Tour with this name already exists");
             Tour tour = Tour.createTour(name, country, price, maxTickets,
-                    minTickets, INITIAL_TAKEN_TICKETS, startDate, endDate,
+                    INITIAL_TAKEN_TICKETS, startDate, endDate,
                     category, status, hotel, city);
 
             tourDao.create(tour);
@@ -458,79 +454,6 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
             Tour tour = tourDao.findById(id);
             tour.setPrice(price);
-            tourDao.update(tour);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    @Override
-    public void changeMaxPlaces(int id, int maxPlaces) {
-        try (TourDao tourDao = daoFactory.createTourDao()) {
-
-            Tour tour = tourDao.findById(id);
-            int minPlaces = tour.getMinPlaces();
-
-            if (maxPlaces < minPlaces) {
-            }
-
-            tour.setMaxPlaces(maxPlaces);
-            tourDao.update(tour);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    @Override
-    public void changeMinPlaces(int id, int minPlaces) {
-        try (TourDao tourDao = daoFactory.createTourDao()) {
-
-            Tour tour = tourDao.findById(id);
-            int maxPlaces = tour.getMaxPlaces();
-
-            if (minPlaces > maxPlaces) {
-            }
-
-            tour.setMinPlaces(minPlaces);
-            tourDao.update(tour);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    @Override
-    public void changeStartDate(int id, Calendar startDate) {
-        try (TourDao tourDao = daoFactory.createTourDao()) {
-
-            Tour tour = tourDao.findById(id);
-            Calendar endDate = tour.getEndDate();
-
-            if (startDate.after(endDate)) {
-            }
-
-            tour.setStartDate(startDate);
-            tourDao.update(tour);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    @Override
-    public void changeEndDate(int id, Calendar endDate) {
-        try (TourDao tourDao = daoFactory.createTourDao()) {
-
-            Tour tour = tourDao.findById(id);
-
-            Calendar startDate = tour.getEndDate();
-
-            if (endDate.before(startDate)) {
-            }
-
-            tour.setEndDate(endDate);
             tourDao.update(tour);
 
         } catch (SQLException throwables) {

@@ -62,6 +62,7 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_ORDERS,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_TOURS,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_CREATE_TOUR,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_CREATE_TOUR_FROM,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
@@ -97,6 +98,6 @@ public class AccessFilter implements Filter {
 
     @Override
     public void destroy() {
-        Filter.super.destroy();
+
     }
 }

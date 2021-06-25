@@ -71,7 +71,7 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
                 minTickets, maxTickets, takenTickets, startDate, endDate);
 
         tourService.update(Integer.parseInt(id), name, country, new BigDecimal(price), Integer.parseInt(maxTickets),
-                Integer.parseInt(minTickets), Integer.parseInt(takenTickets), Tools.getCalendarFromString(startDate),
+                Integer.parseInt(takenTickets), Tools.getCalendarFromString(startDate),
                 Tools.getCalendarFromString(endDate), TourCategory.getById(Integer.parseInt(category)),
                 TourStatus.getById(Integer.parseInt(status)), hotelName, city);
     }

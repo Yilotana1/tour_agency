@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -11,65 +12,63 @@
 <head>
     <title>Title</title>
     <style>
-        th {
-            border: 1px solid black;
-        }
-
-        td {
-            border: 10px groove black;
-        }
+        <jsp:include page="/styles/style.css"/>
     </style>
 </head>
 <body>
 
-<b style="color:red">Information about tour:</b><br/>
+<jsp:include page="/html/locale_buttons.html"/>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
+<b style="color:red"><fmt:message key="information_about_tour"/></b><br/>
 <table>
     <tr>
-        <th>Name:</th>
+        <th><fmt:message key="name_1"/> </th>
         <th>${requestScope.tour.name}</th>
     </tr>
     <tr>
-        <th>Country:</th>
+        <th><fmt:message key="country_1"/></th>
         <th>${requestScope.tour.country}</th>
     </tr>
     <tr>
-        <th>Category:</th>
+        <th><fmt:message key="category_1"/></th>
         <th>${requestScope.tour.category}</th>
     </tr>
     <tr>
-        <th>Start:</th>
+        <th><fmt:message key="start_1"/></th>
         <th>${requestScope.tour.startDateFormat}</th>
     </tr>
     <tr>
-        <th>End:</th>
+        <th><fmt:message key="end_1"/></th>
         <th>${requestScope.tour.endDateFormat}</th>
     </tr>
 
     <tr>
-        <th>Price:</th>
+        <th><fmt:message key="price_1"/></th>
         <th>${requestScope.tour.price}</th>
     </tr>
 </table>
 
 <br/>
 <br/>
-<b style="color: red">Information about hotel:</b><br/>
+<b style="color: red"><fmt:message key="information_about_hotel"/></b><br/>
 
 <table>
     <tr>
-        <th>Name:</th>
+        <th><fmt:message key="name_1"/> </th>
         <th>${requestScope.tour.hotel.name}</th>
     </tr>
     <tr>
-        <th>Address:</th>
+        <th><fmt:message key="address_1"/></th>
         <th>${requestScope.tour.hotel.address}</th>
     </tr>
     <tr>
-        <th>City:</th>
+        <th><fmt:message key="city_1"/></th>
         <th>${requestScope.tour.hotel.city}</th>
     </tr>
     <tr>
-        <th>Stars:</th>
+        <th><fmt:message key="stars_1"/></th>
         <th>${requestScope.tour.hotel.stars}</th>
     </tr>
 </table>
@@ -78,7 +77,8 @@
 <br/>
 <form action="${pageContext.request.contextPath}/order">
     <input type="hidden" name="tourId" value="${requestScope.tour.id}"/>
-    <input type="submit" value="order"/>
+    <fmt:message key="order" var="order"/>
+    <input type="submit" value="${order}"/>
 </form>
 
 <h3 style="color:red">${requestScope.order}</h3>

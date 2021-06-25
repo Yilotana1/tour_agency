@@ -10,6 +10,7 @@ public interface Path {
       String ADMIN_MANAGE_ORDERS ="/admin/manage_orders";
       String ADMIN_MANAGE_TOURS ="/admin/manage_tours";
       String ADMIN_CREATE_TOUR ="/admin/create_tour";
+      String ADMIN_CREATE_TOUR_FROM ="/admin/create_tour.jsp";
       String TOUR_ORDER ="/order";
       String ORDER_FORM ="/order_form";
       String MY_ORDERS ="/my_orders";

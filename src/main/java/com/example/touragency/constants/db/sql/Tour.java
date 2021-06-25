@@ -71,14 +71,14 @@ public interface Tour {
 
     String SQL_INSERT_TOUR = "INSERT INTO " + Tables.TOUR +  "("
             + Fields.TOUR_NAME + ", " + Fields.TOUR_COUNTRY + ", " +  Fields.TOUR_PRICE + ", " + Fields.TOUR_MAX_TICKETS + ", "
-            + Fields.TOUR_MIN_TICKETS + ", " + Fields.TOUR_TAKEN_TICKETS + ", " + Fields.TOUR_START_DATE + ", "
+            + ", " + Fields.TOUR_TAKEN_TICKETS + ", " + Fields.TOUR_START_DATE + ", "
             + Fields.TOUR_END_DATE + ", " + Fields.TOUR_CATEGORY_ID + ", " + Fields.TOUR_STATUS_ID + ", "
             + Fields.TOUR_HOTEL_ID + ", " + Fields.TOUR_CITY
             + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     String SQL_UPDATE_TOUR = "UPDATE " + Tables.TOUR + " SET "
             + Fields.TOUR_NAME + "=?, " + Fields.TOUR_COUNTRY + "=?, " + Fields.TOUR_PRICE + "=?, "
-            + Fields.TOUR_MAX_TICKETS + "=?, " + Fields.TOUR_MIN_TICKETS + "=?, " + Fields.TOUR_TAKEN_TICKETS
+            + Fields.TOUR_MAX_TICKETS + "=?, " + Fields.TOUR_TAKEN_TICKETS
             + "=?, " + Fields.TOUR_START_DATE + "=?, " + Fields.TOUR_END_DATE + "=?, " + Fields.TOUR_CATEGORY_ID +
             "=?, " + Fields.TOUR_STATUS_ID + "=?, " + Fields.TOUR_HOTEL_ID + "=?, "
             + Fields.TOUR_CITY + "=?" + " WHERE " + Fields.ID + "=?;";

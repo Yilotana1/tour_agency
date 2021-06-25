@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -22,52 +23,58 @@
             width: 50%;
         }
 
+        <jsp:include page="/styles/style.css"/>
 
     </style>
 </head>
 <body>
+<jsp:include page="/html/locale_buttons.html"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
+
+
 <fieldset>
-<legend>Please, specify information about tour to insert into the system</legend>
+<legend><fmt:message key="specify_tour_inform"/></legend>
 <form action="${pageContext.request.contextPath}/admin/create_tour">
     <table>
         <tr>
-            <th>Name:</th>
+            <th><fmt:message key="name_1"/>:</th>
             <th><input type="text" name="name"/></th>
         </tr>
         <tr>
-            <th>Country:</th>
+            <th><fmt:message key="country_1"/>:</th>
             <th><input type="text" name="country"/></th>
         </tr>
         <tr>
-            <th>City:</th>
+            <th><fmt:message key="city_1"/>:</th>
             <th><input type="text" name="city"/></th>
         </tr>
         <tr>
-            <th>Price:</th>
+            <th><fmt:message key="price_1"/>:</th>
             <th><input type="text" name="price"/></th>
         </tr>
         <tr>
-            <th>Hotel:</th>
+            <th><fmt:message key="hotel_1"/>:</th>
             <th><input type="text" name="hotelName"/></th>
         </tr>
         <tr>
-            <th>Max tickets:</th>
+            <th><fmt:message key="max_tickets_1"/>:</th>
             <th><input type="text" name="maxTickets"/></th>
         </tr>
         <tr>
-            <th>Min tickets:</th>
+            <th><fmt:message key="min_tickets_1"/>:</th>
             <th><input type="text" name="minTickets"/></th>
         </tr>
         <tr>
-            <th>Start-date:</th>
+            <th><fmt:message key="start_date_1"/>:</th>
             <th><input type="date" name="startDate"/></th>
         </tr>
         <tr>
-            <th>End-date:</th>
+            <th><fmt:message key="end_date_1"/>:</th>
             <th><input type="date" name="endDate"/></th>
         </tr>
         <tr>
-            <th>Category:</th>
+            <th><fmt:message key="category_1"/>:</th>
             <th><select name="category">
                     <option selected="${TourCategory.REST}" value="${TourCategory.REST.id}">${TourCategory.REST}</option>
                     <option value="${TourCategory.EXCURSION.id}">${TourCategory.EXCURSION}</option>
@@ -75,7 +82,7 @@
             </select></th>
         </tr>
         <tr>
-            <th>Status:</th>
+            <th><fmt:message key="status_1"/>:</th>
             <th><select name="status">
                 <option selected="${TourStatus.BURNING.id}" value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
                 <option value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
@@ -84,14 +91,16 @@
     </table>
     <br/><br/>
 
-    <input type="submit" value="create"/>
+    <fmt:message key="create" var="create"/>
+    <input type="submit" value="${create}"/>
     <br/><br/>
 
     <span style="color:red">${requestScope.error}</span>
 
 </form>
 <form action="${pageContext.request.contextPath}/">
-    <input type="submit" value="main"/>
+    <fmt:message key="main" var="main"/>
+    <input type="submit" value="${main}"/>
 </form>
 </fieldset>
 </body>

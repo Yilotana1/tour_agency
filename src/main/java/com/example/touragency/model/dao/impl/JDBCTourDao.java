@@ -50,14 +50,13 @@ public class JDBCTourDao implements TourDao {
             statement.setString(2, tour.getCountry());
             statement.setBigDecimal(3, tour.getPrice());
             statement.setInt(4, tour.getMaxPlaces());
-            statement.setInt(5, tour.getMinPlaces());
-            statement.setInt(6, tour.getTakenPlaces());
-            statement.setDate(7, new Date(tour.getStartDate().getTimeInMillis()));
-            statement.setDate(8, new Date(tour.getEndDate().getTimeInMillis()));
-            statement.setInt(9, tour.getCategory().getId());
-            statement.setInt(10, tour.getStatus().getId());
-            statement.setInt(11, tour.getHotel().getId());
-            statement.setString(12, tour.getCity());
+            statement.setInt(5, tour.getTakenPlaces());
+            statement.setDate(6, new Date(tour.getStartDate().getTimeInMillis()));
+            statement.setDate(7, new Date(tour.getEndDate().getTimeInMillis()));
+            statement.setInt(8, tour.getCategory().getId());
+            statement.setInt(9, tour.getStatus().getId());
+            statement.setInt(10, tour.getHotel().getId());
+            statement.setString(11, tour.getCity());
             statement.executeUpdate();
             return Tools.getGeneratedId(statement);
         } catch (SQLException throwables) {
@@ -415,15 +414,14 @@ public class JDBCTourDao implements TourDao {
             statement.setString(2, tour.getCountry());
             statement.setBigDecimal(3, tour.getPrice());
             statement.setInt(4, tour.getMaxPlaces());
-            statement.setInt(5, tour.getMinPlaces());
-            statement.setInt(6, tour.getTakenPlaces());
-            statement.setDate(7, new Date(tour.getStartDate().getTimeInMillis()));
-            statement.setDate(8, new Date(tour.getEndDate().getTimeInMillis()));
-            statement.setInt(9, tour.getCategory().getId());
-            statement.setInt(10, tour.getStatus().getId());
-            statement.setInt(11, tour.getHotel().getId());
-            statement.setString(12, tour.getCity());
-            statement.setInt(13, tour.getId());
+            statement.setInt(5, tour.getTakenPlaces());
+            statement.setDate(6, new Date(tour.getStartDate().getTimeInMillis()));
+            statement.setDate(7, new Date(tour.getEndDate().getTimeInMillis()));
+            statement.setInt(8, tour.getCategory().getId());
+            statement.setInt(9, tour.getStatus().getId());
+            statement.setInt(10, tour.getHotel().getId());
+            statement.setString(11, tour.getCity());
+            statement.setInt(12, tour.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

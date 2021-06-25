@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -9,9 +10,15 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        <jsp:include page="styles/style.css"/>
+    </style>
 </head>
 <body>
+<jsp:include page="html/locale_buttons.html"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
 <h1>404</h1>
-<h2>You do not have permission to visit this page</h2>
+<h2><fmt:message key="404Permission"/></h2>
 </body>
 </html>

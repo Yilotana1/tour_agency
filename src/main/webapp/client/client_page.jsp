@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -9,28 +10,41 @@
 <html>
 <head>
     <title>Account</title>
+
+    <style>
+        <jsp:include page="/styles/style.css"/>
+    </style>
 </head>
 <body>
-    <h1>Welcome in the system ${user.firstname} ${user.lastname}</h1>
-    <h2>Information about you:</h2><br/>
-    <b>phone:</b> ${user.phone},<br/>
-    <b>email:</b> ${user.email},<br/>
-    <b>status:</b> ${user.status},<br/>
-    <b>login:</b> ${user.login} <br/><br/><br/>
+<jsp:include page="/html/locale_buttons.html"/>
 
-    <form action="${pageContext.request.contextPath}/logout">
-        <input type="submit" value="logout">
-    </form><br/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 
+<fmt:setBundle basename="message"/>
 
-    <form action="${pageContext.request.contextPath}/my_orders">
-        <input type="submit" value="show my orders"/>
-    </form>
-    <br/><br/><br/>
+<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>
+<h2><fmt:message key="information_about_you"/></h2><br/>
+<b><fmt:message key="phone_1"/></b> ${user.phone},<br/>
+<b><fmt:message key="phone_1"/></b> ${user.email},<br/>
+<b><fmt:message key="status_1"/></b> ${user.status},<br/>
+<b><fmt:message key="login_label"/></b> ${user.login} <br/><br/><br/>
 
-    <form action="${pageContext.request.contextPath}">
-        <input type="submit" value="main">
-    </form>
+<fmt:message key="logout" var="logout"/>
+<form action="${pageContext.request.contextPath}/logout">
+    <input type="submit" value="${logout}">
+</form>
+<br/>
+
+<fmt:message key="show_my_orders" var="show"/>
+<form action="${pageContext.request.contextPath}/my_orders">
+    <input type="submit" value="${show}"/>
+</form>
+<br/><br/><br/>
+
+<fmt:message key="main" var="main"/>
+<form action="${pageContext.request.contextPath}">
+    <input type="submit" value="${main}">
+</form>
 
 </body>
 </html>

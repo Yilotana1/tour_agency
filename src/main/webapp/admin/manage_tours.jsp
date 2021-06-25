@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.touragency.model.entity.enums.TourCategory" %>
 <%@ page import="com.example.touragency.model.entity.enums.TourStatus" %>
 <%@ page import="com.example.touragency.controller.commands.Paginator" %>
@@ -17,141 +18,153 @@
     <style>
 
         input[type=text] {
-            width: 100px
+            width: 120px;
         }
 
-        th {
-            border: 1px solid black;
-        }
+        <jsp:include page="/styles/style.css"/>
 
-        td {
-            border: 10px groove black;
-        }
     </style>
 </head>
-<br>
+<body>
+<jsp:include page="/html/locale_buttons.html"/>
 
-<h1>Tours</h1>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
+
+
+<h1><fmt:message key="tours"/></h1>
+
 <br/>
 
-Search by country:
+<fmt:message key="search" var="search"/>
+<fmt:message key="search_by_country"/>
 <form action="${pageContext.request.contextPath}/admin/manage_tours">
     <input type="text" name="country"/>
     <input type="hidden" name="order" value="country"/>
-    <input type="submit" value="search"/>
+    <input type="submit" value="${search}"/>
 </form>
 
 <br/>
 
-<span style="color:red"><b>WARNING, if you delete this tour, all orders will be deleted too</b></span>
+<fmt:message key="delete" var="delete"/>
+<span style="color:red"><b><fmt:message key="warning_delete_tour"/></b></span>
 <br/>
 <form action="${pageContext.request.contextPath}/admin/manage_tours">
     <input type="text" name="deleteTour"/>
-    <input type="submit" value="delete"/>
+    <input type="submit" value="${delete}"/>
 </form>
 
 <br/>
 
-<b>Show first:</b>
+<b><fmt:message key="show_first"/></b>
 <br/>
 <br/>
 <table>
     <tr>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="burning" var="burning"/>
                 <c:if test="${requestScope.order.equals('burning')}">
-                    <input style="color: red" type="submit" value="burning"/>
+                    <input style="color: red" type="submit" value="${burning}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('burning')}">
-                    <input type="submit" value="burning"/>
+                    <input type="submit" value="${burning}"/>
                 </c:if>
                 <input type="hidden" value="burning" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="non_burning" var="non_burning"/>
                 <c:if test="${requestScope.order.equals('non_burning')}">
-                    <input style="color: red" type="submit" value="non burning"/>
+                    <input style="color: red" type="submit" value="${non_burning}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('non_burning')}">
-                    <input type="submit" value="non burning"/>
+                    <input type="submit" value="${non_burning}"/>
                 </c:if>
                 <input type="hidden" value="non_burning" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="highest_stars" var="highest_stars"/>
                 <c:if test="${requestScope.order.equals('high_hotel_stars')}">
-                    <input style="color: red" type="submit" value="high hotel stars"/>
+                    <input style="color: red" type="submit" value="${highest_stars}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('high_hotel_stars')}">
-                    <input type="submit" value="high hotel stars"/>
+                    <input type="submit" value="${highest_stars}"/>
                 </c:if>
                 <input type="hidden" value="high_hotel_stars" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="lowest_stars" var="lowest_stars"/>
                 <c:if test="${requestScope.order.equals('low_hotel_stars')}">
-                    <input style="color: red" type="submit" value="low hotel stars"/>
+                    <input style="color: red" type="submit" value="${lowest_stars}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('low_hotel_stars')}">
-                    <input type="submit" value="low hotel stars"/>
+                    <input type="submit" value="${lowest_stars}"/>
                 </c:if>
                 <input type="hidden" value="low_hotel_stars" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="highest_price" var="highest_price"/>
                 <c:if test="${requestScope.order.equals('high_price')}">
-                    <input style="color: red" type="submit" value="high price"/>
+                    <input style="color: red" type="submit" value="${highest_price}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('high_price')}">
-                    <input type="submit" value="high price"/>
+                    <input type="submit" value="${highest_price}"/>
                 </c:if>
                 <input type="hidden" value="high_price" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="lowest_price" var="lowest_price"/>
                 <c:if test="${requestScope.order.equals('low_price')}">
-                    <input style="color: red" type="submit" value="low price"/>
+                    <input style="color: red" type="submit" value="${lowest_price}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('low_price')}">
-                    <input type="submit" value="low price"/>
+                    <input type="submit" value="${lowest_price}"/>
                 </c:if>
                 <input type="hidden" value="low_price" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="excursion" var="excursion"/>
                 <c:if test="${requestScope.order.equals('excursion')}">
-                    <input style="color: red" type="submit" value="excursion"/>
+                    <input style="color: red" type="submit" value="${excursion}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('excursion')}">
-                    <input type="submit" value="excursion"/>
+                    <input type="submit" value="${excursion}"/>
                 </c:if>
                 <input type="hidden" value="excursion" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="rest" var="rest"/>
                 <c:if test="${requestScope.order.equals('rest')}">
-                    <input style="color: red" type="submit" value="rest"/>
+                    <input style="color: red" type="submit" value="${rest}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('rest')}">
-                    <input type="submit" value="rest"/>
+                    <input type="submit" value="${rest}"/>
                 </c:if>
                 <input type="hidden" value="rest" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <fmt:message key="shopping" var="shopping"/>
                 <c:if test="${requestScope.order.equals('shopping')}">
-                    <input style="color: red" type="submit" value="shopping"/>
+                    <input style="color: red" type="submit" value="${shopping}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('shopping')}">
-                    <input type="submit" value="shopping"/>
+                    <input type="submit" value="${shopping}"/>
                 </c:if>
                 <input type="hidden" value="shopping" name="order"/>
             </form>
@@ -163,20 +176,23 @@ Search by country:
 <br/>
 <br/>
 
+
 <table>
     <tr>
-        <th style="color: red"><b>NAME</b></th>
-        <th style="color: red"><b>COUNTRY</b></th>
-        <th style="color: red"><b>CITY</b></th>
-        <th style="color: red"><b>PRICE</b></th>
-        <th style="color: red"><b>HOTEL NAME</b></th>
-        <th style="color: red"><b>MAX TICKETS</b></th>
-        <th style="color: red"><b>MIN TICKETS</b></th>
-        <th style="color: red"><b>TAKEN TICKETS</b></th>
-        <th style="color: red"><b>START DATE</b></th>
-        <th style="color: red"><b>END DATE</b></th>
-        <th style="color: red"><b>CATEGORY</b></th>
-        <th style="color: red"><b>STATUS</b></th>
+        <th style="color: red"><b><fmt:message key="name"/></b></th>
+        <th style="color: red"><b><fmt:message key="country"/></b></th>
+        <th style="color: red"><b><fmt:message key="city"/></b></th>
+        <th style="color: red"><b>
+            <fmt:message key="UAH" var="UAH"/>
+            <fmt:message key="price"/> (${UAH})
+        </b></th>
+        <th style="color: red"><b><fmt:message key="hotel_name"/></b></th>
+        <th style="color: red"><b><fmt:message key="max_tickets"/></b></th>
+        <th style="color: red"><b><fmt:message key="taken_tickets"/></b></th>
+        <th style="color: red"><b><fmt:message key="start_date"/></b></th>
+        <th style="color: red"><b><fmt:message key="end_date"/></b></th>
+        <th style="color: red"><b><fmt:message key="category"/></b></th>
+        <th style="color: red"><b><fmt:message key="status"/></b></th>
     </tr>
 
     <c:forEach var="tour" items="${requestScope.items}">
@@ -192,7 +208,6 @@ Search by country:
                     <input type="hidden" name="hotelId" value="${tour.hotel.id}"/>
                 </th>
                 <th><input type="text" name="maxTickets" value="${tour.maxPlaces}"/></th>
-                <th><input type="text" name="minTickets" value="${tour.minPlaces}"/></th>
                 <th><input type="hidden" name="takenTickets" value="${tour.takenPlaces}"/>${tour.takenPlaces}</th>
                 <th><input type="date" name="startDate" value="${tour.startDateFormat}"/></th>
                 <th><input type="date" name="endDate" value="${tour.endDateFormat}"/></th>
@@ -229,8 +244,8 @@ Search by country:
                         </c:if>
                     </select>
                 </th>
-
-                <th><input type="submit" value="update"/></th>
+                <fmt:message key="update" var="update"/>
+                <th><input type="submit" value="${update}"/></th>
             </tr>
         </form>
 
@@ -242,13 +257,15 @@ Search by country:
 
 <br/><br/>
 
+<fmt:message key="previous" var="previous"/>
+<fmt:message key="next" var="next"/>
 <table>
     <tr>
         <th style="border: none">
             <form action="${pageContext.request.contextPath}/admin/manage_tours">
                 <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                 <input type="hidden" name="order" value="${requestScope.order}"/>
-                <input type="submit" value="previous">
+                <input type="submit" value="${previous}">
             </form>
         </th>
         <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
@@ -274,25 +291,28 @@ Search by country:
                 <c:if test="${requestScope.order.equals('country')}">
                     <input type="hidden" name="country" value="${requestScope.country}">
                 </c:if>
-                <input type="submit" value="${Paginator.NEXT_PAGE}">
+                <input type="submit" value="${next}">
             </form>
         </th>
     </tr>
 </table>
 
+
+<fmt:message key="create_tour" var="create_tour"/>
+<fmt:message key="main" var="main"/>
+<fmt:message key="profile" var="profile"/>
 <form action="${pageContext.request.contextPath}/admin/create_tour.jsp">
-    <input type="submit" value="create tour">
+    <input type="submit" value="${create_tour}">
 </form>
 
 
 <form action="${pageContext.request.contextPath}/">
-    <input type="submit" value="main">
+    <input type="submit" value="${main}">
 </form>
 
 <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
-    <input type="submit" value="profile">
+    <input type="submit" value="${profile}">
 </form>
-
 
 
 </body>

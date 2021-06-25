@@ -42,7 +42,7 @@ public class CreateTourCommand implements Command {
                     minTickets, maxTickets, String.valueOf(TourServiceImpl.INITIAL_TAKEN_TICKETS), startDate, endDate);
 
             tourService.create(name, country, new BigDecimal(price), Integer.parseInt(maxTickets),
-                    Integer.parseInt(minTickets), Tools.getCalendarFromString(startDate),
+                    Tools.getCalendarFromString(startDate),
                     Tools.getCalendarFromString(endDate), category, status, hotelName, city);
 
         } catch (InvalidDataException | ServiceException e) {

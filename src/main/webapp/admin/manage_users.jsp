@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.touragency.model.entity.enums.UserStatus" %>
 <%@ page import="com.example.touragency.model.entity.enums.Role" %>
 <%@ page import="com.example.touragency.controller.commands.Paginator" %>
@@ -13,62 +14,80 @@
 <html>
 <body>
 
-<h1>Users</h1>
+<head>
+    <style>
+        <jsp:include page="/styles/style.css"/>
+    </style>
+
+</head>
+<jsp:include page="/html/locale_buttons.html"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
+
+
+<h1><fmt:message key="Users"/></h1>
 
 <br/>
 
+<fmt:message key="search" var="search"/>
+<fmt:message key="search_by_login"/>
 <form>
     <input type="text" name="search"/>
-    <input type="submit" value="search"/>
+    <input type="submit" value="${search}"/>
 </form>
 
 <br/>
 
-<b>Show first:</b>
+
+<b><fmt:message key="show_first"/> </b>
 <br/>
 <br/>
 <table>
     <tr>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_users">
+                <fmt:message key="clients" var="clients"/>
                 <c:if test="${requestScope.order.equals('clients')}">
-                    <input style="color: red" type="submit" value="clients"/>
+                    <input style="color: red" type="submit" value="${clients}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('clients')}">
-                    <input type="submit" value="clients"/>
+                    <input type="submit" value="${clients}"/>
                 </c:if>
                 <input type="hidden" value="clients" name="order"/>
             </form>
         </td>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_users">
+                <fmt:message key="managers" var="managers"/>
                 <c:if test="${requestScope.order.equals('managers')}">
-                    <input style="color: red" type="submit" value="manager"/>
+                    <input style="color: red" type="submit" value="${managers}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('managers')}">
-                    <input type="submit" value="managers"/>
+                    <input type="submit" value="${managers}"/>
                 </c:if>
                 <input type="hidden" value="managers" name="order"/>
             </form>
         </td>
         <td style="border:none">
+            <fmt:message key="non_blocked" var="non_blocked"/>
             <form action="${pageContext.request.contextPath}/admin/manage_users">
                 <c:if test="${requestScope.order.equals('non_blocked')}">
-                    <input style="color: red" type="submit" value="non_blocked"/>
+                    <input style="color: red" type="submit" value="${non_blocked}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('non_blocked')}">
-                    <input type="submit" value="non_blocked"/>
+                    <input type="submit" value="${non_blocked}"/>
                 </c:if>
                 <input type="hidden" value="non_blocked" name="order"/>
             </form>
         </td>
         <td style="border:none">
+            <fmt:message key="blocked" var="blocked"/>
             <form action="${pageContext.request.contextPath}/admin/manage_users">
                 <c:if test="${requestScope.order.equals('blocked')}">
-                    <input style="color: red" type="submit" value="blocked"/>
+                    <input style="color: red" type="submit" value="${blocked}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('blocked')}">
-                    <input type="submit" value="blocked"/>
+                    <input type="submit" value="${blocked}"/>
                 </c:if>
                 <input type="hidden" value="blocked" name="order"/>
             </form>
@@ -81,13 +100,13 @@
 
 <table>
     <tr>
-        <th style="color: red"><b>FIRSTNAME</b></th>
-        <th style="color: red"><b>LASTNAME</b></th>
-        <th style="color: red"><b>PHONE</b></th>
-        <th style="color: red"><b>LOGIN</b></th>
-        <th style="color: red"><b>STATUS</b></th>
-        <th style="color: red"><b>EMAIL</b></th>
-        <th style="color: red"><b>ROLE</b></th>
+        <th style="color: red"><b><fmt:message key="FIRSTNAME"/></b></th>
+        <th style="color: red"><b><fmt:message key="LASTNAME"/></b></th>
+        <th style="color: red"><b><fmt:message key="PHONE"/></b></th>
+        <th style="color: red"><b><fmt:message key="LOGIN"/></b></th>
+        <th style="color: red"><b><fmt:message key="STATUS"/></b></th>
+        <th style="color: red"><b><fmt:message key="EMAIL"/></b></th>
+        <th style="color: red"><b><fmt:message key="ROLE"/></b></th>
     </tr>
     <c:forEach var="client" items="${requestScope.items}">
         <form action="${pageContext.request.contextPath}/admin/manage_users">
@@ -161,7 +180,8 @@
                     <th>
                         <input type="hidden" name="order" value="${requestScope.order}">
                         <input type="hidden" name="${Paginator.PAGE}" value="${requestScope.page}">
-                        <input type="submit" value="update"/>
+                        <fmt:message key="update" var="update"/>
+                        <input type="submit" value="${update}"/>
                     </th>
                 </c:if>
             </tr>
@@ -178,7 +198,8 @@
             <form action="${pageContext.request.contextPath}/admin/manage_users">
                 <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                 <input type="hidden" name="order" value="${requestScope.order}"/>
-                <input type="submit" value="previous">
+                <fmt:message key="previous" var="previous"/>
+                <input type="submit" value="${previous}">
             </form>
         </th>
         <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
@@ -201,7 +222,8 @@
             <form action="${pageContext.request.contextPath}/admin/manage_users">
                 <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
                 <input type="hidden" name="order" value="${requestScope.order}"/>
-                <input type="submit" value="next">
+                <fmt:message key="next" var="next"/>
+                <input type="submit" value="${next}">
             </form>
         </th>
     </tr>
@@ -211,11 +233,13 @@
 <br/>
 <br/>
 <form action="${pageContext.request.contextPath}/">
-    <input type="submit" value="main">
+    <fmt:message key="main" var="main"/>
+    <input type="submit" value="${main}">
 </form>
 
 <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
-    <input type="submit" value="profile">
+    <fmt:message key="profile" var="profile"/>
+    <input type="submit" value="${profile}">
 </form>
 
 </body>

@@ -4,6 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.exceptions.*;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.service.factory.ServiceFactory;
@@ -49,19 +50,19 @@ public class LoginCommand implements Command {
                 case CLIENT: {
                     CommandUtility.setUserRole(request, CLIENT);
                     request.getSession().setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + "/client/client_page.jsp");
+                    response.sendRedirect(request.getContextPath() + Path.CLIENT_PAGE);
                     break;
                 }
                 case MANAGER: {
                     CommandUtility.setUserRole(request, MANAGER);
                     request.getSession().setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + "/manager/manager_page.jsp");
+                    response.sendRedirect(request.getContextPath() + Path.MANAGER_PAGE);
                     break;
                 }
                 case ADMIN: {
                     CommandUtility.setUserRole(request, ADMIN);
                     request.getSession().setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + "/admin/admin_page.jsp");
+                    response.sendRedirect(request.getContextPath() + Path.ADMIN_PAGE);
                     break;
                 }
             }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -9,15 +10,25 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        <jsp:include page="styles/style.css"/>
+    </style>
 </head>
 <body>
+<jsp:include page="html/locale_buttons.html"/>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+
+<fmt:setBundle basename="message"/>
+
 <h2 style="color: red">${requestScope.message}</h2>
 
 ${requestScope.errorMessageTour}<br/>
 ${requestScope.errorMessageUser}
 
+<fmt:message key="main" var="main"/>
 <form action="${pageContext.request.contextPath}/">
-    <input type="submit" value="main">
+    <input type="submit" value="${main}">
 </form>
 </body>
 </html>

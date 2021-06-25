@@ -20,11 +20,10 @@ public interface TourService extends Service<Tour>{
     Tour getByName(String name);
 
     void create(String name, String country, BigDecimal price,
-                int maxTickets, int minTickets,
-                Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
+                int maxTickets, Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
                 String hotelName, String city) throws ServiceException;
 
-    void update(int id, String name, String country, BigDecimal price, int maxTickets, int minTickets,
+    void update(int id, String name, String country, BigDecimal price, int maxTickets,
                            int takenTickets, Calendar startDate, Calendar endDate, TourCategory category,
                            TourStatus status, String hotelName, String city) throws ServiceException;
 
@@ -72,14 +71,6 @@ public interface TourService extends Service<Tour>{
     void changeName(int id, String name);
 
     void changePrice(int id, BigDecimal price);
-
-    void changeMaxPlaces(int id, int max_places);
-
-    void changeMinPlaces(int id, int min_places);
-
-    void changeStartDate(int id, Calendar startDate);
-
-    void changeEndDate(int id, Calendar endDate);
 
     void changeCategory(int id, TourCategory category);
 

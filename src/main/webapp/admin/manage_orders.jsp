@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.touragency.model.entity.enums.OrderStatus" %>
 <%@ page import="com.example.touragency.controller.commands.Paginator" %>
 <%--
@@ -15,51 +16,56 @@
 
     <style>
 
-        th {
-            border: 1px solid black;
-        }
+        <jsp:include page="/styles/style.css"/>
 
-        td {
-            border: 10px groove black;
-        }
     </style>
 
 </head>
 <body>
-<h1>Orders</h1>
+<jsp:include page="/html/locale_buttons.html"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
+
+<h1><fmt:message key="orders"/></h1>
+
+
 
 <br/>
-Search by client login:
+<fmt:message key="select_by_client_login"/>
 <form>
+    <fmt:message key="search" var="search"/>
     <input type="text" name="search"/>
-    <input type="submit" value="search"/>
+    <input type="submit" value="${search}"/>
 </form>
 
 <br/>
 
-<b>Show first:</b>
+<fmt:message key="show_first" var="show"/>
+<b>${show}</b>
 <br/>
 <br/>
 <table>
     <tr>
         <td style="border:none">
             <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                <fmt:message key="opened" var="opened"/>
                 <c:if test="${requestScope.order.equals('opened')}">
-                    <input style="color: red" type="submit" value="opened"/>
+                    <input style="color: red" type="submit" value="${opened}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('opened')}">
-                    <input type="submit" value="opened"/>
+                    <input type="submit" value="${opened}"/>
                 </c:if>
                 <input type="hidden" value="opened" name="order"/>
             </form>
         </td>
         <td style="border:none">
+            <fmt:message key="paid" var="paid"/>
             <form action="${pageContext.request.contextPath}/admin/manage_orders">
                 <c:if test="${requestScope.order.equals('paid')}">
-                    <input style="color: red" type="submit" value="paid"/>
+                    <input style="color: red" type="submit" value="${paid}"/>
                 </c:if>
                 <c:if test="${!requestScope.order.equals('paid')}">
-                    <input type="submit" value="paid"/>
+                    <input type="submit" value="${paid}"/>
                 </c:if>
                 <input type="hidden" value="paid" name="order"/>
             </form>
@@ -73,16 +79,16 @@ Search by client login:
 <table>
 
     <tr>
-        <th style="color: red"><b>ID</b></th>
-        <th style="color: red"><b>TOUR</b></th>
-        <th style="color: red"><b>FIRSTNAME</b></th>
-        <th style="color: red"><b>LASTNAME</b></th>
-        <th style="color: red"><b>LOGIN</b></th>
-        <th style="color: red"><b>PHONE</b></th>
-        <th style="color: red"><b>EMAIL</b></th>
-        <th style="color: red"><b>CREATION DATA</b></th>
-        <th style="color: red"><b>PRICE</b></th>
-        <th style="color: red"><b>ORDER STATUS</b></th>
+        <th style="color: red"><b><fmt:message key="id"/></b></th>
+        <th style="color: red"><b><fmt:message key="tour"/></b></th>
+        <th style="color: red"><b><fmt:message key="FIRSTNAME"/></b></th>
+        <th style="color: red"><b><fmt:message key="LASTNAME"/></b></th>
+        <th style="color: red"><b><fmt:message key="LOGIN"/></b></th>
+        <th style="color: red"><b><fmt:message key="PHONE"/></b></th>
+        <th style="color: red"><b><fmt:message key="EMAIL"/></b></th>
+        <th style="color: red"><b><fmt:message key="creation_data"/> </b></th>
+        <th style="color: red"><b><fmt:message key="price"/></b></th>
+        <th style="color: red"><b><fmt:message key="order_status"/></b></th>
     </tr>
 
     <c:forEach var="order" items="${requestScope.items}">
@@ -98,9 +104,11 @@ Search by client login:
             <th>${order.client.phone}</th>
             <th>${order.client.email}</th>
             <th>${order.dateFormat}</th>
-            <th>${order.price}</th>
+            <fmt:message key="money_koef" var="koef"/>
+            <th>${order.price/koef}
+                <fmt:message key="money"/> </th>
             <th>
-                <select name="status">
+                <select name="status" style="width: 100%">
                     <c:if test="${order.status.equals(OrderStatus.OPENED)}">
                         <option selected="selected" value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
                         <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
@@ -118,9 +126,10 @@ Search by client login:
                         <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
                     </c:if>
                 </select>
-                <input type="hidden" name="id" value="${order.id}">
             </th>
-            <th><input type="submit" value="update"/>
+            <input type="hidden" name="id" value="${order.id}">
+            <fmt:message key="update" var="update"/>
+            <th><input type="submit" value="${update}"/>
                 <input type="hidden" name="order" value="${requestScope.order}">
                 <input type="hidden" name="${Paginator.PAGE}" value="${requestScope.page}">
             </th>
@@ -128,18 +137,20 @@ Search by client login:
 
     </form>
     </c:forEach>
-<table/>
+    <table/>
 
     <br/>
     <br/>
     <br/>
     <table>
+        <fmt:message key="previous" var="previous"/>
+        <fmt:message key="next" var="next"/>
         <tr>
             <th style="border: none">
                 <form action="${pageContext.request.contextPath}/admin/manage_orders">
                     <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
-                    <input type="submit" value="previous">
+                    <input type="submit" value="${previous}">
                 </form>
             </th>
             <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
@@ -162,7 +173,7 @@ Search by client login:
                 <form action="${pageContext.request.contextPath}/admin/manage_orders">
                     <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
-                    <input type="submit" value="next">
+                    <input type="submit" value="${next}">
                 </form>
             </th>
         </tr>
@@ -173,11 +184,13 @@ Search by client login:
     <br/>
 
     <form action="${pageContext.request.contextPath}/">
-        <input type="submit" value="main">
+        <fmt:message key="main" var="main"/>
+        <input type="submit" value="${main}">
     </form>
 
     <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
-        <input type="submit" value="profile">
+        <fmt:message key="profile" var="profile"/>
+        <input type="submit" value="${profile}">
     </form>
 
 

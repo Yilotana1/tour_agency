@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -8,53 +9,59 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register</title>
+    <title></title>
 
     <style>
+        <jsp:include page="styles/style.css"/>
         fieldset{
             width: 50%;
         }
     </style>
 </head>
 <body>
+<jsp:include page="html/locale_buttons.html"/>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
 <fieldset>
-    <legend>We need some information about you</legend>
+    <legend><fmt:message key="we_need_inf_about_you"/></legend>
     <form action="register">
             <table>
                 <tr>
-                    <th>Firstname:</th>
+                    <th><fmt:message key="firstname_1"/></th>
                     <th><input type="text" name="firstname"/></th>
                 </tr>
                 <tr>
-                    <th>Lastname:</th>
+                    <th><fmt:message key="lastname_1"/></th>
                     <th><input type="text" name="lastname"/></th>
                 </tr>
                 <tr>
-                    <th>Phone:</th>
+                    <th><fmt:message key="phone_1"/></th>
                     <th><input type="text" name="phone"/></th>
                 </tr>
                 <tr>
-                    <th>Email:</th>
+                    <th><fmt:message key="email_1"/></th>
                     <th><input type="text" name="email"/></th>
                 </tr>
                 <tr>
-                    <th>Login:</th>
+                    <th><fmt:message key="login_label"/></th>
                     <th><input type="text" name="login"/></th>
                 </tr>
                 <tr>
-                    <th>Password:</th>
+                    <th><fmt:message key="password_label"/>:</th>
                     <th><input type="password" name="password"/></th>
                 </tr>
             </table>
             <br/>
-
-            <input type="submit" value="register"/>
+            <fmt:message key="reg" var="reg"/>
+            <input type="submit" value="${reg}"/>
             <br/>
             <span style="color:red">${requestScope.error}</span>
 
     </form>
+    <fmt:message key="main" var="main"/>
     <form action="${pageContext.request.contextPath}/">
-        <input type="submit" value="main">
+        <input type="submit" value="${main}">
     </form>
 </fieldset>
 

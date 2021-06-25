@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -9,29 +10,55 @@
 <html>
 <head>
     <title>Account</title>
+
+    <style>
+        <jsp:include page="/styles/style.css"/>
+    </style>
 </head>
 <body>
-<h1>Welcome to the system ${user.firstname} ${user.lastname}</h1>
-<h2 style="color: red">You are joined as manager</h2>
-<h3>Information about you:</h3><br/>
-<b>phone:</b> ${user.phone},<br/>
-<b>email:</b> ${user.email},<br/>
-<b>status:</b> ${user.status},<br/>
-<b>login:</b> ${user.login} <br/><br/><br/>
+<jsp:include page="/html/locale_buttons.html"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="message"/>
 
-<form action="${pageContext.request.contextPath}/logout">
-    <input type="submit" value="logout">
-</form>
+<table align="right">
+    <tr>
+        <th>
+            <form name="${pageContext.request.contextPath}">
+                <input value="ua" type="submit"/>
+                <input value="ua" type="hidden" name="locale"/>
+            </form>
+        </th>
+        <th>
+            <form name="${pageContext.request.contextPath}">
+                <input value="en" type="submit"/>
+                <input value="en" type="hidden" name="locale"/>
+            </form>
+        </th>
+    </tr>
+</table>
+<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>
+<h2 style="color: red"><fmt:message key="you_joined_as_manager"/></h2>
+<h3><fmt:message key="information_about_you"/>:</h3><br/>
+<b><fmt:message key="phone_1"/>:</b>${user.phone},<br/>
+<b><fmt:message key="email_1"/>:</b> ${user.email},<br/>
+<b><fmt:message key="status_1"/>:</b> ${user.status},<br/>
+    <b><fmt:message key="login_label"/>:</b> ${user.login} <br/><br/><br/>
 
+        <form action="${pageContext.request.contextPath}/logout">
+        <fmt:message key="logout" var="logout"/>
+        <input type="submit" value="${logout}">
+        </form>
 
-<form action="${pageContext.request.contextPath}/my_orders">
-    <input type="submit" value="show my orders"/>
-</form>
+        <fmt:message key="show_my_orders" var="show"/>
+        <form action="${pageContext.request.contextPath}/my_orders">
+        <input type="submit" value="${show}"/>
+        </form>
 
-<br/><br/><br/>
+        <br/><br/><br/>
 
-<form action="${pageContext.request.contextPath}">
-    <input type="submit" value="main">
-</form>
+        <form action="${pageContext.request.contextPath}">
+        <fmt:message key="main" var="main"/>
+        <input type="submit" value="${main}">
+        </form>
 </body>
 </html>
