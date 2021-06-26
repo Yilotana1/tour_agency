@@ -20,32 +20,33 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
 
-<%--<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>--%>
-<%--<h2 style="color: red"><fmt:message key="you_joined_as_manager"/></h2>--%>
-<%--<h3><fmt:message key="information_about_you"/>:</h3><br/>--%>
-<%--<b><fmt:message key="phone_1"/>:</b>${user.phone},<br/>--%>
-<%--<b><fmt:message key="email_1"/>:</b> ${user.email},<br/>--%>
-<%--<b><fmt:message key="status_1"/>:</b> ${user.status},<br/>--%>
-<%--    <b><fmt:message key="login_label"/>:</b> ${user.login} <br/><br/><br/>--%>
 
 <jsp:include page="/profile_header.jsp"/>
 
 
-        <form action="${pageContext.request.contextPath}/logout">
-        <fmt:message key="logout" var="logout"/>
-        <input type="submit" value="${logout}">
-        </form>
+<form action="${pageContext.request.contextPath}/logout">
+    <fmt:message key="logout" var="logout"/>
+    <input type="submit" value="${logout}">
+</form>
 
-        <fmt:message key="show_my_orders" var="show"/>
-        <form action="${pageContext.request.contextPath}/my_orders">
-        <input type="submit" value="${show}"/>
-        </form>
+<fmt:message key="show_my_orders" var="show"/>
+<form action="${pageContext.request.contextPath}/my_orders">
+    <input type="submit" value="${show}"/>
+</form>
 
-        <br/><br/><br/>
+<br/><br/><br/>
 
-        <form action="${pageContext.request.contextPath}">
-        <fmt:message key="main" var="main"/>
-        <input type="submit" value="${main}">
-        </form>
+
+<fmt:message key="manage_orders" var="manage_orders"/>
+<form action="${pageContext.request.contextPath}/admin/manage_orders">
+    <input type="submit" value="${manage_orders}"/>
+</form>
+
+<br/>
+
+<form action="${pageContext.request.contextPath}">
+    <fmt:message key="main" var="main"/>
+    <input type="submit" value="${main}">
+</form>
 </body>
 </html>

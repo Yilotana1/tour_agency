@@ -22,7 +22,10 @@ public interface UserService extends Service<User> {
     void update(int id, String firstName, String lastName, String phone, String email, UserStatus status,
                 String login, String password, Role role);
 
-    void signUp(User user) throws UserAlreadyExistsException;
+    void update(String currentLogin, String firstName, String lastName, String phone, String email, UserStatus status, String login,
+                String password, Role role) throws ServiceException;
+
+    void signUp(User user) throws ServiceException;
 
     List<User> getPageClientsFirst(int pageId, int pageSize);
 

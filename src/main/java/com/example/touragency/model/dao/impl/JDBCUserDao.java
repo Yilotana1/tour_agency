@@ -4,6 +4,8 @@ import com.example.touragency.Tools;
 import com.example.touragency.model.dao.UserDao;
 import com.example.touragency.model.dao.mapper.entity.UserMapper;
 import com.example.touragency.model.entity.User;
+import com.example.touragency.model.entity.enums.Role;
+import com.example.touragency.model.entity.enums.UserStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -129,6 +131,27 @@ public class JDBCUserDao implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void update(String currentLogin, String firstName, String lastName, String phone, String email,
+                       UserStatus status, String login, String password, Role role){
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_BY_LOGIN);
+        ) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            statement.setString(3, firstName);
+            statement.setString(4, lastName);
+            statement.setString(5, email);
+            statement.setString(6, phone);
+            statement.setInt(7, role.getId());
+            statement.setInt(8, status.getId());
+            statement.setString(9, currentLogin);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

@@ -46,27 +46,61 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void update(String currentLogin, String firstName, String lastName,
+                       String phone, String email, UserStatus status,
+                       String login, String password, Role role) throws ServiceException {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+
+            userDao.getConnection().setAutoCommit(false);
+            userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+            checkDataToUpdate(currentLogin, login, email, phone, userDao);
+
+            userDao.update(currentLogin, firstName, lastName, phone, email, status, login, password, role);
+
+            userDao.getConnection().commit();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void checkDataToUpdate(String currentLogin, String login, String email, String phone, UserDao userDao) throws ServiceException{
+        User user1 = userDao.findUserByLogin(login);
+        User user2 = userDao.findUserByEmail(email);
+        User user3 = userDao.findUserByPhone(phone);
+        User userToChange = userDao.findUserByLogin(currentLogin);
+
+        if (user1 != null && !userToChange.getLogin().equals(login))
+            throw new ServiceException("Login already exists");
+        if (user2 != null && !userToChange.getEmail().equals(email))
+            throw new ServiceException("Email already exists");
+        if (user3 != null && !userToChange.getPhone().equals(phone))
+            throw new ServiceException("Phone number already exists");
+    };
+
     public void update() {
 
     }
 
     @Override
-    public void signUp(User user) throws UserAlreadyExistsException {
+    public void signUp(User user) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
             userDao.getConnection().setAutoCommit(false);
             userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            User user1 = userDao.findUserByLogin(user.getLogin());
-            User user2 = userDao.findUserByEmail(user.getEmail());
-            User user3 = userDao.findUserByPhone(user.getPhone());
+//            User user1 = userDao.findUserByLogin(user.getLogin());
+//            User user2 = userDao.findUserByEmail(user.getEmail());
+//            User user3 = userDao.findUserByPhone(user.getPhone());
+//
+//            if (user1 != null)
+//                throw new UserAlreadyExistsException("User with this login already exists in the system", user1);
+//            if (user2 != null)
+//                throw new UserAlreadyExistsException("User with this email already exists in the system", user2);
+//            if (user3 != null)
+//                throw new UserAlreadyExistsException("User with this phone already exists in the system", user3);
 
-            if (user1 != null)
-                throw new UserAlreadyExistsException("User with this login already exists in the system", user1);
-            if (user2 != null)
-                throw new UserAlreadyExistsException("User with this email already exists in the system", user2);
-            if (user3 != null)
-                throw new UserAlreadyExistsException("User with this phone already exists in the system", user3);
-
+            checkDataToCreate(user, userDao);
             userDao.create(user);
 
             userDao.getConnection().commit();
@@ -74,6 +108,19 @@ public class UserServiceImpl implements UserService {
             throwables.printStackTrace();
         }
     }
+
+    private void checkDataToCreate(User user, UserDao userDao) throws ServiceException{
+        User user1 = userDao.findUserByLogin(user.getLogin());
+        User user2 = userDao.findUserByEmail(user.getEmail());
+        User user3 = userDao.findUserByPhone(user.getPhone());
+
+        if (user1 != null)
+            throw new ServiceException("Login already exists");
+        if (user2 != null)
+            throw new ServiceException("Email already exists");
+        if (user3 != null)
+            throw new ServiceException("Phone number already exists");
+    };
 
     @Override
     public int getCount() {

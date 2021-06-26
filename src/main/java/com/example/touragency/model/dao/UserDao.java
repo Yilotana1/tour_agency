@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface UserDao extends GenericDao<User>{
 
+    @Override
+    void update(User entity);
+
+    void update(String currentLogin, String firstName, String lastName, String phone, String email,
+           UserStatus status, String login, String password, Role role);
+
     User findUserByLogin(String login);
 
     User findUserByEmail(String email);

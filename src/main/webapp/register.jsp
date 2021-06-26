@@ -13,6 +13,9 @@
 
     <style>
         <jsp:include page="styles/style.css"/>
+        th {
+            border:0;
+        }
         fieldset{
             width: 50%;
         }

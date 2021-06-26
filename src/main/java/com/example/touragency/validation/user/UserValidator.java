@@ -62,4 +62,14 @@ public class UserValidator {
         checkLoginIsValid(user.getLogin());
     }
 
+    public void checkUserIsValid(String firstName, String lastName, String phone, String email, String login,
+                                 String password) throws InvalidDataException {
+        checkFirstNameIsValid(firstName);
+        checkLastNameIsValid(lastName);
+        checkPhoneNumberIsValid(phone);
+        checkEmailIsValid(email);
+        checkLoginIsValid(login);
+        checkPasswordIsValid(password);
+    }
+
 }

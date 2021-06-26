@@ -1,6 +1,8 @@
 package com.example.touragency.controller.commands.client;
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
+import com.example.touragency.controller.commands.CommandUtility;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
@@ -18,43 +20,43 @@ import java.io.IOException;
 public class EditProfileCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService userService = ServiceFactory.getInstance().createUserService();
+
         String firstName = request.getParameter("firstname");
+        if (firstName == null) {
+            request.getRequestDispatcher(Path.PROFILE_VIEW).forward(request, response);
+            return;
+        }
+
         String lastName = request.getParameter("lastname");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        Role role = (Role)request.getSession().getAttribute("role");
+        Role role = (Role) request.getSession().getAttribute("role");
         UserStatus status = UserStatus.getById(Integer.parseInt(request.getParameter("status")));
-        User user = User.createUser(firstName, lastName, phone, email, status, login, password, role);
+
+        UserService userService = ServiceFactory.getInstance().createUserService();
+
         try {
-            UserValidator.createUserValidator().checkUserIsValid(user);
-        } catch (InvalidDataException e) {
+
+            UserValidator.createUserValidator().checkUserIsValid(firstName, lastName, phone, email, login, password);
+            userService.update((String) request.getSession().getAttribute("login"), firstName, lastName, phone, email,
+                    status, login, password, role);
+
+
+            CommandUtility.deleteFromLoginCache(request, (String)request.getSession().getAttribute("login"));
+            CommandUtility.addUserToLoginCache(request, login);
+            request.getSession().removeAttribute("login");
+            request.getSession().setAttribute("login", login);
+
+
+        } catch (InvalidDataException | ServiceException e) {
             e.printStackTrace();
             request.setAttribute("error", e.getMessage());
-            switch (role){
-                case ADMIN: request.getRequestDispatcher("/admin/admin_page.jsp").forward(request, response);
-                break;
-                case MANAGER:request.getRequestDispatcher("/manager/manager_page.jsp").forward(request,response);
-                break;
-                case CLIENT:request.getRequestDispatcher("client/client_page.jsp").forward(request, response);
-                break;
-            }
+            request.getRequestDispatcher(Path.PROFILE_VIEW).forward(request, response);
             return;
         }
-        try {
-            userService.update(user);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        switch (role){
-            case ADMIN: request.getRequestDispatcher("/admin/admin_page.jsp").forward(request, response);
-                break;
-            case MANAGER:request.getRequestDispatcher("/manager/manager_page.jsp").forward(request,response);
-                break;
-            case CLIENT:request.getRequestDispatcher("client/client_page.jsp").forward(request, response);
-                break;
-        }
+
+        request.getRequestDispatcher(Path.PROFILE_VIEW).forward(request, response);
     }
 }

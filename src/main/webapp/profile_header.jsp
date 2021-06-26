@@ -61,8 +61,7 @@
     </tr>
     <tr>
         <th><fmt:message key="password_label"/>:</th>
-        <fmt:message key="write_new_password" var="write_new_password"/>
-        <th><input name="password" value="${write_new_password}"/></th>
+        <th><input type="password" name="password" value="${requestScope.user.password}"/></th>
     </tr>
 </table>
 <span style="color: red">${requestScope.error}</span>

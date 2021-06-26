@@ -1,5 +1,7 @@
 package com.example.touragency.controller.commands;
 
+import com.example.touragency.constants.Path;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.exceptions.UserAlreadyExistsException;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
@@ -43,15 +45,15 @@ public class RegisterCommand implements Command {
 
             service.signUp(user);
 
-        } catch (UserAlreadyExistsException e) {
+        } catch (ServiceException e) {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/register.jsp").forward(request, response);
             e.printStackTrace();
         }
 
         response.sendRedirect(
-                request.getServletContext().getContextPath()
-                        + "/login?login=" + user.getLogin() + "&password=" + user.getPassword());
+                request.getServletContext().getContextPath() + Path.LOGIN +
+                        "?login=" + user.getLogin() + "&password=" + user.getPassword());
 
 
 
