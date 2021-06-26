@@ -20,6 +20,7 @@ public interface Path {
       String REGISTER_FORM ="/register.jsp";
       String CLIENT_PAGE ="/client/client_page.jsp";
       String MANAGER_PAGE ="/manager/manager_page.jsp";
+      String MANAGER_MANAGER_ORDERS ="/manager/manage_orders";
       String EDIT_PROFILE ="/edit_profile";
       String PROFILE_VIEW ="/profile_view";
 

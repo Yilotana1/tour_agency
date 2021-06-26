@@ -51,6 +51,11 @@
         <url-pattern>/admin/manage_orders</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/manager/manage_orders</url-pattern>
+    </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>servlet</servlet-name>

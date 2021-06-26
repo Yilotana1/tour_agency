@@ -55,7 +55,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
                         filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
-                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW));
+                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW,
+                        filterConfig.getServletContext().getContextPath() + Path.MANAGER_MANAGER_ORDERS));
 
         accessMap.put(ADMIN,
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,

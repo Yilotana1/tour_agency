@@ -22,12 +22,13 @@
 
 </head>
 <body>
+<%--Path that defines either request is from admin or manager--%>
+<c:set var="manage_orders_page" scope="page" value="${requestScope.path}"/>
+
 <jsp:include page="/html/locale_buttons.html"/>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
-
 <h1><fmt:message key="orders"/></h1>
-
 
 
 <br/>
@@ -47,7 +48,7 @@
 <table>
     <tr>
         <td style="border:none">
-            <form action="${pageContext.request.contextPath}/admin/manage_orders">
+            <form action="${manage_orders_page}">
                 <fmt:message key="opened" var="opened"/>
                 <c:if test="${requestScope.order.equals('opened')}">
                     <input style="color: red" type="submit" value="${opened}"/>
@@ -60,7 +61,7 @@
         </td>
         <td style="border:none">
             <fmt:message key="paid" var="paid"/>
-            <form action="${pageContext.request.contextPath}/admin/manage_orders">
+            <form action="${manage_orders_page}">
                 <c:if test="${requestScope.order.equals('paid')}">
                     <input style="color: red" type="submit" value="${paid}"/>
                 </c:if>
@@ -92,7 +93,7 @@
     </tr>
 
     <c:forEach var="order" items="${requestScope.items}">
-    <form action="${pageContext.request.contextPath}/admin/manage_orders">
+    <form action="${manage_orders_page}">
 
 
         <tr>
@@ -106,7 +107,7 @@
             <th>${order.dateFormat}</th>
             <fmt:message key="money_koef" var="koef"/>
             <th>${order.price/koef}
-                <fmt:message key="money"/> </th>
+                <fmt:message key="money"/></th>
             <th>
                 <select name="status" style="width: 100%">
                     <c:if test="${order.status.equals(OrderStatus.OPENED)}">
@@ -147,7 +148,7 @@
         <fmt:message key="next" var="next"/>
         <tr>
             <th style="border: none">
-                <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                <form action="${manage_orders_page}">
                     <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
                     <input type="submit" value="${previous}">
@@ -155,7 +156,7 @@
             </th>
             <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
                 <th style="border: none">
-                    <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                    <form action="${manage_orders_page}">
                         <input type="hidden" name="page" value="${i}"/>
                         <input type="hidden" name="order" value="${requestScope.order}"/>
                         <c:if test="${requestScope.page.equals(i)}">
@@ -170,7 +171,7 @@
                 </th>
             </c:forEach>
             <th style="border: none">
-                <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                <form action="${manage_orders_page}">
                     <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
                     <input type="submit" value="${next}">
@@ -192,6 +193,7 @@
         <fmt:message key="profile" var="profile"/>
         <input type="submit" value="${profile}">
     </form>
+
 
 
 </body>

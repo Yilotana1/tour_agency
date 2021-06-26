@@ -38,7 +38,7 @@
 
 
 <fmt:message key="manage_orders" var="manage_orders"/>
-<form action="${pageContext.request.contextPath}/admin/manage_orders">
+<form action="${pageContext.request.contextPath}/manager/manage_orders">
     <input type="submit" value="${manage_orders}"/>
 </form>
 

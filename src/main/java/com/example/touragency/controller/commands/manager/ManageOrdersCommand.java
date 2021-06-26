@@ -1,5 +1,6 @@
-package com.example.touragency.controller.commands.admin;
+package com.example.touragency.controller.commands.manager;
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.Paginator;
 import com.example.touragency.model.entity.Order;
@@ -26,11 +27,16 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
         updateOrderFromRequest(request, orderService);
 
         new Paginator<>(request, orderService).makePagination(this);
-        request.getRequestDispatcher("/admin/manage_orders.jsp").forward(request, response);
+        request.setAttribute("path", request.getServletContext().getContextPath() + Path.MANAGER_MANAGER_ORDERS);
+        request.getRequestDispatcher("/manager/manage_orders.jsp").forward(request, response);
     }
 
 
-    private void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) {
+
+
+
+
+    protected void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) {
         String id = request.getParameter("id");
 
         if (id != null) {
