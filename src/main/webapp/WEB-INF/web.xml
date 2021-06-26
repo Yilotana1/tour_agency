@@ -13,6 +13,10 @@
         <listener-class>com.example.touragency.controller.listeners.SessionListener</listener-class>
     </listener>
 
+
+
+    <!--servlet definitions-->
+
     <servlet>
         <servlet-name>servlet</servlet-name>
         <servlet-class>com.example.touragency.controller.HelloServlet</servlet-class>
@@ -84,6 +88,17 @@
         <url-pattern>/edit_profile</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/profile_view</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
+
+<!--filter definitions-->
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>com.example.touragency.controller.filters.EncodingFilter</filter-class>

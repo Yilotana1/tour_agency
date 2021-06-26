@@ -176,7 +176,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void applyForOrder(int tourId, int clientId) throws ServiceException {
+    public void applyForOrder(int tourId, String login) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);
              OrderDao orderDao = daoFactory.createOrderDao(connection);
@@ -186,13 +186,13 @@ public class OrderServiceImpl implements OrderService {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            User client = userDao.findById(clientId);
+            User client = userDao.findUserByLogin(login);
             Tour tour = tourDao.findById(tourId);
 
             throwExceptionIfTourIsNotAvailable(client, tour);
             tour.setTakenPlaces(tour.getTakenPlaces() + 1);
 
-            List<Order> orders = orderDao.findOrdersByClientId(clientId);
+            List<Order> orders = orderDao.findOrdersByLogin(login);
             BigDecimal price = getPriceWithDiscount(orders, discountDao, tour.getPrice());
 
             Order order = Order.createOrder(Calendar.getInstance(), OrderStatus.OPENED,

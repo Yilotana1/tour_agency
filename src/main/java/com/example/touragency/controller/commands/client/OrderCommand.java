@@ -19,8 +19,8 @@ public class OrderCommand implements Command {
         try {
             orderService.applyForOrder(
                     Integer.parseInt(request.getParameter("tourId")),
-                    ((User) request.getSession().getAttribute("user")).getId()
-            );
+                    (String)request.getSession().getAttribute("login"));
+
         } catch (ServiceException e) {
             e.printStackTrace();
             request.setAttribute("message", e.getMessage());

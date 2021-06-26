@@ -49,20 +49,20 @@ public class LoginCommand implements Command {
             switch (user.getRole()) {
                 case CLIENT: {
                     CommandUtility.setUserRole(request, CLIENT);
-                    request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("login", user.getLogin());
                     response.sendRedirect(request.getContextPath() + Path.CLIENT_PAGE);
                     break;
                 }
                 case MANAGER: {
                     CommandUtility.setUserRole(request, MANAGER);
-                    request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("login", user.getLogin());
                     response.sendRedirect(request.getContextPath() + Path.MANAGER_PAGE);
                     break;
                 }
                 case ADMIN: {
                     CommandUtility.setUserRole(request, ADMIN);
-                    request.getSession().setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + Path.ADMIN_PAGE);
+                    request.getSession().setAttribute("login", user.getLogin());
+                    response.sendRedirect(request.getContextPath() + Path.PROFILE_VIEW);
                     break;
                 }
             }

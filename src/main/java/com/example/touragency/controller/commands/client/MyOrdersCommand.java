@@ -17,12 +17,10 @@ public class MyOrdersCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
         List<Order> orders = orderService
-                .getByClientId(
-                        ((User) request.getSession().getAttribute("user")).getId()
+                .getByLogin(
+                        (String)request.getSession().getAttribute("login")
                 );
         request.setAttribute("items", orders);
         request.getRequestDispatcher("/my_orders.jsp").forward(request, response);
     }
-
-
 }

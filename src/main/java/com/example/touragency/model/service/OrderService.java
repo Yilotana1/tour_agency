@@ -25,7 +25,7 @@ public interface OrderService extends Service<Order>{
 
     void changeStatus(int id, OrderStatus status);
 
-    void applyForOrder(int tourId, int clientId) throws ServiceException;
+    void applyForOrder(int tourId, String login) throws ServiceException;
 
     void confirmPaid(int id);
 

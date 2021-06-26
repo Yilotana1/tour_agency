@@ -6,10 +6,7 @@ import com.example.touragency.controller.commands.admin.CreateTourCommand;
 import com.example.touragency.controller.commands.admin.ManageOrdersCommand;
 import com.example.touragency.controller.commands.admin.ManageToursCommand;
 import com.example.touragency.controller.commands.admin.ManageUsersCommand;
-import com.example.touragency.controller.commands.client.EditProfileCommand;
-import com.example.touragency.controller.commands.client.MyOrdersCommand;
-import com.example.touragency.controller.commands.client.OrderCommand;
-import com.example.touragency.controller.commands.client.OrderFormCommand;
+import com.example.touragency.controller.commands.client.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -40,6 +37,7 @@ public class HelloServlet extends HttpServlet {
         commands.put("order", new OrderCommand());
         commands.put("my_orders", new MyOrdersCommand());
         commands.put("edit_profile", new EditProfileCommand());
+        commands.put("profile_view", new ProfileViewCommand());
 
     }
 

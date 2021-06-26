@@ -310,7 +310,7 @@
     <input type="submit" value="${main}">
 </form>
 
-<form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
+<form action="${pageContext.request.contextPath}/profile_view">
     <input type="submit" value="${profile}">
 </form>
 

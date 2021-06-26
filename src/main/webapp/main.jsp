@@ -23,21 +23,9 @@
 
 
 <fmt:message key="profile" var="profile"/>
-<c:if test="${sessionScope.role.equals(Role.CLIENT)}">
-    <form action="client/client_page.jsp">
-        <input type="submit" value="${profile}"/>
-    </form>
-</c:if>
-
-<c:if test="${sessionScope.role.equals(Role.ADMIN)}">
-    <form action="admin/admin_page.jsp">
-        <input type="submit" value="${profile}"/>
-    </form>
-</c:if>
-
-<c:if test="${sessionScope.role.equals(Role.MANAGER)}">
-    <form action="manager/manager_page.jsp">
-        <input type="submit" value="${profile}"/>
+<c:if test="${!sessionScope.role.equals(Role.UNKNOWN)}">
+    <form action="${pageContext.request.contextPath}/profile_view">
+        <input type="submit" value="${profile}">
     </form>
 </c:if>
 

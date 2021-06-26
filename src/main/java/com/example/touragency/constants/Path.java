@@ -21,6 +21,7 @@ public interface Path {
       String CLIENT_PAGE ="/client/client_page.jsp";
       String MANAGER_PAGE ="/manager/manager_page.jsp";
       String EDIT_PROFILE ="/edit_profile";
+      String PROFILE_VIEW ="/profile_view";
 
 
 

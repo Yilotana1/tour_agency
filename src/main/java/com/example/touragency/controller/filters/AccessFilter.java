@@ -43,7 +43,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
-                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE));
+                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
+                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW));
 
         accessMap.put(MANAGER,
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
@@ -53,7 +54,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
-                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE));
+                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
+                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW));
 
         accessMap.put(ADMIN,
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
@@ -68,7 +70,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
-                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE));
+                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
+                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW));
     }
 
 
@@ -84,8 +87,8 @@ public class AccessFilter implements Filter {
             userRole = UNKNOWN;
         }
 
-        User user = (User)httpRequest.getSession().getAttribute("user");
-        if ( user != null && !(CommandUtility.userIsLogged(httpRequest, user.getLogin())) ){
+        String login = (String)httpRequest.getSession().getAttribute("login");
+        if ( login != null && !(CommandUtility.userIsLogged(httpRequest, login)) ){
             httpRequest.getSession().invalidate();
             httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/");
             return;

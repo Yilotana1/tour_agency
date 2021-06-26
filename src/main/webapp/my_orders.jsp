@@ -58,20 +58,10 @@
 <form action="${pageContext.request.contextPath}/">
     <input type="submit" value="${main}">
 </form>
-<c:if test="${sessionScope.role.equals(Role.ADMIN)}">
-    <form action="${pageContext.request.contextPath}/admin/admin_page.jsp">
-        <input type="submit" value="${profile}">
-    </form>
-</c:if>
 
-<c:if test="${sessionScope.role.equals(Role.CLIENT)}">
-    <form action="${pageContext.request.contextPath}/client/client_page.jsp">
-        <input type="submit" value="${profile}">
-    </form>
-</c:if>
 
-<c:if test="${sessionScope.role.equals(Role.MANAGER)}">
-    <form action="${pageContext.request.contextPath}/manager/manager_page.jsp">
+<c:if test="${!sessionScope.role.equals(Role.UNKNOWN)}">
+    <form action="${pageContext.request.contextPath}/profile_view">
         <input type="submit" value="${profile}">
     </form>
 </c:if>
