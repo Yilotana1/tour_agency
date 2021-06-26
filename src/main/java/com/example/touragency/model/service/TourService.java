@@ -29,6 +29,8 @@ public interface TourService extends Service<Tour>{
 
     void deleteByName(String name) throws ServiceException;
 
+    List<Tour> getPageName(int pageId, int pageSize, String name);
+
     List<Tour> getPageCountry(int pageId, int pageSize, String country);
 
     List<Tour> getPageBurningFirst(int pageId, int pageSize);

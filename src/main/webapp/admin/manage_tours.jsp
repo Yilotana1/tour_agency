@@ -37,10 +37,10 @@
 <br/>
 
 <fmt:message key="search" var="search"/>
-<fmt:message key="search_by_country"/>
+<fmt:message key="search_by_name"/>
 <form action="${pageContext.request.contextPath}/admin/manage_tours">
-    <input type="text" name="country"/>
-    <input type="hidden" name="order" value="country"/>
+    <input type="text" name="name"/>
+    <input type="hidden" name="order" value="name"/>
     <input type="submit" value="${search}"/>
 </form>
 

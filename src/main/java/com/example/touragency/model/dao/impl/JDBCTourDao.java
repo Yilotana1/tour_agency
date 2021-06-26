@@ -137,6 +137,27 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+    @Override
+    public List<Tour> findByLimitName(int start, int count, String name) {
+        List<Tour> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_NAME);
+        ) {
+
+            statement.setString(1, name);
+            statement.setInt(2, start - 1);
+            statement.setInt(3, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new TourMapper().extractFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 
     @Override
     public List<Tour> findByPrice(BigDecimal price) {

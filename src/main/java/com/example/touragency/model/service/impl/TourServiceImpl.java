@@ -55,7 +55,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void update(Tour tour) throws ServiceException {
+    public void update(Tour tour) throws ServiceException{
         try (TourDao tourDao = daoFactory.createTourDao()) {
             checkTourIsCorrect(tour, tourDao);
             tourDao.update(tour);
@@ -342,6 +342,19 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         return null;
     }
 
+
+    @Override
+    public List<Tour> getPageName(int pageId, int pageSize, String name) {
+        try (TourDao tourDao = daoFactory.createTourDao()) {
+            return tourDao.findByLimitName(pageId * pageSize - pageSize + 1, pageSize, name);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+
     @Override
     public List<Tour> getByCountry(String country) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
@@ -358,8 +371,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
     @Override
     public void create(String name, String country, BigDecimal price,
-                       int maxTickets, Calendar startDate, Calendar endDate,
-                       TourCategory category, TourStatus status,
+                       int maxTickets, Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
                        String hotelName, String city) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TourDao tourDao = daoFactory.createTourDao(connection);

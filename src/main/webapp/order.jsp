@@ -83,6 +83,10 @@
 
 <h3 style="color:red">${requestScope.order}</h3>
 
+<fmt:message key="main" var="main"/>
+<form action="${pageContext.request.contextPath}/">
+    <input type="submit" value="${main}">
+</form>
 
 </body>
 </html>

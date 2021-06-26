@@ -9,6 +9,10 @@
     </welcome-file-list>
 
 
+    <listener>
+        <listener-class>com.example.touragency.controller.listeners.SessionListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>servlet</servlet-name>
         <servlet-class>com.example.touragency.controller.HelloServlet</servlet-class>
@@ -74,6 +78,11 @@
         <url-pattern>/my_orders</url-pattern>
     </servlet-mapping>
 
+
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/edit_profile</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>EncodingFilter</filter-name>

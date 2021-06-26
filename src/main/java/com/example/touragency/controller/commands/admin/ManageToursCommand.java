@@ -83,8 +83,8 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
         if (orderBy == null) orderBy = "";
         request.setAttribute("order", orderBy);
 
-        if (orderBy.equals("country")) {
-            request.setAttribute("country", request.getParameter("country"));
+        if (orderBy.equals("name")) {
+            request.setAttribute("name", request.getParameter("name"));
         }
         List<Tour> tours = tourService.getPage(page, maxPageSize);
         switch (orderBy) {
@@ -115,17 +115,17 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
             case "shopping":
                 tours = ((TourService) tourService).getPageShopping(page, maxPageSize);
                 break;
-            case "country":
-                tours = getToursPageBySearchCountry(request, ((TourService) tourService), page, maxPageSize);
+            case "name":
+                tours = getToursPageBySearchName(request, ((TourService) tourService), page, maxPageSize);
                 break;
         }
         return tours;
     }
 
 
-    private List<Tour> getToursPageBySearchCountry(HttpServletRequest request, TourService tourService, int page, int maxPageSize) {
+    private List<Tour> getToursPageBySearchName(HttpServletRequest request, TourService tourService, int page, int maxPageSize) {
         try {
-            List<Tour> tours = tourService.getPageCountry(page, maxPageSize, request.getParameter("country"));
+            List<Tour> tours = tourService.getPageName(page, maxPageSize, request.getParameter("name"));
             if (tours.size() > 0) {
                 return tours;
             }

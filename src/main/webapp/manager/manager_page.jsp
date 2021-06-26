@@ -20,29 +20,16 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
 
-<table align="right">
-    <tr>
-        <th>
-            <form name="${pageContext.request.contextPath}">
-                <input value="ua" type="submit"/>
-                <input value="ua" type="hidden" name="locale"/>
-            </form>
-        </th>
-        <th>
-            <form name="${pageContext.request.contextPath}">
-                <input value="en" type="submit"/>
-                <input value="en" type="hidden" name="locale"/>
-            </form>
-        </th>
-    </tr>
-</table>
-<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>
-<h2 style="color: red"><fmt:message key="you_joined_as_manager"/></h2>
-<h3><fmt:message key="information_about_you"/>:</h3><br/>
-<b><fmt:message key="phone_1"/>:</b>${user.phone},<br/>
-<b><fmt:message key="email_1"/>:</b> ${user.email},<br/>
-<b><fmt:message key="status_1"/>:</b> ${user.status},<br/>
-    <b><fmt:message key="login_label"/>:</b> ${user.login} <br/><br/><br/>
+<%--<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>--%>
+<%--<h2 style="color: red"><fmt:message key="you_joined_as_manager"/></h2>--%>
+<%--<h3><fmt:message key="information_about_you"/>:</h3><br/>--%>
+<%--<b><fmt:message key="phone_1"/>:</b>${user.phone},<br/>--%>
+<%--<b><fmt:message key="email_1"/>:</b> ${user.email},<br/>--%>
+<%--<b><fmt:message key="status_1"/>:</b> ${user.status},<br/>--%>
+<%--    <b><fmt:message key="login_label"/>:</b> ${user.login} <br/><br/><br/>--%>
+
+<jsp:include page="/profile_header.jsp"/>
+
 
         <form action="${pageContext.request.contextPath}/logout">
         <fmt:message key="logout" var="logout"/>

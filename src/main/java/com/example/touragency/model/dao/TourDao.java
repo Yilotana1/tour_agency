@@ -17,6 +17,8 @@ public interface TourDao extends GenericDao<Tour>{
     List<Tour> findByCategory(TourCategory category);
 
 
+    List<Tour> findByLimitName(int start, int count, String name);
+
     List<Tour> findByLimitCountry(int start, int count, String country);
 
     List<Tour> findByLimit(int start, int count);

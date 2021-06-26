@@ -22,12 +22,14 @@
 
 <fmt:setBundle basename="message"/>
 
-<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>
-<h2><fmt:message key="information_about_you"/></h2><br/>
-<b><fmt:message key="phone_1"/></b> ${user.phone},<br/>
-<b><fmt:message key="phone_1"/></b> ${user.email},<br/>
-<b><fmt:message key="status_1"/></b> ${user.status},<br/>
-<b><fmt:message key="login_label"/></b> ${user.login} <br/><br/><br/>
+
+<jsp:include page="/profile_header.jsp"/>
+<%--<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>--%>
+<%--<h2><fmt:message key="information_about_you"/></h2><br/>--%>
+<%--<b><fmt:message key="phone_1"/></b> ${user.phone},<br/>--%>
+<%--<b><fmt:message key="phone_1"/></b> ${user.email},<br/>--%>
+<%--<b><fmt:message key="status_1"/></b> ${user.status},<br/>--%>
+<%--<b><fmt:message key="login_label"/></b> ${user.login} <br/><br/><br/>--%>
 
 <fmt:message key="logout" var="logout"/>
 <form action="${pageContext.request.contextPath}/logout">

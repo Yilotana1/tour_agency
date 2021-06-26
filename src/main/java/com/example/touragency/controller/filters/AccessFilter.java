@@ -42,7 +42,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.ERROR,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
-                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
+                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
+                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE));
 
         accessMap.put(MANAGER,
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
@@ -51,7 +52,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.ERROR,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
-                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
+                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
+                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE));
 
         accessMap.put(ADMIN,
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
@@ -65,7 +67,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_CREATE_TOUR_FROM,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
-                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS));
+                        filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
+                        filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE));
     }
 
 

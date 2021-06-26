@@ -37,7 +37,7 @@ public interface User {
     String SQL_UPDATE_USER = "UPDATE " + Tables.USER + " SET "
             + Fields.USER_LOGIN + "=?, " + Fields.USER_PASSWORD + "=?, " + Fields.USER_FIRSTNAME + "=?, "
             + Fields.USER_LASTNAME + "=?, " + Fields.USER_EMAIL + "=?," + Fields.USER_PHONE + "=?, "
-            + Fields.USER_ROLE_ID + "=?, " + Fields.USER_STATUS_ID + "=? WHERE " + Fields.ID + "=?;";
+            + Fields.USER_ROLE_ID + "=?, " + Fields.USER_STATUS_ID + "=? WHERE " + Fields.USER_ID + "=?;";
 
 
     String SQL_DELETE_USER = "DELETE FROM " + Tables.USER + " WHERE " + Fields.ID + "=?;";

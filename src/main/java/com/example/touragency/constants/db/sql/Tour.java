@@ -69,6 +69,10 @@ public interface Tour {
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID
             + " WHERE " + Fields.TOUR_COUNTRY + " = ? LIMIT ?, ?";
 
+    String SQL_FIND_TOURS_BY_LIMIT_NAME = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
+            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID
+            + " WHERE " + Fields.TOUR_NAME + " = ? LIMIT ?, ?";
+
     String SQL_INSERT_TOUR = "INSERT INTO " + Tables.TOUR +  "("
             + Fields.TOUR_NAME + ", " + Fields.TOUR_COUNTRY + ", " +  Fields.TOUR_PRICE + ", " + Fields.TOUR_MAX_TICKETS + ", "
             + ", " + Fields.TOUR_TAKEN_TICKETS + ", " + Fields.TOUR_START_DATE + ", "
