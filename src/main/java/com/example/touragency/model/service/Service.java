@@ -3,10 +3,11 @@ package com.example.touragency.model.service;
 import com.example.touragency.exceptions.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Service<T> {
 
-    T getById(int id);
+    Optional<T> getById(int id);
 
     List<T> getAll();
 

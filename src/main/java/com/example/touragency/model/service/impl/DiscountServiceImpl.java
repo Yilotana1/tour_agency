@@ -7,23 +7,24 @@ import com.example.touragency.model.service.DiscountService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class DiscountServiceImpl implements DiscountService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
 
-    public Discount getDiscount() {
+    public Optional<Discount> getDiscount() {
         try (DiscountDao discountDao = daoFactory.createDiscountDao()) {
             return discountDao.findById(1);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Discount getById(int id) {
+    public Optional<Discount> getById(int id) {
         return null;
     }
 

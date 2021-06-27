@@ -2,14 +2,15 @@ package com.example.touragency.model.dao;
 
 import com.example.touragency.model.entity.Tour;
 import java.util.List;
+import java.util.Optional;
 
 public interface TourDao extends GenericDao<Tour>{
 
 
 
-    Tour findById(int id);
+    Optional<Tour> findById(int id);
 
-    Tour findByName(String name);
+    Optional<Tour> findByName(String name);
 
     List<Tour> findByLimitName(int start, int count, String name);
 

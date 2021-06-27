@@ -4,6 +4,7 @@ package com.example.touragency.model.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface GenericDao<T> extends AutoCloseable {
 
@@ -13,7 +14,7 @@ public interface GenericDao<T> extends AutoCloseable {
 
     int create(T entity);
 
-    T findById(int id);
+    Optional<T> findById(int id);
 
     List<T> findAll();
 

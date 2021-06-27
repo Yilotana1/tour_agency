@@ -63,20 +63,20 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID);
         ) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                return new UserMapper().extractFromResultSet(rs);
+                return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
 

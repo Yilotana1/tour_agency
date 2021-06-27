@@ -202,13 +202,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(int id) {
+    public Optional<User> getById(int id) {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
 

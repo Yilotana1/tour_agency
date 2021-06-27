@@ -141,6 +141,7 @@
     </form>
     </c:forEach>
     <table/>
+<span style="color: red">${requestScope.error}</span>
 
     <br/>
     <br/>

@@ -45,6 +45,6 @@ public interface TourService extends Service<Tour>{
 
     List<Tour> getPageShopping(int pageId, int pageSize);
 
-    void changeStatus(int id, TourStatus status);
+    void changeStatus(int id, TourStatus status) throws ServiceException;
 
 }

@@ -1,7 +1,5 @@
 package com.example.touragency;
 
-import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,8 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.sql.Date;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Tools {
 
@@ -31,11 +27,6 @@ public class Tools {
             e.printStackTrace();
         }
         return Calendar.getInstance();
-    }
-
-
-    public static boolean decimalCompare(BigDecimal val1, BigDecimal val2) {
-        return val1.compareTo(val2) >= 0;
     }
 
 

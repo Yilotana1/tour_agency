@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -83,14 +84,14 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order getById(int id) {
+    public Optional<Order> getById(int id) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return null;
+        return Optional.empty();
     }
 
 
@@ -106,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
             User client = userDao.findUserByLogin(login).get();
-            Tour tour = tourDao.findById(tourId);
+            Tour tour = tourDao.findById(tourId).orElseThrow(() -> new ServiceException("Tour doesn't exist anymore"));
 
             throwExceptionIfTourIsNotAvailable(client, tour);
             tour.setTakenPlaces(tour.getTakenPlaces() + 1);
@@ -147,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public void cancel(int id) {
+    public void cancel(int id) throws ServiceException{
         Connection connection = ConnectionPoolHolder.getConnection();
         try (OrderDao orderDao = daoFactory.createOrderDao(connection);
              TourDao tourDao = daoFactory.createTourDao(connection)) {
@@ -155,11 +156,11 @@ public class OrderServiceImpl implements OrderService {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Order order = orderDao.findById(id);
+            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException("Order doesn't exist"));
             order.setStatus(OrderStatus.CANCELED);
             orderDao.update(order);
 
-            Tour tour = tourDao.findById(order.getTourId());
+            Tour tour = tourDao.findById(order.getTourId()).orElseThrow(() -> new ServiceException("Tour doesn't exist"));
             tour.setTakenPlaces(tour.getTakenPlaces() - 1);
             tourDao.update(tour);
 
@@ -169,9 +170,10 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public void confirmPaid(int id) {
+    public void confirmPaid(int id) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            Order order = orderDao.findById(id);
+
+            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException("Order doesn't exist"));
             order.setStatus(OrderStatus.PAID);
             orderDao.update(order);
 
@@ -180,9 +182,10 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public void setOpened(int id) {
+    public void setOpened(int id) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            Order order = orderDao.findById(id);
+
+            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException("Order doesn't exist"));
             order.setStatus(OrderStatus.OPENED);
             orderDao.update(order);
 
@@ -193,7 +196,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     private BigDecimal getPriceWithDiscount(List<Order> orders, DiscountDao discountDao, BigDecimal tourPrice) throws DaoException {
-        Discount discount = discountDao.findById(1);
+        Discount discount = discountDao.findById(1).get();
         return ServiceTools.getPriceWithDiscount(discount, orders, tourPrice);
     }
 

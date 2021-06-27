@@ -8,6 +8,7 @@ import com.example.touragency.model.entity.Hotel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Hotel.*;
 
@@ -48,35 +49,35 @@ public class JDBCHotelDao implements HotelDao {
     }
 
     @Override
-    public Hotel findById(int id) {
+    public Optional<Hotel> findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_HOTEL_BY_ID);
         ) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new HotelMapper().extractFromResultSet(rs);
+                return Optional.of(new HotelMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Hotel findByName(String name) {
+    public Optional<Hotel> findByName(String name) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_HOTEL_BY_NAME);
         ) {
             statement.setString(1, name);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new HotelMapper().extractFromResultSet(rs);
+                return Optional.of(new HotelMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
 

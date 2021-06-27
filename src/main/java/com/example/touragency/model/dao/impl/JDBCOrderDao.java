@@ -8,6 +8,7 @@ import com.example.touragency.model.entity.Order;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Order.*;
 
@@ -57,20 +58,20 @@ public class JDBCOrderDao implements OrderDao {
 
 
     @Override
-    public Order findById(int id) {
+    public Optional<Order> findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_ID)
         ) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new OrderMapper().extractFromResultSet(rs);
+                return Optional.of(new OrderMapper().extractFromResultSet(rs));
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

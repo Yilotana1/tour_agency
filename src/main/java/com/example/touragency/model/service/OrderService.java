@@ -8,11 +8,11 @@ import java.util.List;
 public interface OrderService extends Service<Order>{
 
 
-    void setOpened(int id);
+    void setOpened(int id) throws ServiceException;
 
-    void cancel(int id);
+    void cancel(int id) throws ServiceException;
 
-    void confirmPaid(int id);
+    void confirmPaid(int id) throws ServiceException;
 
     List<Order> getPageOpenedFirst(int start, int count);
 

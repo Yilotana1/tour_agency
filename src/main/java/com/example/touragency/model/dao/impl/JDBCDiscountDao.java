@@ -8,6 +8,7 @@ import com.example.touragency.model.entity.Discount;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Discount.*;
 
@@ -45,19 +46,19 @@ public class JDBCDiscountDao implements DiscountDao {
     }
 
     @Override
-    public Discount findById(int id) {
+    public Optional<Discount> findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_DISCOUNT_BY_ID);
         ) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                return new DiscountMapper().extractFromResultSet(rs);
+                return Optional.of(new DiscountMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

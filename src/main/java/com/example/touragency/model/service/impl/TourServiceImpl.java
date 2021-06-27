@@ -2,7 +2,6 @@ package com.example.touragency.model.service.impl;
 
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.ConnectionPoolHolder;
-import com.example.touragency.Tools;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.dao.TourDao;
@@ -18,6 +17,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class TourServiceImpl implements TourService, Comparator<Tour> {
 
@@ -39,9 +39,9 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
 
     @Override
-    public void update(Tour tour) throws ServiceException{
+    public void update(Tour tour) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
-            checkTourIsCorrect(tour, tourDao);
+            throwExceptionIfNoTickets(tour, tourDao);
             tourDao.update(tour);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -49,9 +49,9 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
 
-    private void checkTourIsCorrect(Tour tour, TourDao tourDao) throws ServiceException {
-        Tour tourFromDb = tourDao.findById(tour.getId());
-        if (tour.getMaxPlaces() < tourFromDb.getTakenPlaces()) {
+    private void throwExceptionIfNoTickets(Tour tour, TourDao tourDao) throws ServiceException {
+        Optional<Tour> tourFromDb = tourDao.findById(tour.getId());
+        if (tour.getMaxPlaces() < tourFromDb.get().getTakenPlaces()) {
             throw new ServiceException("Max-tickets cannot be less than min-tickets or taken tickets");
         }
     }
@@ -67,13 +67,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public Tour getById(int id) {
+    public Optional<Tour> getById(int id) {
         try (TourDao tourDao = daoFactory.createTourDao()) {
             return tourDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -86,15 +86,14 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Hotel hotel = hotelDao.findByName(hotelName);
-            if (hotel == null) throw new ServiceException("Hotel with specified name doesn't exist in database");
+            Hotel hotel = hotelDao.findByName(hotelName).orElseThrow(() -> new ServiceException("Hotel with specified name doesn't exist in database"));
 
             Tour tour = Tour.createTour(id, name, country, price,
                     maxTickets, takenTickets,
                     startDate, endDate, category, status,
                     hotel, city);
 
-            checkTourIsCorrect(tour, tourDao);
+            throwExceptionIfNoTickets(tour, tourDao);
 
             tourDao.update(tour);
 
@@ -249,9 +248,10 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Hotel hotel = hotelDao.findByName(hotelName);
-            if (hotel == null) throw new ServiceException("This hotel doesn't exist in the system");
-            if (tourDao.findByName(name) != null) throw new ServiceException("Tour with this name already exists");
+            Hotel hotel = hotelDao.findByName(hotelName).orElseThrow(() -> new ServiceException("This hotel doesn't exist in the system"));
+
+            tourDao.findByName(name).orElseThrow(() -> new ServiceException("Tour with this name already exists"));
+
             Tour tour = Tour.createTour(name, country, price, maxTickets,
                     INITIAL_TAKEN_TICKETS, startDate, endDate,
                     category, status, hotel, city);
@@ -272,9 +272,11 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             tourDao.getConnection().setAutoCommit(false);
             tourDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Tour tour = tourDao.findByName(name);
-            if (tour == null) throw new ServiceException("Tour with this name doesn't exist");
-            tourDao.delete(tour.getId());
+            Optional<Tour> tour = tourDao.findByName(name);
+            tour.orElseThrow(() -> new ServiceException("Tour with this name doesn't exist"));
+
+            tourDao.delete(tour.get().getId());
+
             tourDao.getConnection().commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -294,12 +296,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
     @Override
-    public void changeStatus(int id, TourStatus status) {
+    public void changeStatus(int id, TourStatus status) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
-            Tour tour = tourDao.findById(id);
-            tour.setStatus(status);
-            tourDao.update(tour);
+            Optional<Tour> tour = tourDao.findById(id);
+            tour.orElseThrow(() -> new ServiceException("Tour doesn't exist"));
+            tour.get().setStatus(status);
+            tourDao.update(tour.get());
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

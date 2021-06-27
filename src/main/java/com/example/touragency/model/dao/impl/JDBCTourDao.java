@@ -9,6 +9,7 @@ import com.example.touragency.model.entity.enums.TourCategory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Tour.*;
 
@@ -42,7 +43,7 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public int create(Tour tour)  {
+    public int create(Tour tour) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_TOUR, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, tour.getName());
@@ -66,35 +67,35 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public Tour findById(int id) {
+    public Optional<Tour> findById(int id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_BY_ID);
         ) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new TourMapper().extractFromResultSet(rs);
+                return Optional.of(new TourMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Tour findByName(String name) {
+    public Optional<Tour> findByName(String name) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOUR_BY_NAME);
         ) {
             statement.setString(1, name);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new TourMapper().extractFromResultSet(rs);
+                return Optional.of(new TourMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
 
@@ -139,12 +140,6 @@ public class JDBCTourDao implements TourDao {
         }
         return list;
     }
-
-
-
-
-
-
 
 
     @Override

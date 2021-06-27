@@ -3,6 +3,7 @@ package com.example.touragency.controller.commands.manager;
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Discount;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.enums.OrderStatus;
@@ -27,7 +28,12 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
 
         fillDiscountForm(request);
-        updateOrderFromRequest(request, orderService);
+        try {
+            updateOrderFromRequest(request, orderService);
+        } catch (ServiceException e) {
+            request.setAttribute("error", e.getMessage());
+            e.printStackTrace();
+        }
 
         new Paginator<>(request, orderService).makePagination(this);
         request.setAttribute("path", request.getServletContext().getContextPath() + Path.MANAGER_MANAGE_ORDERS);
@@ -38,13 +44,13 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
 
     protected void fillDiscountForm(HttpServletRequest request){
         DiscountService discountService = ServiceFactory.getInstance().createDiscountService();
-        Discount discount = discountService.getDiscount();
+        Discount discount = discountService.getDiscount().get();
         request.setAttribute("percentStep", discount.getPercent());
         request.setAttribute("maxPercent", discount.getMaxPercent());
     };
 
 
-    protected void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) {
+    protected void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) throws ServiceException {
         String idS = request.getParameter("id");
 
         if (idS != null) {

@@ -8,6 +8,7 @@ import com.example.touragency.model.service.HotelService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 
 public class HotelServiceImpl implements HotelService {
@@ -15,13 +16,13 @@ public class HotelServiceImpl implements HotelService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public Hotel getById(int id) {
+    public Optional<Hotel> getById(int id) {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
 
