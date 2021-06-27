@@ -1,5 +1,6 @@
 package com.example.touragency.model.service.impl;
 
+import com.example.touragency.constants.ErrorMessages;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.UserDao;
 import com.example.touragency.model.entity.User;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> signIn(String login, String password) throws InvalidCredentialsException {
+    public Optional<User> signIn(String login, String password) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             Optional<User> user = userDao.findUserByLogin(login);
@@ -27,25 +28,26 @@ public class UserServiceImpl implements UserService {
             user.filter(
                     u -> u.getPassword().equals(password)
             )
-                    .orElseThrow(() -> new InvalidCredentialsException("Login or password not found", login, password));
+                    .orElseThrow(() -> new ServiceException(ErrorMessages.LOGIN_OR_PASSWORD_NOT_FOUND));
 
             return user;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return Optional.empty();
     }
 
 
     public void update(int id, String firstName, String lastName, String phone, String email, UserStatus status,
-                       String login, String password, Role role) {
+                       String login, String password, Role role) throws ServiceException {
 
         try (UserDao userDao = daoFactory.createUserDao()) {
             User user = User.createUser(id, firstName, lastName, phone, email, status, login, password, role);
             userDao.update(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
             userDao.getConnection().setAutoCommit(false);
             userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            checkDataToUpdate(currentLogin, login, email, phone, userDao);
+            throwExceptionIfDataExist(currentLogin, login, email, phone, userDao);
 
             userDao.update(currentLogin, firstName, lastName, phone, email, status, login, password, role);
 
@@ -66,23 +68,24 @@ public class UserServiceImpl implements UserService {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
     }
 
-    private void checkDataToUpdate(String currentLogin, String login, String email, String phone, UserDao userDao) throws ServiceException {
+    private void throwExceptionIfDataExist(String currentLogin, String login, String email, String phone, UserDao userDao) throws ServiceException, SQLException {
         Optional<User> userWithTheSameLogin = userDao.findUserByLogin(login);
         Optional<User> userWithTheSameEmail = userDao.findUserByEmail(email);
         Optional<User> userWithTheSamePhone = userDao.findUserByPhone(phone);
         Optional<User> userToUpdate = userDao.findUserByLogin(currentLogin);
 
         if (userWithTheSameLogin.isPresent() && !userToUpdate.get().getLogin().equals(login))
-            throw new ServiceException("Login already exists");
+            throw new ServiceException(ErrorMessages.LOGIN_ALREADY_EXISTS);
 
         if (userWithTheSameEmail.isPresent() && !userToUpdate.get().getEmail().equals(email))
-            throw new ServiceException("Email already exists");
+            throw new ServiceException(ErrorMessages.EMAIL_ALREADY_EXISTS);
 
         if (userWithTheSamePhone.isPresent() && !userToUpdate.get().getPhone().equals(phone))
-            throw new ServiceException("Phone number already exists");
+            throw new ServiceException(ErrorMessages.PHONE_ALREADY_EXISTS);
     }
 
     ;
@@ -100,129 +103,139 @@ public class UserServiceImpl implements UserService {
             userDao.getConnection().commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
     }
 
-    private void throwExceptionIfDataExists(User user, UserDao userDao) throws ServiceException {
+    private void throwExceptionIfDataExists(User user, UserDao userDao) throws ServiceException, SQLException {
         Optional<User> userWithTheSameLogin = userDao.findUserByLogin(user.getLogin());
         Optional<User> userWithTheSameEmail = userDao.findUserByEmail(user.getEmail());
         Optional<User> userWithTheSamePhone = userDao.findUserByPhone(user.getPhone());
 
-        if (userWithTheSameLogin.isPresent()) throw new ServiceException("Login already exists");
-        if (userWithTheSameEmail.isPresent()) throw new ServiceException("Email already exists");
-        if (userWithTheSamePhone.isPresent()) throw new ServiceException("Phone already exists");
+        if (userWithTheSameLogin.isPresent()) throw new ServiceException(ErrorMessages.LOGIN_ALREADY_EXISTS);
+        if (userWithTheSameEmail.isPresent()) throw new ServiceException(ErrorMessages.EMAIL_ALREADY_EXISTS);
+        if (userWithTheSamePhone.isPresent()) throw new ServiceException(ErrorMessages.PHONE_ALREADY_EXISTS);
     }
 
 
     @Override
-    public int getCount() {
+    public int getCount() throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.getCount();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return 0;
     }
 
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll() throws ServiceException{
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
     @Override
-    public List<User> getPage(int pageId, int pageSize) {
+    public List<User> getPage(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
     @Override
-    public List<User> getPageClientsFirst(int pageId, int pageSize) {
+    public List<User> getPageClientsFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitClientsFirst(pageId * pageSize - pageSize + 1, pageSize);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
     @Override
-    public List<User> getPageManagersFirst(int pageId, int pageSize) {
+    public List<User> getPageManagersFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitManagersFirst(pageId * pageSize - pageSize + 1, pageSize);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
     @Override
-    public List<User> getPageNonBlockedFirst(int pageId, int pageSize) {
+    public List<User> getPageNonBlockedFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitNonBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
 
     @Override
-    public List<User> getPageBlockedFirst(int pageId, int pageSize) {
+    public List<User> getPageBlockedFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
 
             return userDao.findByLimitBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
             userDao.update(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
     }
 
     @Override
-    public Optional<User> getById(int id) {
+    public Optional<User> getById(int id) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return Optional.empty();
     }
 
 
     @Override
-    public Optional<User> getByLogin(String login) throws NoSuchElementException {
-        return getAll().stream()
-                .filter(client -> client.getLogin().equals(login))
-                .findFirst();
+    public Optional<User> getByLogin(String login) throws ServiceException {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.findUserByLogin(login);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+        }
     }
 
     @Override
-    public int add(User user) {
-        return daoFactory.createUserDao().create(user);
+    public int add(User user) throws ServiceException {
+        try {
+            return daoFactory.createUserDao().create(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+        }
     }
 
 }

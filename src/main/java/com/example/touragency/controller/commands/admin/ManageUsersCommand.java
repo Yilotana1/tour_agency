@@ -1,8 +1,10 @@
 package com.example.touragency.controller.commands.admin;
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.CommandUtility;
 import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
 import com.example.touragency.model.entity.enums.UserStatus;
@@ -24,15 +26,26 @@ public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<U
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserService userService = ServiceFactory.getInstance().createUserService();
 
-        updateUserFromRequest(request, userService);
+        try {
+            updateUserFromRequest(request, userService);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            request.setAttribute("path", request.getServletContext().getContextPath() + Path.ADMIN_MANAGE_USERS);
+        }
 
-        new Paginator<>(request, userService).makePagination(this);
+        try {
+            new Paginator<>(request, userService).makePagination(this);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
+            return;
+        }
 
         request.getRequestDispatcher("/admin/manage_users.jsp").forward(request, response);
     }
 
 
-    private void updateUserFromRequest(HttpServletRequest request, UserService userService) {
+    private void updateUserFromRequest(HttpServletRequest request, UserService userService) throws ServiceException {
         String id = request.getParameter("id");
 
         if (id == null) return;
@@ -52,21 +65,15 @@ public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<U
     }
 
 
-    private List<User> getSearchedUserAtList(String login, UserService userService) {
-        try {
+    private List<User> getSearchedUserAtList(String login, UserService userService) throws ServiceException {
             Optional<User> user = userService.getByLogin(login);
-            if (user.isPresent()) {
-                return Arrays.asList(user.get());
-            }
-        } catch (NoSuchElementException throwables) {
-            throwables.printStackTrace();
-        }
-        return new ArrayList<>();
+        return user.map(Arrays::asList).orElseGet(ArrayList::new);
+
     }
 
 
     @Override
-    public List<User> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<User> userService) {
+    public List<User> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<User> userService) throws ServiceException {
         if (request.getParameter("search") != null) {
             String login = request.getParameter("search");
             return getSearchedUserAtList(login, (UserService) userService);

@@ -29,7 +29,8 @@ public class AccessFilter implements Filter {
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGIN,
                         filterConfig.getServletContext().getContextPath() + Path.LOGIN_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MAIN,
-                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_404,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_503,
                         filterConfig.getServletContext().getContextPath() + Path.REGISTER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.REGISTER,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
@@ -39,7 +40,8 @@ public class AccessFilter implements Filter {
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
                         filterConfig.getServletContext().getContextPath() + Path.MAIN,
                         filterConfig.getServletContext().getContextPath() + Path.CLIENT_PAGE,
-                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_404,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_503,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
@@ -50,7 +52,8 @@ public class AccessFilter implements Filter {
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
                         filterConfig.getServletContext().getContextPath() + Path.MAIN,
                         filterConfig.getServletContext().getContextPath() + Path.MANAGER_PAGE,
-                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_404,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_503,
                         filterConfig.getServletContext().getContextPath() + Path.TOUR_ORDER,
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
@@ -64,7 +67,8 @@ public class AccessFilter implements Filter {
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
                         filterConfig.getServletContext().getContextPath() + Path.MAIN,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_PAGE,
-                        filterConfig.getServletContext().getContextPath() + Path.ERROR,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_404,
+                        filterConfig.getServletContext().getContextPath() + Path.ERROR_503,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_USERS,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_ORDERS,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_MANAGE_TOURS,
@@ -99,7 +103,7 @@ public class AccessFilter implements Filter {
         }
 
         if (  !(accessMap.get(userRole).contains(httpRequest.getRequestURI()))  ) {
-            httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/error.jsp");
+            httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + Path.ERROR_404);
             return;
         }
 

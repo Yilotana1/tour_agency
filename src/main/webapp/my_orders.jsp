@@ -14,11 +14,11 @@
     <title>Title</title>
 
     <style>
-       <jsp:include page="styles/style.css"/>
+        <jsp:include page="styles/style.css"/>
     </style>
 </head>
 <body>
-
+<jsp:include page="locale_buttons.jsp"/>
 <fmt:setLocale value="${sessionScope.locale}"/>
 
 <fmt:setBundle basename="message"/>
@@ -41,7 +41,7 @@
             <th>${order.tourName}</th>
             <th>${order.dateFormat}</th>
             <th>${order.price/koef}
-                <fmt:message key="money"/> </th>
+                <fmt:message key="money"/></th>
             <th>${order.status}</th>
         </tr>
     </c:forEach>

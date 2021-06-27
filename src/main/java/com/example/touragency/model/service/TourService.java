@@ -23,27 +23,27 @@ public interface TourService extends Service<Tour>{
 
     void deleteByName(String name) throws ServiceException;
 
-    List<Tour> getPageName(int pageId, int pageSize, String name);
+    List<Tour> getPageName(int pageId, int pageSize, String name) throws ServiceException;
 
-    List<Tour> getPageCountry(int pageId, int pageSize, String country);
+    List<Tour> getPageCountry(int pageId, int pageSize, String country) throws ServiceException;
 
-    List<Tour> getPageBurningFirst(int pageId, int pageSize);
+    List<Tour> getPageBurningFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageNonBurningFirst(int pageId, int pageSize);
+    List<Tour> getPageNonBurningFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageHighHotelStarsFirst(int pageId, int pageSize);
+    List<Tour> getPageHighHotelStarsFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageLowHotelStarsFirst(int pageId, int pageSize);
+    List<Tour> getPageLowHotelStarsFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageHighPriceFirst(int pageId, int pageSize);
+    List<Tour> getPageHighPriceFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageLowPriceFirst(int pageId, int pageSize);
+    List<Tour> getPageLowPriceFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageExcursion(int pageId, int pageSize);
+    List<Tour> getPageExcursion(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageRest(int pageId, int pageSize);
+    List<Tour> getPageRest(int pageId, int pageSize) throws ServiceException;
 
-    List<Tour> getPageShopping(int pageId, int pageSize);
+    List<Tour> getPageShopping(int pageId, int pageSize) throws ServiceException;
 
     void changeStatus(int id, TourStatus status) throws ServiceException;
 

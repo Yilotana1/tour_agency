@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -24,7 +25,9 @@
 </head>
 <body>
 
-<jsp:include page="html/locale_buttons.html"/>
+
+<c:set var="path" value="${pageContext.request.contextPath}/login.jsp?" scope="request"/>
+<jsp:include page="locale_buttons.jsp"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 
@@ -52,7 +55,11 @@
         <br/>
         <input type="submit" value="${login_button}"/>
         <br/>
-        <span style="color:red">${requestScope.error}</span>
+
+        <c:if test="${!(requestScope.error == null)}">
+            <span style="color:red"><fmt:message key="${requestScope.error}"/></span>
+        </c:if>
+
     </form>
     <br/>
     <form action="register.jsp">

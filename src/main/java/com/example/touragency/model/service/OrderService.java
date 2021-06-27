@@ -14,12 +14,12 @@ public interface OrderService extends Service<Order>{
 
     void confirmPaid(int id) throws ServiceException;
 
-    List<Order> getPageOpenedFirst(int start, int count);
+    List<Order> getPageOpenedFirst(int start, int count) throws ServiceException;
 
-    List<Order> getPagePaidFirst(int start, int count);
+    List<Order> getPagePaidFirst(int start, int count) throws ServiceException;
 
 
-    List<Order> getByLogin(String login);
+    List<Order> getByLogin(String login) throws ServiceException;
 
     void applyForOrder(int tourId, String login) throws ServiceException;
 

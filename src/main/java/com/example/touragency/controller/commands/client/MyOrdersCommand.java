@@ -1,6 +1,7 @@
 package com.example.touragency.controller.commands.client;
 
 import com.example.touragency.controller.commands.Command;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.service.OrderService;
@@ -16,10 +17,16 @@ public class MyOrdersCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
-        List<Order> orders = orderService
-                .getByLogin(
-                        (String)request.getSession().getAttribute("login")
-                );
+        List<Order> orders = null;
+        try {
+            orders = orderService
+                    .getByLogin(
+                            (String)request.getSession().getAttribute("login")
+                    );
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + "/503error.jsp");
+        }
         request.setAttribute("items", orders);
         request.getRequestDispatcher("/my_orders.jsp").forward(request, response);
     }

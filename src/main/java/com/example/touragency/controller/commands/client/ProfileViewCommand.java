@@ -2,6 +2,7 @@ package com.example.touragency.controller.commands.client;
 
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.service.UserService;
 import com.example.touragency.model.service.factory.ServiceFactory;
@@ -15,7 +16,13 @@ public class ProfileViewCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserService userService = ServiceFactory.getInstance().createUserService();
-        User user = userService.getByLogin((String) request.getSession().getAttribute("login")).get();
+        User user = null;
+        try {
+            user = userService.getByLogin((String) request.getSession().getAttribute("login")).get();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + "/503error.jsp");
+        }
         request.setAttribute("user", user);
 
         switch (user.getRole()){

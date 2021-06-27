@@ -1,5 +1,6 @@
 package com.example.touragency.validation.user;
 
+import com.example.touragency.constants.ErrorMessages;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.validation.InvalidDataException;
 import com.example.touragency.validation.user.exceptions.*;
@@ -20,37 +21,37 @@ public class UserValidator {
     public void checkEmailIsValid(String email) throws InvalidEmailException {
          if (email.matches("^(.+)@(.+)$")) return;
 
-         throw new InvalidEmailException("Please enter email like this: example1@gmail.com", email);
+         throw new InvalidEmailException(ErrorMessages.ENTER_EMAIL_LIKE_THIS, email);
     }
 
     public void checkPasswordIsValid(String password) throws InvalidPasswordException {
          if(password.length() >= PASSWORD_LENGTH) return;
 
-         throw new InvalidPasswordException("Your password should be more or equals " + PASSWORD_LENGTH + " symbols", password);
+         throw new InvalidPasswordException(ErrorMessages.PASSWORD_MUST_BE_MORE, password);
     }
 
     public void checkFirstNameIsValid(String firstName) throws InvalidFirstNameException {
         if (firstName.matches("^[\\p{IsCyrillic}A-Za-z]+$")) return;
 
-        throw new InvalidFirstNameException("Your firstname should consist only latin or cyrillic characters", firstName);
+        throw new InvalidFirstNameException(ErrorMessages.FIRST_NAME_SHOULD_ONLY_CONSIST, firstName);
     }
 
     public void checkLastNameIsValid(String lastName) throws InvalidLastNameException {
         if (lastName.matches("^[\\p{IsCyrillic}A-Za-z]+$")) return;
 
-        throw new InvalidLastNameException("Your firstname should consist only latin or cyrillic characters", lastName);
+        throw new InvalidLastNameException(ErrorMessages.LAST_NAME_SHOULD_ONLY_CONSIST, lastName);
     }
 
     public void checkPhoneNumberIsValid(String phone) throws InvalidPhoneException {
         if (phone.matches("^\\+\\d+$")) return;
 
-        throw new InvalidPhoneException("Your phone number should start with + and consist only digits", phone);
+        throw new InvalidPhoneException(ErrorMessages.PHONE_NUMBER_SHOULD_CONSIST, phone);
     }
 
     public void checkLoginIsValid(String login) throws InvalidLoginException {
         if (login.matches("[A-Za-z\\d_]+")) return;
 
-        throw new InvalidLoginException("Your login should not be avoid and consist only latin characters or digits", login);
+        throw new InvalidLoginException(ErrorMessages.LOGIN_SHOULD_CONSIST, login);
     }
 
     public void checkUserIsValid(User user) throws InvalidDataException {

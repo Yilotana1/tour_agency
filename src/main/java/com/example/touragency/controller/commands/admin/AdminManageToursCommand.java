@@ -1,6 +1,7 @@
 package com.example.touragency.controller.commands.admin;
 
 import com.example.touragency.Tools;
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Paginator;
 import com.example.touragency.controller.commands.manager.ManageToursCommand;
 import com.example.touragency.exceptions.ServiceException;
@@ -31,7 +32,13 @@ public class AdminManageToursCommand extends ManageToursCommand {
             e.printStackTrace();
             request.setAttribute("error", e.getMessage());
         }
-        new Paginator<>(request, tourService).makePagination(this);
+        try {
+            new Paginator<>(request, tourService).makePagination(this);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
+            return;
+        }
         request.getRequestDispatcher("/admin/manage_tours.jsp").forward(request, response);
 
 

@@ -1,5 +1,7 @@
 package com.example.touragency.model.service.impl;
 
+import com.example.touragency.constants.ErrorMessages;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.DiscountDao;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.entity.Discount;
@@ -14,13 +16,13 @@ public class DiscountServiceImpl implements DiscountService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
 
-    public Optional<Discount> getDiscount() {
+    public Optional<Discount> getDiscount() throws ServiceException {
         try (DiscountDao discountDao = daoFactory.createDiscountDao()) {
             return discountDao.findById(1);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return Optional.empty();
     }
 
     @Override
@@ -34,23 +36,25 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
 
-    public void update(int percentStep, int maxPercent) {
+    public void update(int percentStep, int maxPercent) throws ServiceException {
         try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
             Discount discount = Discount.createDiscount(percentStep, maxPercent);
             discountDao.update(discount);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
     }
 
     @Override
-    public void update(Discount discount) {
+    public void update(Discount discount) throws ServiceException {
         try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
             discountDao.update(discount);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
     }
 

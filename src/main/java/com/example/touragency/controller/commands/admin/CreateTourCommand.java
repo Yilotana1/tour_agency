@@ -1,6 +1,7 @@
 package com.example.touragency.controller.commands.admin;
 
 import com.example.touragency.Tools;
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.enums.TourCategory;
@@ -27,7 +28,6 @@ public class CreateTourCommand implements Command {
         String city = request.getParameter("city");
         String price = request.getParameter("price");
         String hotelName = request.getParameter("hotelName");
-        String minTickets = request.getParameter("minTickets");
         String maxTickets = request.getParameter("maxTickets");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
@@ -48,11 +48,11 @@ public class CreateTourCommand implements Command {
         } catch (InvalidDataException | ServiceException e) {
             e.printStackTrace();
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("/admin/create_tour.jsp").forward(request, response);
+            request.getRequestDispatcher(Path.ADMIN_CREATE_TOUR).forward(request, response);
             return;
         }
 
-        response.sendRedirect(request.getServletContext().getContextPath() + "/admin/manage_tours");
+        response.sendRedirect(request.getServletContext().getContextPath() + Path.ADMIN_MANAGE_TOURS);
 
     }
 

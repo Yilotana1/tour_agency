@@ -11,24 +11,24 @@ import java.util.Optional;
 
 public interface UserService extends Service<User> {
 
-    Optional<User> signIn(String login, String password) throws InvalidCredentialsException;
+    Optional<User> signIn(String login, String password) throws ServiceException;
 
     void update(int id, String firstName, String lastName, String phone, String email, UserStatus status,
-                String login, String password, Role role);
+                String login, String password, Role role) throws ServiceException;
 
     void update(String currentLogin, String firstName, String lastName, String phone, String email, UserStatus status, String login,
                 String password, Role role) throws ServiceException;
 
     void signUp(User user) throws ServiceException;
 
-    List<User> getPageClientsFirst(int pageId, int pageSize);
+    List<User> getPageClientsFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<User> getPageManagersFirst(int pageId, int pageSize);
+    List<User> getPageManagersFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<User> getPageBlockedFirst(int pageId, int pageSize);
+    List<User> getPageBlockedFirst(int pageId, int pageSize) throws ServiceException;
 
-    List<User> getPageNonBlockedFirst(int pageId, int pageSize);
+    List<User> getPageNonBlockedFirst(int pageId, int pageSize) throws ServiceException;
 
-    Optional<User> getByLogin(String login);
+    Optional<User> getByLogin(String login) throws ServiceException;
 
 }

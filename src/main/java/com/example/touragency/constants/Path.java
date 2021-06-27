@@ -5,7 +5,8 @@ public interface Path {
       String LOGOUT ="/logout";
       String MAIN ="/";
       String ADMIN_PAGE ="/admin/admin_page.jsp";
-      String ERROR ="/error.jsp";
+      String ERROR_404 ="/404error.jsp";
+      String ERROR_503 ="/503error.jsp";
       String ADMIN_MANAGE_USERS ="/admin/manage_users";
       String ADMIN_MANAGE_ORDERS ="/admin/manage_orders";
       String ADMIN_MANAGE_TOURS ="/admin/manage_tours";

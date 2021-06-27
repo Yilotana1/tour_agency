@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<jsp:include page="/html/locale_buttons.html"/>
+<jsp:include page="/locale_buttons.jsp"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
@@ -211,7 +211,9 @@
 </table>
 
 <br/>
-<span style="color:red">${requestScope.error}</span>
+<c:if test="${!(requestScope.error == null)}">
+  <span style="color:red"><fmt:message key="${requestScope.error}"/></span>
+</c:if>
 
 <br/><br/>
 

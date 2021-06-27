@@ -1,5 +1,6 @@
 package com.example.touragency.controller.commands.manager;
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Paginator;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.exceptions.ServiceException;
@@ -31,8 +32,17 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
         } catch (ServiceException | InvalidDataException e) {
             e.printStackTrace();
             request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/manager/manage_tours.jsp").forward(request, response);
+            return;
+
         }
-        new Paginator<>(request, tourService).makePagination(this);
+        try {
+            new Paginator<>(request, tourService).makePagination(this);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
+            return;
+        }
         request.getRequestDispatcher("/manager/manage_tours.jsp").forward(request, response);
 
     }
@@ -52,7 +62,7 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
 
 
     // This method defines previous page order parameters and retrieve according data to show on the next page
-    public List<Tour> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Tour> tourService) {
+    public List<Tour> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Tour> tourService) throws ServiceException {
         String orderBy = request.getParameter(Paginator.ORDER);
         if (orderBy == null) orderBy = "";
         request.setAttribute("order", orderBy);
@@ -97,15 +107,12 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
     }
 
 
-    private List<Tour> getToursPageBySearchName(HttpServletRequest request, TourService tourService, int page, int maxPageSize) {
-        try {
+    private List<Tour> getToursPageBySearchName(HttpServletRequest request, TourService tourService, int page, int maxPageSize) throws ServiceException {
             List<Tour> tours = tourService.getPageName(page, maxPageSize, request.getParameter("name"));
             if (tours.size() > 0) {
                 return tours;
             }
-        } catch (NoSuchElementException throwables) {
-            throwables.printStackTrace();
-        }
+
         return new ArrayList<>();
     }
 

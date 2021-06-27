@@ -20,16 +20,7 @@ import java.io.IOException;
 public class RegisterCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = User.createUser(
-                request.getParameter("firstname"),
-                request.getParameter("lastname"),
-                request.getParameter("phone"),
-                request.getParameter("email"),
-                UserStatus.NON_BLOCKED,
-                request.getParameter("login"),
-                request.getParameter("password"),
-                Role.CLIENT);
-
+        User user = getUserFromRequest(request);
 
         try {
             UserValidator.createUserValidator().checkUserIsValid(user);
@@ -37,8 +28,8 @@ public class RegisterCommand implements Command {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/register.jsp").forward(request, response);
             e.printStackTrace();
+            return;
         }
-
 
         UserService service = ServiceFactory.getInstance().createUserService();
         try {
@@ -49,14 +40,28 @@ public class RegisterCommand implements Command {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/register.jsp").forward(request, response);
             e.printStackTrace();
+            return;
         }
 
         response.sendRedirect(
                 request.getServletContext().getContextPath() + Path.LOGIN +
                         "?login=" + user.getLogin() + "&password=" + user.getPassword());
 
+    }
 
 
+
+
+    private User getUserFromRequest(HttpServletRequest request){
+        return User.createUser(
+                request.getParameter("firstname"),
+                request.getParameter("lastname"),
+                request.getParameter("phone"),
+                request.getParameter("email"),
+                UserStatus.NON_BLOCKED,
+                request.getParameter("login"),
+                request.getParameter("password"),
+                Role.CLIENT);
     }
 
 }

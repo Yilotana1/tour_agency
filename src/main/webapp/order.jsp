@@ -17,7 +17,6 @@
 </head>
 <body>
 
-
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
 

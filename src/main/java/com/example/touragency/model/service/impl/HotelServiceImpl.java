@@ -1,6 +1,8 @@
 package com.example.touragency.model.service.impl;
 
 
+import com.example.touragency.constants.ErrorMessages;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.entity.Hotel;
@@ -16,24 +18,24 @@ public class HotelServiceImpl implements HotelService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public Optional<Hotel> getById(int id) {
+    public Optional<Hotel> getById(int id) throws ServiceException {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return Optional.empty();
     }
 
 
     @Override
-    public List<Hotel> getAll()  {
+    public List<Hotel> getAll() throws ServiceException {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return null;
     }
 
     @Override
@@ -49,13 +51,13 @@ public class HotelServiceImpl implements HotelService {
 
 
     @Override
-    public int add(Hotel hotel) {
+    public int add(Hotel hotel) throws ServiceException {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.create(hotel);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
         }
-        return -1;
     }
 
 

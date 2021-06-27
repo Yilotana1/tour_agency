@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -14,52 +15,56 @@
     <style>
         <jsp:include page="styles/style.css"/>
         th {
-            border:0;
+            border: 0;
         }
-        fieldset{
+
+        fieldset {
             width: 50%;
         }
     </style>
 </head>
 <body>
-<jsp:include page="html/locale_buttons.html"/>
+<jsp:include page="locale_buttons.jsp"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
 <fieldset>
     <legend><fmt:message key="we_need_inf_about_you"/></legend>
     <form action="register">
-            <table>
-                <tr>
-                    <th><fmt:message key="firstname_1"/></th>
-                    <th><input type="text" name="firstname"/></th>
-                </tr>
-                <tr>
-                    <th><fmt:message key="lastname_1"/></th>
-                    <th><input type="text" name="lastname"/></th>
-                </tr>
-                <tr>
-                    <th><fmt:message key="phone_1"/></th>
-                    <th><input type="text" name="phone"/></th>
-                </tr>
-                <tr>
-                    <th><fmt:message key="email_1"/></th>
-                    <th><input type="text" name="email"/></th>
-                </tr>
-                <tr>
-                    <th><fmt:message key="login_label"/></th>
-                    <th><input type="text" name="login"/></th>
-                </tr>
-                <tr>
-                    <th><fmt:message key="password_label"/>:</th>
-                    <th><input type="password" name="password"/></th>
-                </tr>
-            </table>
-            <br/>
-            <fmt:message key="reg" var="reg"/>
-            <input type="submit" value="${reg}"/>
-            <br/>
-            <span style="color:red">${requestScope.error}</span>
+        <table>
+            <tr>
+                <th><fmt:message key="firstname_1"/></th>
+                <th><input type="text" name="firstname"/></th>
+            </tr>
+            <tr>
+                <th><fmt:message key="lastname_1"/></th>
+                <th><input type="text" name="lastname"/></th>
+            </tr>
+            <tr>
+                <th><fmt:message key="phone_1"/></th>
+                <th><input type="text" name="phone"/></th>
+            </tr>
+            <tr>
+                <th><fmt:message key="email_1"/></th>
+                <th><input type="text" name="email"/></th>
+            </tr>
+            <tr>
+                <th><fmt:message key="login_label"/></th>
+                <th><input type="text" name="login"/></th>
+            </tr>
+            <tr>
+                <th><fmt:message key="password_label"/>:</th>
+                <th><input type="password" name="password"/></th>
+            </tr>
+        </table>
+        <br/>
+        <fmt:message key="reg" var="reg"/>
+        <input type="submit" value="${reg}"/>
+        <br/>
+
+        <c:if test="${!(requestScope.error == null)}">
+            <span style="color:red"><fmt:message key="${requestScope.error}"/></span>
+        </c:if>
 
     </form>
     <fmt:message key="main" var="main"/>

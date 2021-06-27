@@ -32,10 +32,6 @@
 
 
 <h3><fmt:message key="information_about_you"/>:</h3>
-<%--<b><fmt:message key="phone_1"/></b> ${user.phone},<br/>--%>
-<%--<b><fmt:message key="email_1"/></b> ${user.email},<br/>--%>
-<%--<b><fmt:message key="status_1"/></b> ${user.status},<br/>--%>
-<%--<b><fmt:message key="login_label"/> </b> ${user.login} <br/><br/><br/>--%>
 <form action="${pageContext.request.contextPath}/edit_profile">
 <table>
     <input type="hidden" name="status" value="${requestScope.user.status.id}"/>
@@ -64,7 +60,10 @@
         <th><input type="password" name="password" value="${requestScope.user.password}"/></th>
     </tr>
 </table>
-<span style="color: red">${requestScope.error}</span>
+
+    <c:if test="${!(requestScope.error == null)}">
+        <span style="color:red"><fmt:message key="${requestScope.error}"/></span>
+    </c:if>
 <br/>
 
 <fmt:message key="edit" var="edit"/>

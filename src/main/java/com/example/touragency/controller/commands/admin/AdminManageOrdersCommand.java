@@ -29,16 +29,23 @@ public class AdminManageOrdersCommand extends ManageOrdersCommand implements Pag
 
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
 
-        fillDiscountForm(request);
 
         try {
+            fillDiscountForm(request);
             super.updateOrderFromRequest(request, orderService);
         } catch (ServiceException e) {
             e.printStackTrace();
             request.setAttribute("error", e.getMessage());
         }
 
-        new Paginator<>(request, orderService).makePagination(this);
+        try {
+            new Paginator<>(request, orderService).makePagination(this);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
+            return;
+        }
+
         request.setAttribute("path", request.getServletContext().getContextPath() + Path.ADMIN_MANAGE_ORDERS);
         request.getRequestDispatcher("/manager/manage_orders.jsp").forward(request, response);
     }

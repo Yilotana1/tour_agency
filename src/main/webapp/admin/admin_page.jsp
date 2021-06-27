@@ -18,18 +18,8 @@
 <body>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
-<jsp:include page="/html/locale_buttons.html"/>
+<jsp:include page="/locale_buttons.jsp"/>
 <jsp:include page="/profile_header.jsp"/>
-
-
-<%--<h1><fmt:message key="welcome"/> ${user.firstname} ${user.lastname}</h1>--%>
-
-<%--<h2 style="color: red"><fmt:message key="you_joined_as_admin"/></h2>--%>
-<%--    <h3><fmt:message key="information_about_you"/></h3><br/>--%>
-<%--    <b><fmt:message key="phone_1"/></b> ${user.phone},<br/>--%>
-<%--    <b><fmt:message key="email_1"/></b> ${user.email},<br/>--%>
-<%--    <b><fmt:message key="status_1"/></b> ${user.status},<br/>--%>
-<%--    <b><fmt:message key="login_label"/> </b> ${user.login} <br/><br/><br/>--%>
 
 
 <fmt:message key="logout" var="logout"/>

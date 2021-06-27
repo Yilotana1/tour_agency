@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -15,16 +16,15 @@
     </style>
 </head>
 <body>
-<jsp:include page="html/locale_buttons.html"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 
 <fmt:setBundle basename="message"/>
 
-<h2 style="color: red">${requestScope.message}</h2>
+<c:if test="${!(requestScope.message == null)}">
+    <span style="color:red"><fmt:message key="${requestScope.message}"/></span>
+</c:if>
 
-${requestScope.errorMessageTour}<br/>
-${requestScope.errorMessageUser}
 
 <fmt:message key="main" var="main"/>
 <form action="${pageContext.request.contextPath}/">

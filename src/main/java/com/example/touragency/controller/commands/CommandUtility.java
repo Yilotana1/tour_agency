@@ -9,11 +9,6 @@ import java.util.HashSet;
 public class CommandUtility {
 
 
-    public static void changeUserRole(HttpServletRequest request, Role role){
-        removeUserRole(request);
-        setUserRole(request, role);
-    }
-
     public static void setUserRole(HttpServletRequest request,
                             Role role) {
         HttpSession session = request.getSession();

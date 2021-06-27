@@ -1,5 +1,7 @@
 package com.example.touragency.controller.commands;
 
+import com.example.touragency.constants.Path;
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.TourService;
@@ -11,20 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class MainCommand implements Command, Paginator.NextPageSupplier<Tour> {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TourService tourService = ServiceFactory.getInstance().createTourService();
 
-        new Paginator<>(request, tourService).makePagination(this);
+        try {
+            new Paginator<>(request, tourService).makePagination(this);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
+            return;
+        }
 
         request.getRequestDispatcher("/main.jsp").forward(request, response);
     }
 
     @Override
-    public List<Tour> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Tour> tourService) {
+    public List<Tour> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Tour> tourService) throws ServiceException {
         String orderBy = request.getParameter(Paginator.ORDER);
         if (orderBy == null) orderBy = "";
         request.setAttribute("order", orderBy);
@@ -68,17 +75,12 @@ public class MainCommand implements Command, Paginator.NextPageSupplier<Tour> {
         return tours;
     }
 
-    private List<Tour> getToursPageBySearchCountry(HttpServletRequest request, TourService tourService, int page, int maxPageSize) {
-        try {
-            List<Tour> tours = tourService.getPageCountry(page, maxPageSize, request.getParameter("country"));
-            if (tours.size() > 0) {
-                return tours;
-            }
-        } catch (NoSuchElementException throwables) {
-            throwables.printStackTrace();
+    private List<Tour> getToursPageBySearchCountry(HttpServletRequest request, TourService tourService, int page, int maxPageSize) throws ServiceException {
+        List<Tour> tours = tourService.getPageCountry(page, maxPageSize, request.getParameter("country"));
+        if (tours.size() > 0) {
+            return tours;
         }
         return new ArrayList<>();
     }
-
 
 }

@@ -15,10 +15,15 @@
     </style>
 </head>
 <body>
-<jsp:include page="html/locale_buttons.html"/>
+<jsp:include page="locale_buttons.jsp"/>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
 <h1>404</h1>
 <h2><fmt:message key="404Permission"/></h2>
+
+<fmt:message key="main" var="main"/>
+<form action="${pageContext.request.contextPath}/">
+    <input type="submit" value="${main}">
+</form>
 </body>
 </html>

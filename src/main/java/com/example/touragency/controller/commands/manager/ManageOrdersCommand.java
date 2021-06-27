@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<Order> {
 
@@ -27,22 +26,31 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
 
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
 
-        fillDiscountForm(request);
         try {
+            fillDiscountForm(request);
             updateOrderFromRequest(request, orderService);
         } catch (ServiceException e) {
             request.setAttribute("error", e.getMessage());
             e.printStackTrace();
+            request.getRequestDispatcher("/manager_manage_orders.jsp").forward(request, response);
+            return;
         }
 
-        new Paginator<>(request, orderService).makePagination(this);
+        try {
+            new Paginator<>(request, orderService).makePagination(this);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
+            return;
+        }
+
         request.setAttribute("path", request.getServletContext().getContextPath() + Path.MANAGER_MANAGE_ORDERS);
-        request.getRequestDispatcher("/manager/manage_orders.jsp").forward(request, response);
+        request.getRequestDispatcher("/manager_manage_orders.jsp").forward(request, response);
     }
 
 
 
-    protected void fillDiscountForm(HttpServletRequest request){
+    protected void fillDiscountForm(HttpServletRequest request) throws ServiceException {
         DiscountService discountService = ServiceFactory.getInstance().createDiscountService();
         Discount discount = discountService.getDiscount().get();
         request.setAttribute("percentStep", discount.getPercent());
@@ -67,21 +75,19 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
     }
 
 
-    private List<Order> getSearchedOrders(String login, OrderService orderService) {
-        try {
+    private List<Order> getSearchedOrders(String login, OrderService orderService) throws ServiceException {
+
             List<Order> orders = orderService.getByLogin(login);
             if (orders.size() > 0) {
                 return orders;
             }
-        } catch (NoSuchElementException throwables) {
-            throwables.printStackTrace();
-        }
+
         return new ArrayList<>();
     }
 
 
     @Override
-    public List<Order> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Order> orderService) {
+    public List<Order> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Order> orderService) throws ServiceException {
         if (request.getParameter("search") != null) {
             String login = request.getParameter("search");
             return getSearchedOrders(login, (OrderService) orderService);

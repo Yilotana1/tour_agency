@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="/html/locale_buttons.html"/>
+<jsp:include page="/locale_buttons.jsp"/>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
 

@@ -1,5 +1,6 @@
 package com.example.touragency.controller.commands;
-import com.example.touragency.model.entity.User;
+
+import com.example.touragency.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,6 @@ public class LogOutCommand implements Command{
         CommandUtility.removeUserRole(request);
         String login = (String)request.getSession().getAttribute("login");
         CommandUtility.deleteFromLoginCache(request, login);
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + Path.MAIN);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.touragency.controller.commands;
 
+import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class Paginator<Item> {
 
 
 
-    public void makePagination(NextPageSupplier<Item> supplier) {
+    public void makePagination(NextPageSupplier<Item> supplier) throws ServiceException {
         int itemsCount = service.getCount();
         int pageCount = getPageCount(itemsCount, maxPageSize);
 
@@ -86,6 +87,6 @@ public class Paginator<Item> {
 
 // This method defines previous page order parameters and retrieve according data to show on the next page
     public interface NextPageSupplier<Item> {
-        List<Item> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Item> service);
+        List<Item> getNextPageContent(HttpServletRequest request, int page, int maxPageSize, Service<Item> service) throws ServiceException;
     }
 }
