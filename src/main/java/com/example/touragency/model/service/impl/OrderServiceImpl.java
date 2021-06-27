@@ -12,24 +12,13 @@ import com.example.touragency.exceptions.*;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrderService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    @Override
-    public List<Order> getByClientId(int clientId) {
-        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            return orderDao.findOrdersByClientId(clientId);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
     public List<Order> getByLogin(String login) {
@@ -62,37 +51,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public void changeStatus(int id, OrderStatus status){
-        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            orderDao.getConnection().setAutoCommit(false);
-            orderDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-            Order order  = orderDao.findById(id);
-            order.setStatus(status);
-            orderDao.update(order);
-            orderDao.getConnection().commit();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-
-//    public void update(int id, User client, String tourName, int tourId,
-//                       Calendar date, OrderStatus status, BigDecimal price) {
-//
-//        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-//            Order order = Order.createOrder(id, date, status, client, price, tourName, tourId);
-//            orderDao.update(order);
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//    }
-
-
-    @Override
-    public void update() throws ServiceException {
-
-    }
-
     @Override
     public List<Order> getPage(int pageId, int pageSize) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
@@ -117,46 +75,6 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getPagePaidFirst(int pageId, int pageSize) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findOrdersByLimitPaidFirst(pageId * pageSize - pageSize + 1, pageSize);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
-
-
-    @Override
-    public List<Order> getOpened() {
-        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            return orderDao.findAll()
-                    .stream()
-                    .filter(order -> order.getStatus().equals(OrderStatus.OPENED))
-                    .collect(Collectors.toList());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public List<Order> getPaid() {
-        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            return orderDao.findAll()
-                    .stream()
-                    .filter(order -> order.getStatus().equals(OrderStatus.PAID))
-                    .collect(Collectors.toList());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public List<Order> getCanceled() {
-        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            return orderDao.findAll()
-                    .stream()
-                    .filter(order -> order.getStatus().equals(OrderStatus.CANCELED))
-                    .collect(Collectors.toList());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -214,17 +132,6 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void confirmPaid(int id) {
-        try (OrderDao orderDao = daoFactory.createOrderDao()) {
-            Order order = orderDao.findById(id);
-            order.setStatus(OrderStatus.PAID);
-            orderDao.update(order);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    @Override
     public void update(Order order) {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             orderDao.update(order);
@@ -235,63 +142,54 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void cancel(int id) {
-        Connection connection = ConnectionPoolHolder.getConnection();
-        try (OrderDao orderDao = daoFactory.createOrderDao(connection);
-             TourDao tourDao = daoFactory.createTourDao(connection)) {
-            connection.setAutoCommit(false);
-            Order order = orderDao.findById(id);
-            order.setStatus(OrderStatus.CANCELED);
-            orderDao.update(order);
-            Tour tour = tourDao.findById(order.getTourId());
-            tour.setTakenPlaces(tour.getTakenPlaces() - 1);
-            tourDao.update(tour);
-            connection.commit();
-        } catch (SQLException throwables) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            throwables.printStackTrace();
-        }
-    }
-
-
-    @Override
     public int add(Order entity) {
         return 0;
     }
 
-    @Override
-    public void remove(int id) {
+
+    public void cancel(int id) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        try (OrderDao orderDao = daoFactory.createOrderDao(connection);
+             TourDao tourDao = daoFactory.createTourDao(connection)) {
+
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
+            Order order = orderDao.findById(id);
+            order.setStatus(OrderStatus.CANCELED);
+            orderDao.update(order);
+
+            Tour tour = tourDao.findById(order.getTourId());
+            tour.setTakenPlaces(tour.getTakenPlaces() - 1);
+            tourDao.update(tour);
+
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
+    public void confirmPaid(int id) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            Order order = orderDao.findById(id);
+            order.setStatus(OrderStatus.PAID);
+            orderDao.update(order);
 
-//    @Override
-//    public void removeOrder(int id) {
-//        Connection connection = ConnectionPoolHolder.getConnection();
-//        try (OrderDao orderDao = daoFactory.createOrderDao(connection);
-//             TourDao tourDao = daoFactory.createTourDao(connection)) {
-//
-//            connection.setAutoCommit(false);
-//
-//            Order order = orderDao.findById(id);
-//            orderDao.delete(order.getId());
-//            List<Tour> tours = tourDao.findByOrderId(order.getId());
-//            tours.forEach(tour -> tour.setTakenPlaces(tour.getTakenPlaces() - 1));
-//            for (Tour tour : tours) tourDao.update(tour);
-//
-//            connection.commit();
-//        } catch (SQLException throwables) {
-//            try {
-//                connection.rollback();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            throwables.printStackTrace();
-//        }
-//    }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void setOpened(int id) {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            Order order = orderDao.findById(id);
+            order.setStatus(OrderStatus.OPENED);
+            orderDao.update(order);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
 
     private BigDecimal getPriceWithDiscount(List<Order> orders, DiscountDao discountDao, BigDecimal tourPrice) throws DaoException {

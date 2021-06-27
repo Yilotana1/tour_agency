@@ -79,26 +79,12 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Phone number already exists");
     };
 
-    public void update() {
-
-    }
 
     @Override
     public void signUp(User user) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
             userDao.getConnection().setAutoCommit(false);
             userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-
-//            User user1 = userDao.findUserByLogin(user.getLogin());
-//            User user2 = userDao.findUserByEmail(user.getEmail());
-//            User user3 = userDao.findUserByPhone(user.getPhone());
-//
-//            if (user1 != null)
-//                throw new UserAlreadyExistsException("User with this login already exists in the system", user1);
-//            if (user2 != null)
-//                throw new UserAlreadyExistsException("User with this email already exists in the system", user2);
-//            if (user3 != null)
-//                throw new UserAlreadyExistsException("User with this phone already exists in the system", user3);
 
             checkDataToCreate(user, userDao);
             userDao.create(user);
@@ -200,21 +186,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public void updateUsers(List<User> users) {
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            userDao.getConnection().setAutoCommit(false);
-            userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-
-            for (User user : users) {
-                userDao.update(user);
-            }
-
-            userDao.getConnection().commit();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 
     @Override
     public void update(User user) {
@@ -248,22 +219,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public List<User> getAllClients() throws ServiceException {
-        return daoFactory.createUserDao().findAll()
-                .stream().filter(user -> user.getRole().equals(Role.CLIENT))
-                .collect(Collectors.toList());
-
-    }
-
-    @Override
-    public List<User> getAllManagers() throws ServiceException {
-        return daoFactory.createUserDao().findAll()
-                .stream().filter(user -> user.getRole().equals(Role.MANAGER))
-                .collect(Collectors.toList());
-
-    }
-
 
     @Override
     public User getByLogin(String login) throws NoSuchElementException {
@@ -273,69 +228,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getByFirstLastName(String firstName, String lastName) throws ServiceException {
-        return getAll().stream()
-                .filter(client -> client.getFirstname().equals(firstName) || client.getLastname().equals(lastName))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public User getByPhone(String phone) throws ServiceException {
-        return getAll().stream()
-                .filter(client -> client.getPhone().equals(phone))
-                .findFirst().get();
-    }
-
-    @Override
-    public List<User> getBlockedUsers() throws ServiceException {
-        return getAll().stream()
-                .filter(user -> user.getStatus().equals(UserStatus.BLOCKED))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<User> getNonBlockedUsers() throws ServiceException {
-        return getAll().stream()
-                .filter(user -> user.getStatus().equals(UserStatus.NON_BLOCKED))
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public void block(int id) throws ServiceException {
-        User client = getById(id);
-        client.setStatus(UserStatus.BLOCKED);
-        daoFactory.createUserDao().update(client);
-    }
-
-    @Override
-    public void block(String login) throws ServiceException {
-        User client = getByLogin(login);
-        client.setStatus(UserStatus.BLOCKED);
-        daoFactory.createUserDao().update(client);
-    }
-
-    @Override
-    public void unBlock(int id) throws ServiceException {
-        User client = getById(id);
-        client.setStatus(UserStatus.NON_BLOCKED);
-        daoFactory.createUserDao().update(client);
-    }
-
-    @Override
-    public void unBlock(String login) throws ServiceException {
-        User client = getByLogin(login);
-        client.setStatus(UserStatus.NON_BLOCKED);
-        daoFactory.createUserDao().update(client);
-    }
-
-    @Override
     public int add(User user) {
         return daoFactory.createUserDao().create(user);
-    }
-
-    @Override
-    public void remove(int id) {
     }
 
 }

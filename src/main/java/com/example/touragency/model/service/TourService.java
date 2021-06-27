@@ -13,12 +13,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public interface TourService extends Service<Tour>{
-
-
-    List<Tour> getSortedByStatus();
-
-    Tour getByName(String name);
-
     void create(String name, String country, BigDecimal price,
                 int maxTickets, Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
                 String hotelName, String city) throws ServiceException;
@@ -50,35 +44,6 @@ public interface TourService extends Service<Tour>{
     List<Tour> getPageRest(int pageId, int pageSize);
 
     List<Tour> getPageShopping(int pageId, int pageSize);
-
-
-    List<Tour> getWithPriceLessThan(BigDecimal price);
-
-    List<Tour> getWithPriceMoreThan(BigDecimal price);
-
-    List<Tour> getWithPeopleMoreThan(int maxPlaces);
-
-    List<Tour> getWithPeopleLessThan(int maxPlaces);
-
-    List<Tour> getWithHotelStarsMoreThan(int stars);
-
-    List<Tour> getWithHotelStarsLessThan(int stars);
-
-    List<Tour> getByCategory(TourCategory category);
-
-    List<Tour> getByCountry(String country);
-
-    void changeCountry(int id, String country);
-
-    void changeName(int id, String name);
-
-    void changePrice(int id, BigDecimal price);
-
-    void changeCategory(int id, TourCategory category);
-
-    void changeHotel(int id, String hotelName);
-
-    void changeCity(int id, String name);
 
     void changeStatus(int id, TourStatus status);
 

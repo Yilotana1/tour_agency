@@ -45,12 +45,18 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
 
 
     protected void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) {
-        String id = request.getParameter("id");
+        String idS = request.getParameter("id");
 
-        if (id != null) {
-
+        if (idS != null) {
+            int id = Integer.parseInt(idS);
             OrderStatus status = OrderStatus.getById(Integer.parseInt(request.getParameter("status")));
-            orderService.changeStatus(Integer.parseInt(id), status);
+            switch (status){
+                case OPENED:orderService.setOpened(id);
+                break;
+                case PAID:orderService.confirmPaid(id);
+                break;
+                case CANCELED:orderService.cancel(id);
+            }
         }
     }
 

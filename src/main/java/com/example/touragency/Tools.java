@@ -22,16 +22,6 @@ public class Tools {
     }
 
 
-    public static String localize(String key, Locale locale) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources", Locale.ENGLISH);
-        if (locale != null) {
-            resourceBundle = ResourceBundle.getBundle("resources", locale);
-        }
-
-        return resourceBundle.getString(key);
-    }
-
-
     public static Calendar getCalendarFromString(String date) {
         try {
             Calendar calendar = Calendar.getInstance();

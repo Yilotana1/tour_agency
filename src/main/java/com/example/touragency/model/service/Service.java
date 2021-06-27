@@ -10,15 +10,13 @@ public interface Service<T> {
 
     List<T> getAll();
 
-    void update() throws ServiceException;
+//    void update() throws ServiceException;
 
     void update(T entity) throws ServiceException;
 
     List<T> getPage(int pageId, int pageSize);
 
     int add(T entity);
-
-    void remove(int id);
 
     int getCount();
 
