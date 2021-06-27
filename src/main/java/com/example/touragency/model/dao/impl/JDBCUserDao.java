@@ -10,6 +10,7 @@ import com.example.touragency.model.entity.enums.UserStatus;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.User.*;
 
@@ -171,54 +172,54 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public User findUserByLogin(String login) {
+    public Optional<User> findUserByLogin(String login) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
         ) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                return new UserMapper().extractFromResultSet(rs);
+                return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_EMAIL);
         ) {
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                return new UserMapper().extractFromResultSet(rs);
+                return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public User findUserByPhone(String phone) {
+    public Optional<User> findUserByPhone(String phone) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_PHONE);
         ) {
             statement.setString(1, phone);
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                return new UserMapper().extractFromResultSet(rs);
+                return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

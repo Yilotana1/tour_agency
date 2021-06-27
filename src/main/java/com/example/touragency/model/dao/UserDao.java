@@ -6,6 +6,7 @@ import com.example.touragency.model.entity.enums.UserStatus;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDao extends GenericDao<User>{
 
@@ -15,11 +16,11 @@ public interface UserDao extends GenericDao<User>{
     void update(String currentLogin, String firstName, String lastName, String phone, String email,
            UserStatus status, String login, String password, Role role);
 
-    User findUserByLogin(String login);
+    Optional<User> findUserByLogin(String login);
 
-    User findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
-    User findUserByPhone(String phone);
+    Optional<User> findUserByPhone(String phone);
 
     List<User> findByLimitManagersFirst(int start, int count);
 

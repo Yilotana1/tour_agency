@@ -44,7 +44,7 @@ public class LoginCommand implements Command {
         addUserToLoginCache(request, login);
 
         try {
-            User user = ServiceFactory.getInstance().createUserService().signIn(login, password);
+            User user = ServiceFactory.getInstance().createUserService().signIn(login, password).get();
 
             switch (user.getRole()) {
                 case CLIENT: {

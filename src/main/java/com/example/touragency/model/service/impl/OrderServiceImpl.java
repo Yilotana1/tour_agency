@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            User client = userDao.findUserByLogin(login);
+            User client = userDao.findUserByLogin(login).get();
             Tour tour = tourDao.findById(tourId);
 
             throwExceptionIfTourIsNotAvailable(client, tour);

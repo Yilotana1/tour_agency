@@ -15,7 +15,7 @@ public class ProfileViewCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserService userService = ServiceFactory.getInstance().createUserService();
-        User user = userService.getByLogin((String) request.getSession().getAttribute("login"));
+        User user = userService.getByLogin((String) request.getSession().getAttribute("login")).get();
         request.setAttribute("user", user);
 
         switch (user.getRole()){

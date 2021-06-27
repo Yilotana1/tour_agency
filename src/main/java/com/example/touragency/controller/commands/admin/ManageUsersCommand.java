@@ -14,10 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<User> {
@@ -57,9 +54,9 @@ public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<U
 
     private List<User> getSearchedUserAtList(String login, UserService userService) {
         try {
-            User user = userService.getByLogin(login);
-            if (user != null) {
-                return Arrays.asList(user);
+            Optional<User> user = userService.getByLogin(login);
+            if (user.isPresent()) {
+                return Arrays.asList(user.get());
             }
         } catch (NoSuchElementException throwables) {
             throwables.printStackTrace();
