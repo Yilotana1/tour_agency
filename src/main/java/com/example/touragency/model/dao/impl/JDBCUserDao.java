@@ -29,21 +29,18 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public int getCount() {
+    public int getCount() throws SQLException {
         try (Statement statement = connection.createStatement();
         ) {
             ResultSet rs = statement.executeQuery(SQL_FIND_USERS_NUMBER_AS_COUNT);
             rs.next();
             return rs.getInt("count");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return 0;
     }
 
     @Override
-    public int create(User user) {
+    public int create(User user) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, user.getLogin());
@@ -56,14 +53,11 @@ public class JDBCUserDao implements UserDao {
             statement.setInt(8, user.getStatus().getId());
             statement.executeUpdate();
             return Tools.getGeneratedId(statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return -1;
     }
 
     @Override
-    public Optional<User> findById(int id) {
+    public Optional<User> findById(int id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID);
         ) {
             statement.setInt(1, id);
@@ -73,15 +67,13 @@ public class JDBCUserDao implements UserDao {
                 return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll() throws SQLException{
         List<User> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
         ) {
@@ -90,13 +82,12 @@ public class JDBCUserDao implements UserDao {
                 list.add(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
         }
         return list;
     }
 
     @Override
-    public List<User> findByLimit(int start, int count) {
+    public List<User> findByLimit(int start, int count) throws SQLException{
         List<User> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT);
         ) {
@@ -109,14 +100,12 @@ public class JDBCUserDao implements UserDao {
                 list.add(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER);
         ) {
             statement.setString(1, user.getLogin());
@@ -129,13 +118,11 @@ public class JDBCUserDao implements UserDao {
             statement.setInt(8, user.getStatus().getId());
             statement.setInt(9, user.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     public void update(String currentLogin, String firstName, String lastName, String phone, String email,
-                       UserStatus status, String login, String password, Role role){
+                       UserStatus status, String login, String password, Role role) throws SQLException{
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_BY_LOGIN);
         ) {
@@ -149,20 +136,16 @@ public class JDBCUserDao implements UserDao {
             statement.setInt(8, status.getId());
             statement.setString(9, currentLogin);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER);
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -172,7 +155,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByLogin(String login) {
+    public Optional<User> findUserByLogin(String login) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
         ) {
             statement.setString(1, login);
@@ -182,14 +165,12 @@ public class JDBCUserDao implements UserDao {
                 return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_EMAIL);
         ) {
             statement.setString(1, email);
@@ -199,14 +180,12 @@ public class JDBCUserDao implements UserDao {
                 return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
     @Override
-    public Optional<User> findUserByPhone(String phone) {
+    public Optional<User> findUserByPhone(String phone) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_PHONE);
         ) {
             statement.setString(1, phone);
@@ -216,14 +195,12 @@ public class JDBCUserDao implements UserDao {
                 return Optional.of(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
     @Override
-    public List<User> findByLimitClientsFirst(int start, int count) {
+    public List<User> findByLimitClientsFirst(int start, int count) throws SQLException{
         List<User> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_CLIENTS_FIRST);
         ) {
@@ -236,14 +213,12 @@ public class JDBCUserDao implements UserDao {
                 list.add(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<User> findByLimitManagersFirst(int start, int count) {
+    public List<User> findByLimitManagersFirst(int start, int count) throws SQLException{
         List<User> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_MANAGERS_FIRST);
         ) {
@@ -256,14 +231,12 @@ public class JDBCUserDao implements UserDao {
                 list.add(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<User> findByLimitNonBlockedFirst(int start, int count) {
+    public List<User> findByLimitNonBlockedFirst(int start, int count) throws SQLException{
         List<User> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_NON_BLOCKED_FIRST);
         ) {
@@ -276,14 +249,12 @@ public class JDBCUserDao implements UserDao {
                 list.add(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<User> findByLimitBlockedFirst(int start, int count) {
+    public List<User> findByLimitBlockedFirst(int start, int count) throws SQLException{
         List<User> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USERS_BY_LIMIT_BLOCKED_FIRST);
         ) {
@@ -296,8 +267,6 @@ public class JDBCUserDao implements UserDao {
                 list.add(new UserMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }

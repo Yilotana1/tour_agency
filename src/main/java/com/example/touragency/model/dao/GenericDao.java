@@ -10,19 +10,19 @@ public interface GenericDao<T> extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
-    int getCount();
+    int getCount() throws SQLException;
 
-    int create(T entity);
+    int create(T entity) throws SQLException;
 
-    Optional<T> findById(int id);
+    Optional<T> findById(int id) throws SQLException;
 
-    List<T> findAll();
+    List<T> findAll() throws SQLException;
 
-    List<T> findByLimit(int start, int count);
+    List<T> findByLimit(int start, int count) throws SQLException;
 
-    void update(T entity);
+    void update(T entity) throws SQLException;
 
-    void delete(int id);
+    void delete(int id) throws SQLException;
 
     void close() throws SQLException;
 

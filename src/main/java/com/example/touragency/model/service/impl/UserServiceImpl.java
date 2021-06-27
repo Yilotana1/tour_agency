@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
 
             userDao.getConnection().setAutoCommit(false);
             userDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
             checkDataToUpdate(currentLogin, login, email, phone, userDao);
 
             userDao.update(currentLogin, firstName, lastName, phone, email, status, login, password, role);
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userWithTheSamePhone = userDao.findUserByPhone(phone);
         Optional<User> userToUpdate = userDao.findUserByLogin(currentLogin);
 
-        if (userWithTheSameLogin.isPresent() && !userToUpdate.get().equals(login))
+        if (userWithTheSameLogin.isPresent() && !userToUpdate.get().getLogin().equals(login))
             throw new ServiceException("Login already exists");
 
         if (userWithTheSameEmail.isPresent() && !userToUpdate.get().getEmail().equals(email))

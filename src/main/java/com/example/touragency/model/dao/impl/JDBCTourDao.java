@@ -159,7 +159,7 @@ public class JDBCTourDao implements TourDao {
     }
 
     @Override
-    public List<Tour> findByLimit(int start, int count) {
+    public List<Tour> findByLimit(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT);
         ) {
@@ -172,14 +172,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitBurningFirst(int start, int count) {
+    public List<Tour> findByLimitBurningFirst(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_BURNING_FIRST);
         ) {
@@ -192,14 +190,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitNonBurningFirst(int start, int count) {
+    public List<Tour> findByLimitNonBurningFirst(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_NON_BURNING_FIRST);
         ) {
@@ -212,14 +208,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitHighHotelStarsFirst(int start, int count) {
+    public List<Tour> findByLimitHighHotelStarsFirst(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_HIGH_HOTEL_STARS_FIRST);
         ) {
@@ -232,14 +226,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitLowHotelStarsFirst(int start, int count) {
+    public List<Tour> findByLimitLowHotelStarsFirst(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_LOW_HOTEL_STARS_FIRST);
         ) {
@@ -252,14 +244,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitHighPriceFirst(int start, int count) {
+    public List<Tour> findByLimitHighPriceFirst(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_HIGH_PRICE_FIRST);
         ) {
@@ -272,14 +262,13 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitLowPriceFirst(int start, int count) {
+    public List<Tour> findByLimitLowPriceFirst(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_LOW_PRICE_FIRST);
         ) {
@@ -292,14 +281,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitExcursion(int start, int count) {
+    public List<Tour> findByLimitExcursion(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_EXCURSION);
         ) {
@@ -313,14 +300,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitRest(int start, int count) {
+    public List<Tour> findByLimitRest(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_REST);
         ) {
@@ -334,14 +319,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Tour> findByLimitShopping(int start, int count) {
+    public List<Tour> findByLimitShopping(int start, int count) throws SQLException{
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_SHOPPING);
         ) {
@@ -355,14 +338,12 @@ public class JDBCTourDao implements TourDao {
                 list.add(new TourMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public void update(Tour tour) {
+    public void update(Tour tour) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TOUR);
         ) {
             statement.setString(1, tour.getName());
@@ -378,19 +359,15 @@ public class JDBCTourDao implements TourDao {
             statement.setString(11, tour.getCity());
             statement.setInt(12, tour.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TOUR);
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

@@ -27,12 +27,12 @@ public class JDBCHotelDao implements HotelDao {
     }
 
     @Override
-    public int getCount() {
+    public int getCount() throws SQLException{
         return 0;
     }
 
     @Override
-    public int create(Hotel hotel) {
+    public int create(Hotel hotel) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HOTEL, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, hotel.getName());
@@ -42,14 +42,11 @@ public class JDBCHotelDao implements HotelDao {
             statement.setString(5, hotel.getAdminPhone());
             statement.executeUpdate();
             return Tools.getGeneratedId(statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return -1;
     }
 
     @Override
-    public Optional<Hotel> findById(int id) {
+    public Optional<Hotel> findById(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_HOTEL_BY_ID);
         ) {
             statement.setInt(1, id);
@@ -58,14 +55,12 @@ public class JDBCHotelDao implements HotelDao {
                 return Optional.of(new HotelMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
     @Override
-    public Optional<Hotel> findByName(String name) {
+    public Optional<Hotel> findByName(String name) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_HOTEL_BY_NAME);
         ) {
             statement.setString(1, name);
@@ -74,15 +69,13 @@ public class JDBCHotelDao implements HotelDao {
                 return Optional.of(new HotelMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
 
     @Override
-    public List<Hotel> findAll() {
+    public List<Hotel> findAll() throws SQLException{
         List<Hotel> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
         ) {
@@ -91,19 +84,17 @@ public class JDBCHotelDao implements HotelDao {
                 list.add(new HotelMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Hotel> findByLimit(int start, int count) {
+    public List<Hotel> findByLimit(int start, int count) throws SQLException{
         return null;
     }
 
     @Override
-    public void update(Hotel hotel) {
+    public void update(Hotel hotel) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_HOTEL)) {
             statement.setString(1, hotel.getName());
             statement.setString(2, hotel.getCity());
@@ -112,19 +103,15 @@ public class JDBCHotelDao implements HotelDao {
             statement.setString(5, hotel.getAdminPhone());
             statement.setInt(6, hotel.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_HOTEL);
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

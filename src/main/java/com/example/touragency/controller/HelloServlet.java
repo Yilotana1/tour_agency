@@ -1,6 +1,7 @@
 package com.example.touragency.controller;
 
 
+import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.*;
 import com.example.touragency.controller.commands.admin.CreateTourCommand;
 import com.example.touragency.controller.commands.admin.AdminManageOrdersCommand;
@@ -28,23 +29,23 @@ public class HelloServlet extends HttpServlet {
         getServletConfig().getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
-        commands.put("login", new LoginCommand());
-        commands.put("logout", new LogOutCommand());
-        commands.put("register", new RegisterCommand());
-        commands.put("admin/manage_users", new ManageUsersCommand());
-        commands.put("admin/manage_orders", new AdminManageOrdersCommand());
-        commands.put("manager/manage_orders", new ManageOrdersCommand());
-        commands.put("admin/manage_tours", new AdminManageToursCommand());
-        commands.put("admin/create_tour", new CreateTourCommand());
-        commands.put("", new MainCommand());
-        commands.put("order_form", new OrderFormCommand());
-        commands.put("order", new OrderCommand());
-        commands.put("my_orders", new MyOrdersCommand());
-        commands.put("edit_profile", new EditProfileCommand());
-        commands.put("profile_view", new ProfileViewCommand());
-        commands.put("manager/manage_tours", new ManageToursCommand());
-        commands.put("admin/edit_discount", new EditDiscountCommand());
-        commands.put("manager/edit_discount", new EditDiscountCommand());
+        commands.put(Path.LOGIN, new LoginCommand());
+        commands.put(Path.LOGOUT, new LogOutCommand());
+        commands.put(Path.REGISTER, new RegisterCommand());
+        commands.put(Path.ADMIN_MANAGE_USERS, new ManageUsersCommand());
+        commands.put(Path.ADMIN_MANAGE_ORDERS, new AdminManageOrdersCommand());
+        commands.put(Path.ADMIN_MANAGE_TOURS, new AdminManageToursCommand());
+        commands.put(Path.ADMIN_CREATE_TOUR, new CreateTourCommand());
+        commands.put(Path.ADMIN_EDIT_DISCOUNT, new EditDiscountCommand());
+        commands.put(Path.MANAGER_MANAGE_ORDERS, new ManageOrdersCommand());
+        commands.put(Path.MANAGER_MANAGE_TOURS, new ManageToursCommand());
+        commands.put(Path.MANAGER_EDIT_DISCOUNT, new EditDiscountCommand());
+        commands.put(Path.MAIN, new MainCommand());
+        commands.put(Path.ORDER_FORM, new OrderFormCommand());
+        commands.put(Path.TOUR_ORDER, new OrderCommand());
+        commands.put(Path.MY_ORDERS, new MyOrdersCommand());
+        commands.put(Path.EDIT_PROFILE, new EditProfileCommand());
+        commands.put(Path.PROFILE_VIEW, new ProfileViewCommand());
 
     }
 
@@ -60,7 +61,7 @@ public class HelloServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/tour_agency_war_exploded/" , "");
+        path = path.replaceAll(".*/tour_agency_war_exploded" , "");
         Command command = commands.getOrDefault(path ,
                 null);
         command.execute(request, response);

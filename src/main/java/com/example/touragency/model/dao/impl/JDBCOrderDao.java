@@ -26,21 +26,18 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public int getCount() {
+    public int getCount() throws SQLException{
         try (Statement statement = connection.createStatement();
         ) {
             ResultSet rs = statement.executeQuery(SQL_FIND_ORDERS_NUMBER_AS_COUNT);
             rs.next();
             return rs.getInt("count");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return 0;
     }
 
     @Override
-    public int create(Order order) {
+    public int create(Order order) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
             statement.setInt(2, order.getStatus().getId());
@@ -50,15 +47,12 @@ public class JDBCOrderDao implements OrderDao {
 
             statement.executeUpdate();
             return Tools.getGeneratedId(statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return -1;
     }
 
 
     @Override
-    public Optional<Order> findById(int id) {
+    public Optional<Order> findById(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_ID)
         ) {
             statement.setInt(1, id);
@@ -68,14 +62,12 @@ public class JDBCOrderDao implements OrderDao {
             }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
 
     @Override
-    public List<Order> findAll() {
+    public List<Order> findAll() throws SQLException{
         List<Order> list = new ArrayList<>();
         try (Statement statement = connection.createStatement()
         ) {
@@ -84,14 +76,12 @@ public class JDBCOrderDao implements OrderDao {
                 list.add(new OrderMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Order> findByLimit(int start, int count) {
+    public List<Order> findByLimit(int start, int count) throws SQLException{
         List<Order> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDERS_BY_LIMIT);
         ) {
@@ -104,14 +94,12 @@ public class JDBCOrderDao implements OrderDao {
                 list.add(new OrderMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public void update(Order order) {
+    public void update(Order order) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER)
         ) {
             statement.setDate(1, new Date(order.getDate().getTimeInMillis()));
@@ -120,19 +108,15 @@ public class JDBCOrderDao implements OrderDao {
             statement.setInt(4, order.getTourId());
             statement.setInt(5, order.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ORDER)
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -143,7 +127,7 @@ public class JDBCOrderDao implements OrderDao {
 
 
     @Override
-    public List<Order> findOrdersByLogin(String login) {
+    public List<Order> findOrdersByLogin(String login) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_LOGIN)
         ) {
             List<Order> orders = new ArrayList<>();
@@ -154,14 +138,11 @@ public class JDBCOrderDao implements OrderDao {
             }
 
             return orders;
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     @Override
-    public List<Order> findOrdersByLimitOpenedFirst(int start, int count) {
+    public List<Order> findOrdersByLimitOpenedFirst(int start, int count) throws SQLException{
         List<Order> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDERS_BY_LIMIT_OPENED_FIRST);
         ) {
@@ -174,14 +155,12 @@ public class JDBCOrderDao implements OrderDao {
                 list.add(new OrderMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public List<Order> findOrdersByLimitPaidFirst(int start, int count) {
+    public List<Order> findOrdersByLimitPaidFirst(int start, int count) throws SQLException{
         List<Order> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDERS_BY_LIMIT_PAID_FIRST);
         ) {
@@ -194,8 +173,6 @@ public class JDBCOrderDao implements OrderDao {
                 list.add(new OrderMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }

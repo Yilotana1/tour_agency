@@ -75,8 +75,9 @@
 
 <br/>
 <br/>
-<span style="color: red"><fmt:message key="discount_message"/></span>
-
+<span style="color: #1bd01b"><fmt:message key="discount_message"/></span>
+<br/>
+<br/>
 <form action="${pageContext.request.contextPath}/order">
     <input type="hidden" name="tourId" value="${requestScope.tour.id}"/>
     <fmt:message key="order" var="order"/>

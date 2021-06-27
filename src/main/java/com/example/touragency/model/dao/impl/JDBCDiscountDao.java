@@ -27,12 +27,12 @@ public class JDBCDiscountDao implements DiscountDao {
     }
 
     @Override
-    public int getCount() {
+    public int getCount() throws SQLException{
         return 0;
     }
 
     @Override
-    public int create(Discount discount){
+    public int create(Discount discount) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_DISCOUNT, Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setInt(1, discount.getPercent());
@@ -46,7 +46,7 @@ public class JDBCDiscountDao implements DiscountDao {
     }
 
     @Override
-    public Optional<Discount> findById(int id) {
+    public Optional<Discount> findById(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_DISCOUNT_BY_ID);
         ) {
             statement.setInt(1, id);
@@ -62,7 +62,7 @@ public class JDBCDiscountDao implements DiscountDao {
     }
 
     @Override
-    public List<Discount> findAll() {
+    public List<Discount> findAll() throws SQLException{
         List<Discount> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
         ) {
@@ -71,37 +71,32 @@ public class JDBCDiscountDao implements DiscountDao {
                 list.add(new DiscountMapper().extractFromResultSet(rs));
             }
 
-        } catch (SQLException e) {
         }
         return list;
     }
 
     @Override
     public List<Discount> findByLimit(int start, int count) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void update(Discount discount) {
+    public void update(Discount discount) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_DISCOUNT);
         ) {
             statement.setInt(1, discount.getPercent());
             statement.setInt(2, discount.getMaxPercent());
             statement.setInt(3, discount.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_DISCOUNT);
         ) {
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
