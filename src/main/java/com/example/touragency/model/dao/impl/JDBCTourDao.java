@@ -2,11 +2,10 @@ package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.Tools;
 import com.example.touragency.model.dao.TourDao;
-import com.example.touragency.model.dao.mapper.entity.TourMapper;
+import com.example.touragency.model.dao.mapper.TourMapper;
 import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.TourCategory;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,23 +99,6 @@ public class JDBCTourDao implements TourDao {
 
 
     @Override
-    public List<Tour> findByCategory(TourCategory category) {
-        List<Tour> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_CATEGORY)) {
-            statement.setInt(1, category.getId());
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                list.add(new TourMapper().extractFromResultSet(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return list;
-    }
-
-    @Override
     public List<Tour> findByLimitCountry(int start, int count, String country) {
         List<Tour> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_LIMIT_COUNTRY);
@@ -159,53 +141,10 @@ public class JDBCTourDao implements TourDao {
     }
 
 
-    @Override
-    public List<Tour> findByPrice(BigDecimal price) {
-        List<Tour> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_PRICE)) {
-            statement.setBigDecimal(1, price);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                list.add(new TourMapper().extractFromResultSet(rs));
-            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 
-    @Override
-    public List<Tour> findByPeople(int peopleNumber) {
-        List<Tour> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_PEOPLE)) {
-            statement.setInt(1, peopleNumber);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                list.add(new TourMapper().extractFromResultSet(rs));
-            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 
-    @Override
-    public List<Tour> findByHotelId(int hotelId) {
-        List<Tour> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TOURS_BY_HOTEL_ID)) {
-            statement.setInt(1, hotelId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                list.add(new TourMapper().extractFromResultSet(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 
 
     @Override

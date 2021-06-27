@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface OrderDao extends GenericDao<Order>{
 
-    List<Order> findOrdersByClientId(int clientId);
-
     List<Order> findOrdersByLogin(String login);
 
     List<Order> findOrdersByLimitOpenedFirst(int start, int count);

@@ -2,7 +2,7 @@ package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.Tools;
 import com.example.touragency.model.dao.OrderDao;
-import com.example.touragency.model.dao.mapper.entity.OrderMapper;
+import com.example.touragency.model.dao.mapper.OrderMapper;
 import com.example.touragency.model.entity.Order;
 
 import java.sql.*;
@@ -140,23 +140,6 @@ public class JDBCOrderDao implements OrderDao {
         connection.close();
     }
 
-    @Override
-    public List<Order> findOrdersByClientId(int clientId) {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_CLIENT_ID)
-        ) {
-            List<Order> orders = new ArrayList<>();
-            statement.setInt(1, clientId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                orders.add(new OrderMapper().extractFromResultSet(rs));
-            }
-
-            return orders;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
     public List<Order> findOrdersByLogin(String login) {

@@ -2,7 +2,7 @@ package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.Tools;
 import com.example.touragency.model.dao.HotelDao;
-import com.example.touragency.model.dao.mapper.entity.HotelMapper;
+import com.example.touragency.model.dao.mapper.HotelMapper;
 import com.example.touragency.model.entity.Hotel;
 
 import java.sql.*;

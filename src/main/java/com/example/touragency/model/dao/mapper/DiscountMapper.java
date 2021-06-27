@@ -1,4 +1,4 @@
-package com.example.touragency.model.dao.mapper.entity;
+package com.example.touragency.model.dao.mapper;
 
 import com.example.touragency.constants.db.Fields;
 import com.example.touragency.model.entity.Discount;
