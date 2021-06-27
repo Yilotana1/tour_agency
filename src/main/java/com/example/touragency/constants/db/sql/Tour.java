@@ -11,32 +11,11 @@ public interface Tour {
     String SQL_FIND_TOUR_BY_NAME = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_NAME + "=?";
 
-    String SQL_FIND_TOURS_BY_CATEGORY = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
-            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_CATEGORY_ID + "=?";
-
-    String SQL_FIND_TOURS_BY_PRICE = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
-            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_PRICE + "=?";
-
-    String SQL_FIND_TOURS_BY_PEOPLE = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
-            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.TOUR_MAX_TICKETS + "=?";
-
-    String SQL_FIND_TOURS_BY_HOTEL_ID = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
-            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.HOTEL_ID + "=?";
-
-//    String SQL_FIND_TOURS_BY_ORDER_ID = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.ORDER_HAS_TOUR + " ON " +
-//            Fields.TOUR_ID + " = " + Fields.ORDER_HAS_TOUR_TOUR_ID + " JOIN " + Tables.HOTEL + " ON " +
-//            Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " WHERE " + Fields.ORDER_HAS_TOUR_ORDER_ID + "=?;";
-
-
     String SQL_FIND_ALL_TOURS = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID;
 
     String SQL_FIND_TOURS_BY_LIMIT = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " LIMIT ?, ?";
-
-//    String SQL_FIND_TOURS_BY_LIMIT = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
-//            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " ORDER BY " + Fields.TOUR_STATUS_ID + " LIMIT ?, ?";
-
 
     String SQL_FIND_TOURS_BY_LIMIT_BURNING_FIRST = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " ORDER BY " + Fields.TOUR_STATUS_ID + " LIMIT ?, ?";

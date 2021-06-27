@@ -5,26 +5,11 @@ import com.example.touragency.constants.db.Tables;
 
 public interface Order {
 
-    //    String SQL_FIND_ORDER_BY_ID = "SELECT * FROM " + Tables.ORDER + " JOIN " + Tables.USER + " ON "
-//            + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID
-//            + " WHERE " + Fields.ORDER_ID + "=?;";
 
-//    String SQL_FIND_ORDER_BY_ID = "SELECT " + Tables.ORDER + ".*," + Tables.USER + "*," + Fields.TOUR_NAME + " FROM "
-//            + Tables.ORDER_HAS_TOUR + " JOIN " + Tables.TOUR + " ON "
-//            + Fields.ORDER_HAS_TOUR_TOUR_ID + " = " + Fields.TOUR_ID +
-//            " JOIN " + Tables.ORDER +
-//            " ON " + Fields.ORDER_ID + " = " + Fields.ORDER_HAS_TOUR_ORDER_ID + " JOIN " +
-//            Tables.USER + " ON " + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID +
-//            " WHERE " + Fields.ORDER_HAS_TOUR_ORDER_ID + " = ?";
 
     String SQL_FIND_ORDER_BY_ID = "SELECT " + Tables.ORDER + ".*," + Fields.TOUR_ID + ","
             + Fields.TOUR_NAME + ", " + Tables.USER + ".* " + " FROM " + Tables.ORDER + " JOIN " + Tables.USER + " ON " + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID +
             " JOIN " + Tables.TOUR + " ON " + Fields.ORDER_TOUR_ID + " = " + Fields.TOUR_ID + " WHERE " + Fields.ORDER_ID + " = ?";
-
-
-    String SQL_FIND_ORDER_BY_CLIENT_ID = "SELECT " + Tables.ORDER + ".*," + Fields.TOUR_ID + ","
-            + Fields.TOUR_NAME + ", " + Tables.USER + ".* " + " FROM " + Tables.ORDER + " JOIN " + Tables.USER + " ON " + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID +
-            " JOIN " + Tables.TOUR + " ON " + Fields.ORDER_TOUR_ID + " = " + Fields.TOUR_ID + " WHERE " + Fields.ORDER_CLIENT_ID + " = ?";
 
     String SQL_FIND_ORDER_BY_LOGIN = "SELECT " + Tables.ORDER + ".*," + Fields.TOUR_ID + ","
             + Fields.TOUR_NAME + ", " + Tables.USER + ".* " + " FROM " + Tables.ORDER + " JOIN " + Tables.USER + " ON " + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID +
@@ -45,17 +30,6 @@ public interface Order {
             + Fields.TOUR_NAME + ", " + Tables.USER + ".* " + " FROM " + Tables.ORDER
             + " JOIN " + Tables.USER + " ON " + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID +
             " JOIN " + Tables.TOUR + " ON " + Fields.ORDER_TOUR_ID + " = " + Fields.TOUR_ID + " ORDER BY " + Fields.ORDER_STATUS_ID + " DESC LIMIT ?, ?";
-
-
-//    String SQL_FIND_ALL_ORDERS = "SELECT * FROM " + Tables.ORDER + " JOIN " + Tables.USER + " ON "
-//            + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID;
-
-//    String SQL_FIND_ALL_ORDERS = "SELECT " + Tables.ORDER + ".*," + Tables.USER + ".*," + Fields.TOUR_NAME + " FROM "
-//            + Tables.ORDER_HAS_TOUR + " JOIN " + Tables.TOUR + " ON "
-//            + Fields.ORDER_HAS_TOUR_TOUR_ID + " = " + Fields.TOUR_ID +
-//            " JOIN " + Tables.ORDER +
-//            " ON " + Fields.ORDER_ID + " = " + Fields.ORDER_HAS_TOUR_ORDER_ID + " JOIN " +
-//            Tables.USER + " ON " + Fields.ORDER_CLIENT_ID + " = " + Fields.USER_ID;
 
     String SQL_FIND_ALL_ORDERS = "SELECT " + Tables.ORDER + ".*," + Fields.TOUR_ID + ","
             + Fields.TOUR_NAME + ", " + Tables.USER + ".* " + " FROM " + Tables.ORDER

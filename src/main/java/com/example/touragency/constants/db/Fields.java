@@ -54,8 +54,4 @@ public interface Fields {
     String DISCOUNT_PERCENT = Tables.DISCOUNT + ".percent";
     String DISCOUNT_MAX_PERCENT= Tables.DISCOUNT + ".max_percent";
 
-    //Tour_has_order
-//    String ORDER_HAS_TOUR_TOUR_ID = Tables.ORDER_HAS_TOUR + ".tour_id";
-//    String ORDER_HAS_TOUR_ORDER_ID = Tables.ORDER_HAS_TOUR + ".order_id";
-
 }
