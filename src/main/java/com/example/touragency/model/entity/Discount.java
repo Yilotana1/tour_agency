@@ -3,7 +3,7 @@ package com.example.touragency.model.entity;
 public class Discount extends Entity {
     private int percent;
     private int maxPercent;
-
+    private int id = 1;
 
     private Discount() {
     }
@@ -29,6 +29,11 @@ public class Discount extends Entity {
                 "percent=" + percent +
                 ", maxPercent=" + maxPercent +
                 '}';
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public void setPercent(int percent) {

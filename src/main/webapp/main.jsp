@@ -3,7 +3,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.example.touragency.model.entity.enums.Role" %>
 <%@ page import="com.example.touragency.controller.commands.Paginator" %>
-<%@ page import="com.example.touragency.Tools" %>
 <!DOCTYPE html>
 
 
@@ -209,9 +208,8 @@
                 <th>${tour.endDateFormat}</th>
                 <th>${tour.category}</th>
                 <th>${tour.status}</th>
-
-                <fmt:message key="order" var="order_locale"/>
-                <th><input type="submit" value="${order_locale}"/></th>
+                <fmt:message key="order" var="order"/>
+                <th><input type="submit" value="${order}"/></th>
             </tr>
         </form>
 

@@ -20,12 +20,12 @@ public interface Path {
       String REGISTER_FORM ="/register.jsp";
       String CLIENT_PAGE ="/client/client_page.jsp";
       String MANAGER_PAGE ="/manager/manager_page.jsp";
-      String MANAGER_MANAGER_ORDERS ="/manager/manage_orders";
+      String MANAGER_MANAGE_ORDERS ="/manager/manage_orders";
       String EDIT_PROFILE ="/edit_profile";
       String PROFILE_VIEW ="/profile_view";
-
-
-
+      String MANAGER_MANAGE_TOURS ="/manager/manage_tours";
+      String MANAGER_EDIT_DISCOUNT ="/manager/edit_discount";
+      String ADMIN_EDIT_DISCOUNT ="/admin/edit_discount";
 
 }
 

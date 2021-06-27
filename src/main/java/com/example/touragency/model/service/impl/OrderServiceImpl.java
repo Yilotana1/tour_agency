@@ -12,6 +12,7 @@ import com.example.touragency.exceptions.*;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -194,7 +195,6 @@ public class OrderServiceImpl implements OrderService {
 
             List<Order> orders = orderDao.findOrdersByLogin(login);
             BigDecimal price = getPriceWithDiscount(orders, discountDao, tour.getPrice());
-
             Order order = Order.createOrder(Calendar.getInstance(), OrderStatus.OPENED,
                     client, price, tour.getName(), tour.getId());
 

@@ -64,6 +64,11 @@
 
     <servlet-mapping>
         <servlet-name>servlet</servlet-name>
+        <url-pattern>/manager/manage_tours</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
         <url-pattern>/admin/create_tour</url-pattern>
     </servlet-mapping>
 
@@ -99,8 +104,15 @@
     </servlet-mapping>
 
 
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/admin/edit_discount</url-pattern>
+    </servlet-mapping>
 
-
+    <servlet-mapping>
+        <servlet-name>servlet</servlet-name>
+        <url-pattern>/manager/edit_discount</url-pattern>
+    </servlet-mapping>
 
 
 <!--filter definitions-->

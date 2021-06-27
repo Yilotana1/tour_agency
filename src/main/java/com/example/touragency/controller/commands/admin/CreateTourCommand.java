@@ -39,7 +39,7 @@ public class CreateTourCommand implements Command {
 
         try {
             new TourValidator().checkTourIsValid(name, country, city, price, hotelName,
-                    minTickets, maxTickets, String.valueOf(TourServiceImpl.INITIAL_TAKEN_TICKETS), startDate, endDate);
+                   maxTickets, String.valueOf(TourServiceImpl.INITIAL_TAKEN_TICKETS), startDate, endDate);
 
             tourService.create(name, country, new BigDecimal(price), Integer.parseInt(maxTickets),
                     Tools.getCalendarFromString(startDate),

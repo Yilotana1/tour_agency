@@ -37,6 +37,11 @@
 <br/><br/><br/>
 
 
+<fmt:message key="manage_tours" var="manage_tours"/>
+<form action="${pageContext.request.contextPath}/manager/manage_tours">
+    <input type="submit" value="${manage_tours}"/>
+</form>
+
 <fmt:message key="manage_orders" var="manage_orders"/>
 <form action="${pageContext.request.contextPath}/manager/manage_orders">
     <input type="submit" value="${manage_orders}"/>

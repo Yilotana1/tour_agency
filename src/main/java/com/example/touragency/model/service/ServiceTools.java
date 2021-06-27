@@ -1,6 +1,5 @@
 package com.example.touragency.model.service;
 
-import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.entity.Discount;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.Tour;
@@ -26,36 +25,20 @@ public class ServiceTools {
         return tour.getStartDate().before(Calendar.getInstance());
     }
 
-    public static long countClientOrders(OrderDao orderDao, User client) {
-        return orderDao.findAll().stream()
-                .filter(order -> order.getClient().getId() == client.getId()).count();
-    }
-
 
     public static BigDecimal getPriceWithDiscount(Discount discount, List<Order> orders, BigDecimal tourPrice) {
-//        BigDecimal priceSum = tours.stream()
-//                .map(Tour::getPrice)
-//                .reduce(BigDecimal::add).get();
 
-        int percentSum = orders.size() * discount.getPercent();
+        float percentSum = orders.size() * discount.getPercent();
         if (percentSum > discount.getMaxPercent()) {
             percentSum = (orders.size() - 1) * discount.getPercent();
         }
+
         return tourPrice
                 .subtract(
                         tourPrice.multiply(BigDecimal.valueOf(percentSum / 100))
                 );
 
-//        int orderTourNumber = tours.size();
-//        if (orderTourNumber != 0) {
-//            float discountPercent = (float) (discount.getPercent() * orderTourNumber);
-//            if (discountPercent < discount.getMaxPercent()) {
-//                priceSum = priceSum
-//                        .subtract(priceSum.multiply(BigDecimal.valueOf(discountPercent / 100))
-//                                .multiply(BigDecimal.valueOf(orderTourNumber)));
-//            }
-//        }
-//        return priceSum;
+
     }
 
 }

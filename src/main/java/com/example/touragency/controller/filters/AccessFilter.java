@@ -56,7 +56,9 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
                         filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
                         filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW,
-                        filterConfig.getServletContext().getContextPath() + Path.MANAGER_MANAGER_ORDERS));
+                        filterConfig.getServletContext().getContextPath() + Path.MANAGER_MANAGE_ORDERS,
+                        filterConfig.getServletContext().getContextPath() + Path.MANAGER_MANAGE_TOURS,
+                        filterConfig.getServletContext().getContextPath() + Path.MANAGER_EDIT_DISCOUNT));
 
         accessMap.put(ADMIN,
                 Arrays.asList(filterConfig.getServletContext().getContextPath() + Path.LOGOUT,
@@ -72,7 +74,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.ORDER_FORM,
                         filterConfig.getServletContext().getContextPath() + Path.MY_ORDERS,
                         filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
-                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW));
+                        filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW,
+                        filterConfig.getServletContext().getContextPath() + Path.ADMIN_EDIT_DISCOUNT));
     }
 
 

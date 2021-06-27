@@ -4,6 +4,11 @@ import com.example.touragency.exceptions.*;
 import com.example.touragency.model.entity.Discount;
 
 public interface DiscountService extends Service<Discount>{
+
+    void update(int percentStep, int maxPercent);
+
+    Discount getDiscount();
+
     int getPercent() throws ServiceException;
 
     int getMaxPercent() throws ServiceException;

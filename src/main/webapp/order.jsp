@@ -17,14 +17,14 @@
 </head>
 <body>
 
-<jsp:include page="/html/locale_buttons.html"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="message"/>
+
 <b style="color:red"><fmt:message key="information_about_tour"/></b><br/>
 <table>
     <tr>
-        <th><fmt:message key="name_1"/> </th>
+        <th><fmt:message key="name_1"/></th>
         <th>${requestScope.tour.name}</th>
     </tr>
     <tr>
@@ -56,7 +56,7 @@
 
 <table>
     <tr>
-        <th><fmt:message key="name_1"/> </th>
+        <th><fmt:message key="name_1"/></th>
         <th>${requestScope.tour.hotel.name}</th>
     </tr>
     <tr>
@@ -75,6 +75,8 @@
 
 <br/>
 <br/>
+<span style="color: red"><fmt:message key="discount_message"/></span>
+
 <form action="${pageContext.request.contextPath}/order">
     <input type="hidden" name="tourId" value="${requestScope.tour.id}"/>
     <fmt:message key="order" var="order"/>

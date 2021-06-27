@@ -34,6 +34,10 @@ public interface Tour {
     String SQL_FIND_TOURS_BY_LIMIT = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " LIMIT ?, ?";
 
+//    String SQL_FIND_TOURS_BY_LIMIT = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
+//            + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " ORDER BY " + Fields.TOUR_STATUS_ID + " LIMIT ?, ?";
+
+
     String SQL_FIND_TOURS_BY_LIMIT_BURNING_FIRST = "SELECT * FROM " + Tables.TOUR + " JOIN " + Tables.HOTEL + " ON "
             + Fields.TOUR_HOTEL_ID + " = " + Fields.HOTEL_ID + " ORDER BY " + Fields.TOUR_STATUS_ID + " LIMIT ?, ?";
 

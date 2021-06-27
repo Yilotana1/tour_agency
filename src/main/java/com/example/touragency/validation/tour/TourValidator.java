@@ -49,18 +49,14 @@ public class TourValidator {
         throw new InvalidHotelNameException("Hotel name should contain only latin or cyrillic characters or digits", hotel);
     }
 
-    public void checkTicketsAreValid(String maxTickets, String minTickets, String takenTickets) throws InvalidTicketsException {
+    public void checkTicketsAreValid(String maxTickets, String takenTickets) throws InvalidTicketsException {
         if (!maxTickets.matches("[\\d]+"))
             throw new InvalidTicketsException("Max tickets should be specified as a number", maxTickets);
 
-        if (!minTickets.matches("[\\d]+"))
-            throw new InvalidTicketsException("Min tickets should be specified as a number", minTickets);
-
         int iMaxTickets = Integer.parseInt(maxTickets);
-        int iMinTickets = Integer.parseInt(minTickets);
         int iTakenTickets = Integer.parseInt(takenTickets);
 
-        if (iMaxTickets < iMinTickets || iMaxTickets < iTakenTickets) {
+        if (iMaxTickets < iTakenTickets) {
             throw new InvalidTicketsException("Max tickets cannot be less than min tickets or taken tickets", maxTickets);
         }
 
@@ -84,15 +80,14 @@ public class TourValidator {
         }
     }
 
-    public void checkTourIsValid(String name, String country, String city, String price, String hotel,
-                                 String minTickets, String maxTickets,
+    public void checkTourIsValid(String name, String country, String city, String price, String hotel, String maxTickets,
                                  String takenTickets, String startDate, String endDate) throws InvalidDataException {
         checkNameIsValid(name);
         checkCountryIsValid(country);
         checkCityIsValid(city);
         checkPriceIsValid(price);
         checkHotelIsValid(hotel);
-        checkTicketsAreValid(maxTickets, minTickets, takenTickets);
+        checkTicketsAreValid(maxTickets, takenTickets);
         checkDatesAreValid(startDate, endDate);
     }
 

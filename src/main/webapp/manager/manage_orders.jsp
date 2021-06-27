@@ -30,6 +30,8 @@
 <fmt:setBundle basename="message"/>
 <h1><fmt:message key="orders"/></h1>
 
+<jsp:include page="/discount_form.jsp"/>
+
 
 <br/>
 <fmt:message key="select_by_client_login"/>
@@ -193,7 +195,6 @@
         <fmt:message key="profile" var="profile"/>
         <input type="submit" value="${profile}">
     </form>
-
 
 
 </body>

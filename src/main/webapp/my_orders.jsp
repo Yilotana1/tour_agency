@@ -20,14 +20,13 @@
 <body>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
-<jsp:include page="html/locale_buttons.html"/>
-
 
 <fmt:setBundle basename="message"/>
 
 <table>
 
     <tr>
+        <th style="color: red"><b><fmt:message key="id"/></b></th>
         <th style="color: red"><b><fmt:message key="tour"/></b></th>
         <th style="color: red"><b><fmt:message key="creation_data"/></b></th>
         <th style="color: red"><b><fmt:message key="price"/></b></th>
@@ -38,6 +37,7 @@
         <fmt:message key="money_koef" var="koef"/>
 
         <tr>
+            <th>${order.id}</th>
             <th>${order.tourName}</th>
             <th>${order.dateFormat}</th>
             <th>${order.price/koef}

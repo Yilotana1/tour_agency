@@ -14,8 +14,8 @@ public class DiscountServiceImpl implements DiscountService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public int getPercent()  {
-        try(DiscountDao discountDao = daoFactory.createDiscountDao()){
+    public int getPercent() {
+        try (DiscountDao discountDao = daoFactory.createDiscountDao()) {
             return discountDao.findById(1).getPercent();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -25,7 +25,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public int getMaxPercent() {
-        try(DiscountDao discountDao = daoFactory.createDiscountDao()){
+        try (DiscountDao discountDao = daoFactory.createDiscountDao()) {
             return discountDao.findById(1).getMaxPercent();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -35,7 +35,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public void changePercent(int percent) throws ServiceException {
-        try(DiscountDao discountDao = daoFactory.createDiscountDao()){
+        try (DiscountDao discountDao = daoFactory.createDiscountDao()) {
             Discount discount = discountDao.findById(1);
             if (percent > discount.getMaxPercent()) throw new ServiceException("percent is more than maxPercent");
 
@@ -48,7 +48,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public void changeMaxPercent(int maxPercent) throws ServiceException {
-        try(DiscountDao discountDao = daoFactory.createDiscountDao()){
+        try (DiscountDao discountDao = daoFactory.createDiscountDao()) {
             Discount discount = discountDao.findById(1);
             if (maxPercent < discount.getPercent()) throw new ServiceException("percent is more than maxPercent");
             discount.setMaxPercent(maxPercent);
@@ -56,6 +56,15 @@ public class DiscountServiceImpl implements DiscountService {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public Discount getDiscount() {
+        try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
+            return discountDao.findById(1);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -68,14 +77,31 @@ public class DiscountServiceImpl implements DiscountService {
         return null;
     }
 
+
     @Override
     public void update() throws ServiceException {
 
     }
 
+
+    public void update(int percentStep, int maxPercent) {
+        try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
+            Discount discount = Discount.createDiscount(percentStep, maxPercent);
+            discountDao.update(discount);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     @Override
     public void update(Discount entity) {
+        try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
 
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override

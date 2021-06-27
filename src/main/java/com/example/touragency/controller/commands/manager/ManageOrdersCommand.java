@@ -3,8 +3,10 @@ package com.example.touragency.controller.commands.manager;
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.model.entity.Discount;
 import com.example.touragency.model.entity.Order;
 import com.example.touragency.model.entity.enums.OrderStatus;
+import com.example.touragency.model.service.DiscountService;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.factory.ServiceFactory;
@@ -24,16 +26,22 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
 
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
 
+        fillDiscountForm(request);
         updateOrderFromRequest(request, orderService);
 
         new Paginator<>(request, orderService).makePagination(this);
-        request.setAttribute("path", request.getServletContext().getContextPath() + Path.MANAGER_MANAGER_ORDERS);
+        request.setAttribute("path", request.getServletContext().getContextPath() + Path.MANAGER_MANAGE_ORDERS);
         request.getRequestDispatcher("/manager/manage_orders.jsp").forward(request, response);
     }
 
 
 
-
+    protected void fillDiscountForm(HttpServletRequest request){
+        DiscountService discountService = ServiceFactory.getInstance().createDiscountService();
+        Discount discount = discountService.getDiscount();
+        request.setAttribute("percentStep", discount.getPercent());
+        request.setAttribute("maxPercent", discount.getMaxPercent());
+    };
 
 
     protected void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) {
