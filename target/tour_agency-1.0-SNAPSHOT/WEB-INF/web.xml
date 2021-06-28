@@ -19,7 +19,7 @@
 
     <servlet>
         <servlet-name>servlet</servlet-name>
-        <servlet-class>com.example.touragency.controller.HelloServlet</servlet-class>
+        <servlet-class>com.example.touragency.controller.Servlet</servlet-class>
         <init-param>
             <param-name>Local</param-name>
             <param-value>Whats up guys</param-value>

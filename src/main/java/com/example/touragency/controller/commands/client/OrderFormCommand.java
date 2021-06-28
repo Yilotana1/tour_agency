@@ -7,6 +7,7 @@ import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.entity.enums.Role;
 import com.example.touragency.model.service.TourService;
 import com.example.touragency.model.service.factory.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class OrderFormCommand implements Command {
+
+    public final static Logger log = Logger.getLogger(OrderFormCommand.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.debug("Command started executing");
+
         if (request.getSession().getAttribute("role").equals(Role.UNKNOWN)) {
             response.sendRedirect(request.getServletContext().getContextPath() + Path.LOGIN_FORM);
             return;
@@ -29,11 +35,13 @@ public class OrderFormCommand implements Command {
 
             request.setAttribute("tour", tour);
             request.getRequestDispatcher("/order.jsp").forward(request, response);
+            log.debug("Redirect to order.jsp");
 
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.MAIN);
         }
+
 
     }
 }

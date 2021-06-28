@@ -1,11 +1,15 @@
 package com.example.touragency.controller.filters;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import java.io.IOException;
 
 public class EncodingFilter implements Filter {
+    public final static Logger log = Logger.getLogger(EncodingFilter.class);
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
+        log.debug("Filter initialized");
     }
 
     @Override
@@ -18,5 +22,6 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void destroy() {
+        log.debug("Filter destroyed");
     }
 }

@@ -11,6 +11,7 @@ import com.example.touragency.model.service.TourService;
 import com.example.touragency.model.service.factory.ServiceFactory;
 import com.example.touragency.validation.InvalidDataException;
 import com.example.touragency.validation.tour.TourValidator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,27 +21,30 @@ import java.math.BigDecimal;
 
 public class AdminManageToursCommand extends ManageToursCommand {
 
+    public final static Logger log = Logger.getLogger(AdminManageToursCommand.class);
+
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        log.debug("Command started executing");
         TourService tourService = ServiceFactory.getInstance().createTourService();
 
         try {
             updateTourFromRequest(request, tourService);
             deleteTourFromRequest(request, tourService);
         } catch (ServiceException | InvalidDataException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             request.setAttribute("error", e.getMessage());
         }
         try {
             new Paginator<>(request, tourService).makePagination(this);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
             return;
         }
         request.getRequestDispatcher("/admin/manage_tours.jsp").forward(request, response);
-
+        log.debug("Redirect to /admin/manage_tours.jsp");
 
     }
 

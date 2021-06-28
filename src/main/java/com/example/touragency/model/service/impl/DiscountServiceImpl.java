@@ -1,6 +1,6 @@
 package com.example.touragency.model.service.impl;
 
-import com.example.touragency.constants.ErrorMessages;
+import com.example.touragency.constants.Messages;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.DiscountDao;
 import com.example.touragency.model.dao.Factory.DaoFactory;
@@ -21,7 +21,7 @@ public class DiscountServiceImpl implements DiscountService {
             return discountDao.findById(1);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -43,7 +43,7 @@ public class DiscountServiceImpl implements DiscountService {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -54,7 +54,7 @@ public class DiscountServiceImpl implements DiscountService {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 

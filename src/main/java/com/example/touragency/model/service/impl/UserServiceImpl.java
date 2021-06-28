@@ -1,6 +1,6 @@
 package com.example.touragency.model.service.impl;
 
-import com.example.touragency.constants.ErrorMessages;
+import com.example.touragency.constants.Messages;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.UserDao;
 import com.example.touragency.model.entity.User;
@@ -12,7 +12,6 @@ import com.example.touragency.model.service.UserService;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
 
@@ -28,13 +27,13 @@ public class UserServiceImpl implements UserService {
             user.filter(
                     u -> u.getPassword().equals(password)
             )
-                    .orElseThrow(() -> new ServiceException(ErrorMessages.LOGIN_OR_PASSWORD_NOT_FOUND));
+                    .orElseThrow(() -> new ServiceException(Messages.LOGIN_OR_PASSWORD_NOT_FOUND));
 
             return user;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService {
             userDao.update(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -79,13 +78,13 @@ public class UserServiceImpl implements UserService {
         Optional<User> userToUpdate = userDao.findUserByLogin(currentLogin);
 
         if (userWithTheSameLogin.isPresent() && !userToUpdate.get().getLogin().equals(login))
-            throw new ServiceException(ErrorMessages.LOGIN_ALREADY_EXISTS);
+            throw new ServiceException(Messages.LOGIN_ALREADY_EXISTS);
 
         if (userWithTheSameEmail.isPresent() && !userToUpdate.get().getEmail().equals(email))
-            throw new ServiceException(ErrorMessages.EMAIL_ALREADY_EXISTS);
+            throw new ServiceException(Messages.EMAIL_ALREADY_EXISTS);
 
         if (userWithTheSamePhone.isPresent() && !userToUpdate.get().getPhone().equals(phone))
-            throw new ServiceException(ErrorMessages.PHONE_ALREADY_EXISTS);
+            throw new ServiceException(Messages.PHONE_ALREADY_EXISTS);
     }
 
     ;
@@ -103,7 +102,7 @@ public class UserServiceImpl implements UserService {
             userDao.getConnection().commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -112,9 +111,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> userWithTheSameEmail = userDao.findUserByEmail(user.getEmail());
         Optional<User> userWithTheSamePhone = userDao.findUserByPhone(user.getPhone());
 
-        if (userWithTheSameLogin.isPresent()) throw new ServiceException(ErrorMessages.LOGIN_ALREADY_EXISTS);
-        if (userWithTheSameEmail.isPresent()) throw new ServiceException(ErrorMessages.EMAIL_ALREADY_EXISTS);
-        if (userWithTheSamePhone.isPresent()) throw new ServiceException(ErrorMessages.PHONE_ALREADY_EXISTS);
+        if (userWithTheSameLogin.isPresent()) throw new ServiceException(Messages.LOGIN_ALREADY_EXISTS);
+        if (userWithTheSameEmail.isPresent()) throw new ServiceException(Messages.EMAIL_ALREADY_EXISTS);
+        if (userWithTheSamePhone.isPresent()) throw new ServiceException(Messages.PHONE_ALREADY_EXISTS);
     }
 
 
@@ -124,7 +123,7 @@ public class UserServiceImpl implements UserService {
             return userDao.getCount();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -135,7 +134,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -145,7 +144,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -157,7 +156,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -169,7 +168,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -180,7 +179,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findByLimitNonBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -192,7 +191,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findByLimitBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -203,7 +202,7 @@ public class UserServiceImpl implements UserService {
             userDao.update(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -213,7 +212,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -224,7 +223,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findUserByLogin(login);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -234,7 +233,7 @@ public class UserServiceImpl implements UserService {
             return daoFactory.createUserDao().create(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 

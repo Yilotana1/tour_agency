@@ -6,6 +6,7 @@ import com.example.touragency.model.entity.Tour;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.TourService;
 import com.example.touragency.model.service.factory.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,19 +16,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainCommand implements Command, Paginator.NextPageSupplier<Tour> {
+
+
+    public final static Logger log = Logger.getLogger(MainCommand.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.debug("Command started executing");
         TourService tourService = ServiceFactory.getInstance().createTourService();
 
         try {
             new Paginator<>(request, tourService).makePagination(this);
+            log.trace("Pagination passed successfully");
+
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
             return;
         }
 
         request.getRequestDispatcher("/main.jsp").forward(request, response);
+        log.debug("Forward to main.jsp");
     }
 
     @Override

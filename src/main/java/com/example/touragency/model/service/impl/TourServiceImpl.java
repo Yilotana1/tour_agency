@@ -1,6 +1,6 @@
 package com.example.touragency.model.service.impl;
 
-import com.example.touragency.constants.ErrorMessages;
+import com.example.touragency.constants.Messages;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.ConnectionPoolHolder;
 import com.example.touragency.model.dao.Factory.DaoFactory;
@@ -46,7 +46,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             tourDao.update(tour);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -56,11 +56,11 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         try {
             tourFromDb = tourDao.findById(tour.getId());
             if (tour.getMaxPlaces() < tourFromDb.get().getTakenPlaces()) {
-                throw new ServiceException(ErrorMessages.MAX_TICKETS_NOT_LESS_THAN_TAKEN_TICKETS);
+                throw new ServiceException(Messages.MAX_TICKETS_NOT_LESS_THAN_TAKEN_TICKETS);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
 
     }
@@ -71,7 +71,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             return tourDao.getCount();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -81,7 +81,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             return tourDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -95,7 +95,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Hotel hotel = hotelDao.findByName(hotelName).orElseThrow(() -> new ServiceException(ErrorMessages.HOTEL_DOESNT_EXIST));
+            Hotel hotel = hotelDao.findByName(hotelName).orElseThrow(() -> new ServiceException(Messages.HOTEL_DOESNT_EXIST));
 
             Tour tour = Tour.createTour(id, name, country, price,
                     maxTickets, takenTickets,
@@ -109,7 +109,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             connection.commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -121,7 +121,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -132,7 +132,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -143,7 +143,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -154,7 +154,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -165,7 +165,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -176,7 +176,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -187,7 +187,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -198,7 +198,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -209,7 +209,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -220,7 +220,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -231,7 +231,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -243,7 +243,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -258,9 +258,9 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Hotel hotel = hotelDao.findByName(hotelName).orElseThrow(() -> new ServiceException(ErrorMessages.HOTEL_DOESNT_EXIST));
+            Hotel hotel = hotelDao.findByName(hotelName).orElseThrow(() -> new ServiceException(Messages.HOTEL_DOESNT_EXIST));
 
-            tourDao.findByName(name).orElseThrow(() -> new ServiceException(ErrorMessages.TOUR_DOESNT_EXIST));
+            tourDao.findByName(name).orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
 
             Tour tour = Tour.createTour(name, country, price, maxTickets,
                     INITIAL_TAKEN_TICKETS, startDate, endDate,
@@ -271,7 +271,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             connection.commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -282,14 +282,14 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             tourDao.getConnection().setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
             Optional<Tour> tour = tourDao.findByName(name);
-            tour.orElseThrow(() -> new ServiceException(ErrorMessages.TOUR_DOESNT_EXIST));
+            tour.orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
 
             tourDao.delete(tour.get().getId());
 
             tourDao.getConnection().commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -300,7 +300,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -309,13 +309,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         try (TourDao tourDao = daoFactory.createTourDao()) {
 
             Optional<Tour> tour = tourDao.findById(id);
-            tour.orElseThrow(() -> new ServiceException(ErrorMessages.TOUR_DOESNT_EXIST));
+            tour.orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
             tour.get().setStatus(status);
             tourDao.update(tour.get());
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 

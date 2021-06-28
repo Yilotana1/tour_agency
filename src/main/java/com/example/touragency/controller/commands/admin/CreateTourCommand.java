@@ -11,6 +11,7 @@ import com.example.touragency.model.service.factory.ServiceFactory;
 import com.example.touragency.model.service.impl.TourServiceImpl;
 import com.example.touragency.validation.InvalidDataException;
 import com.example.touragency.validation.tour.TourValidator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,12 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 public class CreateTourCommand implements Command {
+
+    public final static Logger log = Logger.getLogger(CreateTourCommand.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        log.debug("Command started executing");
 
         String name = request.getParameter("name");
         String country = request.getParameter("country");
@@ -46,14 +50,14 @@ public class CreateTourCommand implements Command {
                     Tools.getCalendarFromString(endDate), category, status, hotelName, city);
 
         } catch (InvalidDataException | ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher(Path.ADMIN_CREATE_TOUR).forward(request, response);
             return;
         }
 
         response.sendRedirect(request.getServletContext().getContextPath() + Path.ADMIN_MANAGE_TOURS);
-
+        log.debug("Redirect to " + Path.ADMIN_MANAGE_TOURS);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.touragency.model.service.impl;
 
-import com.example.touragency.constants.ErrorMessages;
+import com.example.touragency.constants.Messages;
 import com.example.touragency.model.ConnectionPoolHolder;
 import com.example.touragency.model.dao.*;
 import com.example.touragency.model.dao.Factory.DaoFactory;
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.findOrdersByLogin(login);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.getCount();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.findAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.findOrdersByLimitOpenedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.findOrdersByLimitPaidFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
             return orderDao.findById(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
             User client = userDao.findUserByLogin(login).get();
-            Tour tour = tourDao.findById(tourId).orElseThrow(() -> new ServiceException(ErrorMessages.TOUR_DOESNT_EXIST));
+            Tour tour = tourDao.findById(tourId).orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
 
             throwExceptionIfTourIsNotAvailable(client, tour);
             tour.setTakenPlaces(tour.getTakenPlaces() + 1);
@@ -126,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
                 connection.rollback();
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+                throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
             }
         }
 
@@ -139,7 +139,7 @@ public class OrderServiceImpl implements OrderService {
             orderDao.update(order);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -158,11 +158,11 @@ public class OrderServiceImpl implements OrderService {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(ErrorMessages.ORDER_DOESNT_EXIST));
+            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(Messages.ORDER_DOESNT_EXIST));
             order.setStatus(OrderStatus.CANCELED);
             orderDao.update(order);
 
-            Tour tour = tourDao.findById(order.getTourId()).orElseThrow(() -> new ServiceException(ErrorMessages.TOUR_DOESNT_EXIST));
+            Tour tour = tourDao.findById(order.getTourId()).orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
             tour.setTakenPlaces(tour.getTakenPlaces() - 1);
             tourDao.update(tour);
 
@@ -174,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
                 connection.rollback();
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+                throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
             }
         }
     }
@@ -182,26 +182,26 @@ public class OrderServiceImpl implements OrderService {
     public void confirmPaid(int id) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
 
-            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(ErrorMessages.ORDER_DOESNT_EXIST));
+            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(Messages.ORDER_DOESNT_EXIST));
             order.setStatus(OrderStatus.PAID);
             orderDao.update(order);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
     public void setOpened(int id) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
 
-            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(ErrorMessages.ORDER_DOESNT_EXIST));
+            Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(Messages.ORDER_DOESNT_EXIST));
             order.setStatus(OrderStatus.OPENED);
             orderDao.update(order);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
@@ -212,14 +212,14 @@ public class OrderServiceImpl implements OrderService {
             return ServiceTools.getPriceWithDiscount(discount, orders, tourPrice);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ServiceException(ErrorMessages.UNDEFINED_EXCEPTION);
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
     private void throwExceptionIfTourIsNotAvailable(User client, Tour tour) throws ServiceException {
-        if (ServiceTools.isUserBlocked(client)) throw new ServiceException(ErrorMessages.USER_BLOCKED);
-        if (tourIsOutDated(tour)) throw new ServiceException(ErrorMessages.TOUR_OUTDATED);
-        if (!tourContainsFreeTickets(tour)) throw new ServiceException(ErrorMessages.NO_TICKETS);
+        if (ServiceTools.isUserBlocked(client)) throw new ServiceException(Messages.USER_BLOCKED);
+        if (tourIsOutDated(tour)) throw new ServiceException(Messages.TOUR_OUTDATED);
+        if (!tourContainsFreeTickets(tour)) throw new ServiceException(Messages.NO_TICKETS);
     }
 
     private boolean tourIsOutDated(Tour tour) {

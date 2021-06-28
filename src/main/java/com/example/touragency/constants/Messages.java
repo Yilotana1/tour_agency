@@ -1,6 +1,6 @@
 package com.example.touragency.constants;
 
-public interface ErrorMessages {
+public interface Messages {
 
     String UNDEFINED_EXCEPTION = "something_went_wrong";
 
@@ -14,7 +14,7 @@ public interface ErrorMessages {
 
     String PHONE_ALREADY_EXISTS = "phone_already_exists";
 
-    String LOGIN_OR_PASSWORD_NOT_FOUND = "phone_already_exists";
+    String LOGIN_OR_PASSWORD_NOT_FOUND = "login_or_password_not_found";
 
     String MAX_TICKETS_NOT_LESS_THAN_TAKEN_TICKETS = "max_tickets_not_less_than_taken_tickets";
 
@@ -55,5 +55,7 @@ public interface ErrorMessages {
     String START_CANNOT_BE_BEFORE_CURRENT = "start_cannot_be_before_current";
 
     String END_CANNOT_BE_BEFORE_CURRENT = "end_cannot_be_before_current";
+
+    String ORDER_IS_OPENED = "order_is_opened";
 
 }

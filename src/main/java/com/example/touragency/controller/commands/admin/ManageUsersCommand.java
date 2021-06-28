@@ -4,6 +4,7 @@ import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.controller.commands.CommandUtility;
 import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.controller.commands.client.EditProfileCommand;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
@@ -11,6 +12,7 @@ import com.example.touragency.model.entity.enums.UserStatus;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.UserService;
 import com.example.touragency.model.service.factory.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,27 +23,32 @@ import java.util.*;
 
 public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<User> {
 
+    public final static Logger log = Logger.getLogger(ManageUsersCommand.class);
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.debug("Command started executing");
+
         UserService userService = ServiceFactory.getInstance().createUserService();
 
         try {
             updateUserFromRequest(request, userService);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             request.setAttribute("path", request.getServletContext().getContextPath() + Path.ADMIN_MANAGE_USERS);
         }
 
         try {
             new Paginator<>(request, userService).makePagination(this);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
             return;
         }
 
         request.getRequestDispatcher("/admin/manage_users.jsp").forward(request, response);
+        log.debug("Forward to /admin/manage_users.jsp");
     }
 
 
@@ -66,7 +73,7 @@ public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<U
 
 
     private List<User> getSearchedUserAtList(String login, UserService userService) throws ServiceException {
-            Optional<User> user = userService.getByLogin(login);
+        Optional<User> user = userService.getByLogin(login);
         return user.map(Arrays::asList).orElseGet(ArrayList::new);
 
     }

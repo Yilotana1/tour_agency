@@ -2,6 +2,7 @@ package com.example.touragency.controller.commands.manager;
 
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
+import com.example.touragency.controller.commands.LogOutCommand;
 import com.example.touragency.controller.commands.Paginator;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Discount;
@@ -11,6 +12,7 @@ import com.example.touragency.model.service.DiscountService;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.factory.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +23,12 @@ import java.util.List;
 
 public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<Order> {
 
+    public final static Logger log = Logger.getLogger(ManageOrdersCommand.class);
+
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.debug("Command started executing");
 
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
 
@@ -31,7 +37,7 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
             updateOrderFromRequest(request, orderService);
         } catch (ServiceException e) {
             request.setAttribute("error", e.getMessage());
-            e.printStackTrace();
+            log.error(e.getMessage());
             request.getRequestDispatcher("/manager_manage_orders.jsp").forward(request, response);
             return;
         }
@@ -39,15 +45,15 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
         try {
             new Paginator<>(request, orderService).makePagination(this);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
             return;
         }
 
         request.setAttribute("path", request.getServletContext().getContextPath() + Path.MANAGER_MANAGE_ORDERS);
-        request.getRequestDispatcher("/manager_manage_orders.jsp").forward(request, response);
+        request.getRequestDispatcher("/manager/manage_orders.jsp").forward(request, response);
+        log.debug("Forward to manager/manage_orders.jsp");
     }
-
 
 
     protected void fillDiscountForm(HttpServletRequest request) throws ServiceException {
@@ -55,7 +61,9 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
         Discount discount = discountService.getDiscount().get();
         request.setAttribute("percentStep", discount.getPercent());
         request.setAttribute("maxPercent", discount.getMaxPercent());
-    };
+    }
+
+    ;
 
 
     protected void updateOrderFromRequest(HttpServletRequest request, OrderService orderService) throws ServiceException {
@@ -64,12 +72,15 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
         if (idS != null) {
             int id = Integer.parseInt(idS);
             OrderStatus status = OrderStatus.getById(Integer.parseInt(request.getParameter("status")));
-            switch (status){
-                case OPENED:orderService.setOpened(id);
-                break;
-                case PAID:orderService.confirmPaid(id);
-                break;
-                case CANCELED:orderService.cancel(id);
+            switch (status) {
+                case OPENED:
+                    orderService.setOpened(id);
+                    break;
+                case PAID:
+                    orderService.confirmPaid(id);
+                    break;
+                case CANCELED:
+                    orderService.cancel(id);
             }
         }
     }
@@ -77,10 +88,10 @@ public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<
 
     private List<Order> getSearchedOrders(String login, OrderService orderService) throws ServiceException {
 
-            List<Order> orders = orderService.getByLogin(login);
-            if (orders.size() > 0) {
-                return orders;
-            }
+        List<Order> orders = orderService.getByLogin(login);
+        if (orders.size() > 0) {
+            return orders;
+        }
 
         return new ArrayList<>();
     }

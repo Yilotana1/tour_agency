@@ -11,6 +11,7 @@ import com.example.touragency.controller.commands.client.*;
 import com.example.touragency.controller.commands.manager.EditDiscountCommand;
 import com.example.touragency.controller.commands.manager.ManageOrdersCommand;
 import com.example.touragency.controller.commands.manager.ManageToursCommand;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.HashMap;
@@ -20,10 +21,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 
-public class HelloServlet extends HttpServlet {
+public class Servlet extends HttpServlet {
 
     private final Map<String, Command> commands = new HashMap<>();
 
+    public final static Logger log = Logger.getLogger(Servlet.class);
 
     public void init() {
         getServletConfig().getServletContext()
@@ -50,22 +52,29 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.debug("Servlet started");
         response.setContentType("text/plain");
         try {
             processRequest(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         }
-
+        log.debug("Servlet finished");
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/tour_agency_war_exploded" , "");
-        Command command = commands.getOrDefault(path ,
+
+        log.trace("got URI from request: " + path);
+
+        path = path.replaceAll(".*/tour_agency_war_exploded", "");
+        Command command = commands.getOrDefault(path,
                 null);
+        log.trace("Retrieved command from path");
+
         command.execute(request, response);
 
+        log.trace("Command executed");
     }
 
     public void destroy() {

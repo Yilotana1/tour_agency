@@ -4,6 +4,7 @@ import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.CommandUtility;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.entity.enums.Role;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import static com.example.touragency.model.entity.enums.Role.*;
 public class AccessFilter implements Filter {
 
     private static final Map<Role, List<String>> accessMap = new HashMap<>();
+
+    public final static Logger log = Logger.getLogger(AccessFilter.class);
 
     private FilterConfig filterConfig;
 
@@ -80,6 +83,8 @@ public class AccessFilter implements Filter {
                         filterConfig.getServletContext().getContextPath() + Path.EDIT_PROFILE,
                         filterConfig.getServletContext().getContextPath() + Path.PROFILE_VIEW,
                         filterConfig.getServletContext().getContextPath() + Path.ADMIN_EDIT_DISCOUNT));
+
+        log.debug("Filter initialized");
     }
 
 
@@ -89,21 +94,29 @@ public class AccessFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         Role userRole = (Role) httpRequest.getSession().getAttribute("role");
+        log.trace("got role from session: " + userRole);
 
         if (userRole == null){
             httpRequest.getSession().setAttribute("role", UNKNOWN);
             userRole = UNKNOWN;
+            log.trace("role from session is null, set role : " + UNKNOWN);
         }
 
         String login = (String)httpRequest.getSession().getAttribute("login");
+        log.trace("got login from session: " + login);
         if ( login != null && !(CommandUtility.userIsLogged(httpRequest, login)) ){
+            log.trace("login exists but not in login cache" + login);
             httpRequest.getSession().invalidate();
+            log.trace("invalidate session: " + login);
             httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + "/");
+            log.trace("redirect to main: ");
             return;
         }
 
-        if (  !(accessMap.get(userRole).contains(httpRequest.getRequestURI()))  ) {
+        String URI = httpRequest.getRequestURI();
+        if (  !(accessMap.get(userRole).contains(URI))  ) {
             httpResponse.sendRedirect(filterConfig.getServletContext().getContextPath() + Path.ERROR_404);
+            log.error("AccessMap(" + userRole + ") doesn't contain requestURI: " + URI);
             return;
         }
 
@@ -112,6 +125,7 @@ public class AccessFilter implements Filter {
 
     @Override
     public void destroy() {
+        log.debug("Filter destroyed");
 
     }
 }

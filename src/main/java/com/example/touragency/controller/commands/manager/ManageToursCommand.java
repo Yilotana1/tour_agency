@@ -1,6 +1,7 @@
 package com.example.touragency.controller.commands.manager;
 
 import com.example.touragency.constants.Path;
+import com.example.touragency.controller.commands.LogOutCommand;
 import com.example.touragency.controller.commands.Paginator;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.exceptions.ServiceException;
@@ -11,6 +12,7 @@ import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.TourService;
 import com.example.touragency.model.service.factory.ServiceFactory;
 import com.example.touragency.validation.InvalidDataException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,16 +24,18 @@ import java.util.NoSuchElementException;
 
 public class ManageToursCommand implements Command, Paginator.NextPageSupplier<Tour> {
 
+    public final static Logger log = Logger.getLogger(ManageToursCommand.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        log.debug("Command started executing");
         TourService tourService = ServiceFactory.getInstance().createTourService();
 
         try {
             updateTourFromRequest(request, tourService);
         } catch (ServiceException | InvalidDataException e) {
-            e.printStackTrace();
             request.setAttribute("error", e.getMessage());
+            log.error(e.getMessage());
             request.getRequestDispatcher("/manager/manage_tours.jsp").forward(request, response);
             return;
 
@@ -39,11 +43,13 @@ public class ManageToursCommand implements Command, Paginator.NextPageSupplier<T
         try {
             new Paginator<>(request, tourService).makePagination(this);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
             return;
         }
         request.getRequestDispatcher("/manager/manage_tours.jsp").forward(request, response);
+
+        log.debug("Forward to manager/manage_tours.jsp");
 
     }
 

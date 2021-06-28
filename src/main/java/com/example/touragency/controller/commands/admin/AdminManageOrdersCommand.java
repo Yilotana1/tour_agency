@@ -12,6 +12,7 @@ import com.example.touragency.model.service.DiscountService;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.factory.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +24,11 @@ import java.util.NoSuchElementException;
 
 public class AdminManageOrdersCommand extends ManageOrdersCommand implements Paginator.NextPageSupplier<Order> {
 
+    public final static Logger log = Logger.getLogger(AdminManageToursCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.debug("Command started executing");
 
         OrderService orderService = ServiceFactory.getInstance().createOrderService();
 
@@ -34,19 +37,20 @@ public class AdminManageOrdersCommand extends ManageOrdersCommand implements Pag
             fillDiscountForm(request);
             super.updateOrderFromRequest(request, orderService);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             request.setAttribute("error", e.getMessage());
         }
 
         try {
             new Paginator<>(request, orderService).makePagination(this);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.sendRedirect(request.getServletContext().getContextPath() + Path.ERROR_503);
             return;
         }
 
         request.setAttribute("path", request.getServletContext().getContextPath() + Path.ADMIN_MANAGE_ORDERS);
         request.getRequestDispatcher("/manager/manage_orders.jsp").forward(request, response);
+        log.debug("Forward to /manage/manage_orders.jsp");
     }
 }

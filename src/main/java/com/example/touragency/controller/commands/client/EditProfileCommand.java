@@ -11,6 +11,7 @@ import com.example.touragency.model.service.UserService;
 import com.example.touragency.model.service.factory.ServiceFactory;
 import com.example.touragency.validation.InvalidDataException;
 import com.example.touragency.validation.user.UserValidator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +19,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class EditProfileCommand implements Command {
+
+    public final static Logger log = Logger.getLogger(EditProfileCommand.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.debug("Command started executing");
 
         String firstName = request.getParameter("firstname");
         if (firstName == null) {
             request.getRequestDispatcher(Path.PROFILE_VIEW).forward(request, response);
+            log.trace("Missclick on edit profile");
             return;
         }
 
@@ -44,19 +50,20 @@ public class EditProfileCommand implements Command {
                     status, login, password, role);
 
 
-            CommandUtility.deleteFromLoginCache(request, (String)request.getSession().getAttribute("login"));
+            CommandUtility.deleteFromLoginCache(request, (String) request.getSession().getAttribute("login"));
             CommandUtility.addUserToLoginCache(request, login);
             request.getSession().removeAttribute("login");
             request.getSession().setAttribute("login", login);
 
 
         } catch (InvalidDataException | ServiceException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher(Path.PROFILE_VIEW).forward(request, response);
             return;
         }
 
         request.getRequestDispatcher(Path.PROFILE_VIEW).forward(request, response);
+        log.debug("Forward to " + Path.PROFILE_VIEW);
     }
 }
