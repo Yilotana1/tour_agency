@@ -1,6 +1,7 @@
 package com.example.touragency.model.service.impl;
 
 import com.example.touragency.constants.Messages;
+import com.example.touragency.controller.Servlet;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.UserDao;
 import com.example.touragency.model.entity.User;
@@ -8,6 +9,7 @@ import com.example.touragency.model.entity.enums.Role;
 import com.example.touragency.model.entity.enums.UserStatus;
 import com.example.touragency.exceptions.*;
 import com.example.touragency.model.service.UserService;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,6 +18,8 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
+
+    public final static Logger log = Logger.getLogger(Servlet.class);
 
 
     @Override
@@ -29,10 +33,11 @@ public class UserServiceImpl implements UserService {
             )
                     .orElseThrow(() -> new ServiceException(Messages.LOGIN_OR_PASSWORD_NOT_FOUND));
 
+
             return user;
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -45,7 +50,7 @@ public class UserServiceImpl implements UserService {
             User user = User.createUser(id, firstName, lastName, phone, email, status, login, password, role);
             userDao.update(user);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -62,11 +67,10 @@ public class UserServiceImpl implements UserService {
             throwExceptionIfDataExist(currentLogin, login, email, phone, userDao);
 
             userDao.update(currentLogin, firstName, lastName, phone, email, status, login, password, role);
-
             userDao.getConnection().commit();
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -101,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
             userDao.getConnection().commit();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -122,7 +126,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.getCount();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -133,7 +137,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findAll();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -143,7 +147,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -155,7 +159,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findByLimitClientsFirst(pageId * pageSize - pageSize + 1, pageSize);
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -167,7 +171,7 @@ public class UserServiceImpl implements UserService {
             return userDao.findByLimitManagersFirst(pageId * pageSize - pageSize + 1, pageSize);
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -178,7 +182,7 @@ public class UserServiceImpl implements UserService {
 
             return userDao.findByLimitNonBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -190,7 +194,7 @@ public class UserServiceImpl implements UserService {
 
             return userDao.findByLimitBlockedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -201,7 +205,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             userDao.update(user);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -211,7 +215,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findById(id);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -222,7 +226,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findUserByLogin(login);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -232,7 +236,7 @@ public class UserServiceImpl implements UserService {
         try {
             return daoFactory.createUserDao().create(user);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }

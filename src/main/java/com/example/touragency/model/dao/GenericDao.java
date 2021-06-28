@@ -1,6 +1,8 @@
 package com.example.touragency.model.dao;
 
 
+import com.example.touragency.exceptions.ServiceException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,7 +12,7 @@ public interface GenericDao<T> extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
-    int getCount() throws SQLException;
+    int getCount() throws SQLException, ServiceException;
 
     int create(T entity) throws SQLException;
 

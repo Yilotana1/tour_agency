@@ -2,11 +2,13 @@ package com.example.touragency.model.service.impl;
 
 
 import com.example.touragency.constants.Messages;
+import com.example.touragency.controller.Servlet;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.entity.Hotel;
 import com.example.touragency.model.service.HotelService;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,12 +19,15 @@ public class HotelServiceImpl implements HotelService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
+    public final static Logger log = Logger.getLogger(Servlet.class);
+
+
     @Override
     public Optional<Hotel> getById(int id) throws ServiceException {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findById(id);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -33,7 +38,7 @@ public class HotelServiceImpl implements HotelService {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.findAll();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -55,7 +60,7 @@ public class HotelServiceImpl implements HotelService {
         try (HotelDao hotelDao = daoFactory.createHotelDao()) {
             return hotelDao.create(hotel);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }

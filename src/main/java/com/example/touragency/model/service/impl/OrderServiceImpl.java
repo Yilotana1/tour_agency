@@ -1,6 +1,7 @@
 package com.example.touragency.model.service.impl;
 
 import com.example.touragency.constants.Messages;
+import com.example.touragency.controller.Servlet;
 import com.example.touragency.model.ConnectionPoolHolder;
 import com.example.touragency.model.dao.*;
 import com.example.touragency.model.dao.Factory.DaoFactory;
@@ -9,6 +10,7 @@ import com.example.touragency.model.entity.enums.OrderStatus;
 import com.example.touragency.model.service.OrderService;
 import com.example.touragency.model.service.ServiceTools;
 import com.example.touragency.exceptions.*;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -21,13 +23,15 @@ public class OrderServiceImpl implements OrderService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
+    public final static Logger log = Logger.getLogger(Servlet.class);
+
 
     @Override
     public List<Order> getByLogin(String login) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findOrdersByLogin(login);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -37,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.getCount();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -47,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findAll();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -58,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -68,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findOrdersByLimitOpenedFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -78,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findOrdersByLimitPaidFirst(pageId * pageSize - pageSize + 1, pageSize);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -89,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             return orderDao.findById(id);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -121,11 +125,11 @@ public class OrderServiceImpl implements OrderService {
             tourDao.update(tour);
             connection.commit();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             try {
                 connection.rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(throwables.getMessage());
                 throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
             }
         }
@@ -138,12 +142,12 @@ public class OrderServiceImpl implements OrderService {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
             orderDao.update(order);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
 
-
+//TODO insert create() from dao
     @Override
     public int add(Order entity) {
         return 0;
@@ -168,12 +172,12 @@ public class OrderServiceImpl implements OrderService {
 
             connection.commit();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
 
             try {
                 connection.rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(throwables.getMessage());
                 throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
             }
         }
@@ -187,7 +191,7 @@ public class OrderServiceImpl implements OrderService {
             orderDao.update(order);
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -200,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
             orderDao.update(order);
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
@@ -211,7 +215,7 @@ public class OrderServiceImpl implements OrderService {
             Discount discount = discountDao.findById(1).get();
             return ServiceTools.getPriceWithDiscount(discount, orders, tourPrice);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error(throwables.getMessage());
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
