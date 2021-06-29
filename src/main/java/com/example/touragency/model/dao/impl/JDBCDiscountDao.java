@@ -28,7 +28,7 @@ public class JDBCDiscountDao implements DiscountDao {
 
     @Override
     public int getCount() throws SQLException{
-        return 0;
+        return 1;
     }
 
     @Override

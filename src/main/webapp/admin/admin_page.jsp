@@ -39,20 +39,28 @@
     <input type="submit" value="${main}">
 </form>
 
-<fmt:message key="manage_users" var="manage_users"/>
-<form action="${pageContext.request.contextPath}/admin/manage_users">
-    <input type="submit" value="${manage_users}">
-</form>
 
-<fmt:message key="manage_orders" var="manage_orders"/>
-<form action="${pageContext.request.contextPath}/admin/manage_orders">
-    <input type="submit" value="${manage_orders}"/>
-</form>
+<table>
+    <tr>
+        <th><fmt:message key="manage_users" var="manage_users"/>
+            <form action="${pageContext.request.contextPath}/admin/manage_users">
+                <input type="submit" value="${manage_users}">
+            </form></th>
+        <th><fmt:message key="manage_orders" var="manage_orders"/>
+            <form action="${pageContext.request.contextPath}/admin/manage_orders">
+                <input type="submit" value="${manage_orders}"/>
+            </form></th>
+        <th><fmt:message key="manage_tours" var="manage_tours"/>
+            <form action="${pageContext.request.contextPath}/admin/manage_tours">
+                <input type="submit" value="${manage_tours}"/>
+            </form></th>
+    </tr>
+</table>
 
-<fmt:message key="manage_tours" var="manage_tours"/>
-<form action="${pageContext.request.contextPath}/admin/manage_tours">
-    <input type="submit" value="${manage_tours}"/>
-</form>
+
+
+
+
 
 </body>
 </html>

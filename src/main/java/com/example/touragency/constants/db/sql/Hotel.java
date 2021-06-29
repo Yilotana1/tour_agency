@@ -10,6 +10,8 @@ public interface Hotel {
 
     String SQL_FIND_ALL_HOTELS = "SELECT * FROM " + Tables.HOTEL;
 
+    String SQL_FIND_HOTEL_NUMBER_AS_COUNT = "SELECT COUNT(" + Fields.HOTEL_ID + ") AS count FROM " + Tables.HOTEL;
+
     String SQL_INSERT_HOTEL = "INSERT INTO " + Tables.HOTEL + "("
             + Fields.HOTEL_NAME + ", " + Fields.HOTEL_CITY + ", " +  Fields.HOTEL_ADDRESS
             + ", " + Fields.HOTEL_STARS + ", " + Fields.HOTEL_ADMIN_PHONE

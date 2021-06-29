@@ -12,7 +12,7 @@ public interface GenericDao<T> extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
-    int getCount() throws SQLException, ServiceException;
+    int getCount() throws SQLException;
 
     int create(T entity) throws SQLException;
 

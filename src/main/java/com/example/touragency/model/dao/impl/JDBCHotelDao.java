@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Hotel.*;
+import static com.example.touragency.constants.db.sql.Tour.SQL_FIND_TOUR_NUMBER_AS_COUNT;
 
 public class JDBCHotelDao implements HotelDao {
 
@@ -28,7 +29,10 @@ public class JDBCHotelDao implements HotelDao {
 
     @Override
     public int getCount() throws SQLException{
-        return 0;
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(SQL_FIND_HOTEL_NUMBER_AS_COUNT);
+        rs.next();
+        return rs.getInt("count");
     }
 
     @Override

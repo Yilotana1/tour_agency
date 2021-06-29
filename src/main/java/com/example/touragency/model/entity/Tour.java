@@ -47,15 +47,15 @@ public class Tour extends Entity {
     }
 
     public static Tour createTour(String name, String country, BigDecimal price,
-                                  int maxPlaces, int takenPlaces,
+                                  int maxTickets, int takenTickets,
                                   Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
                                   Hotel hotel, String city) {
         Tour tour = new Tour();
         tour.setName(name);
         tour.setCountry(country);
         tour.setPrice(price);
-        tour.setMaxPlaces(maxPlaces);
-        tour.setTakenPlaces(takenPlaces);
+        tour.setMaxPlaces(maxTickets);
+        tour.setTakenPlaces(takenTickets);
         tour.setStartDate(startDate);
         tour.setEndDate(endDate);
         tour.setCategory(category);

@@ -37,10 +37,21 @@
 <br/><br/><br/>
 
 
-<fmt:message key="manage_tours" var="manage_tours"/>
-<form action="${pageContext.request.contextPath}/manager/manage_tours">
-    <input type="submit" value="${manage_tours}"/>
-</form>
+<table>
+    <tr>
+        <th><fmt:message key="manage_tours" var="manage_tours"/>
+            <form action="${pageContext.request.contextPath}/manager/manage_tours">
+                <input type="submit" value="${manage_tours}"/>
+            </form></th>
+
+        <th><form action="${pageContext.request.contextPath}">
+            <fmt:message key="main" var="main"/>
+            <input type="submit" value="${main}">
+        </form></th>
+    </tr>
+
+</table>
+
 
 <fmt:message key="manage_orders" var="manage_orders"/>
 <form action="${pageContext.request.contextPath}/manager/manage_orders">
@@ -49,9 +60,6 @@
 
 <br/>
 
-<form action="${pageContext.request.contextPath}">
-    <fmt:message key="main" var="main"/>
-    <input type="submit" value="${main}">
-</form>
+
 </body>
 </html>
