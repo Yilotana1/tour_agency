@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Shows order list and presents functionality to change and delete order.
+ */
 public class AdminManageOrdersCommand extends ManagerManageOrdersCommand implements Paginator.NextPageSupplier<Order> {
 
     public final static Logger log = Logger.getLogger(AdminManageToursCommand.class);

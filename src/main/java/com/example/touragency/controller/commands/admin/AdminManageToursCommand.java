@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+/**
+ * Shows tour list and presents functionality to change and delete tour.
+ */
 public class AdminManageToursCommand extends ManagerManageToursCommand {
 
     public final static Logger log = Logger.getLogger(AdminManageToursCommand.class);

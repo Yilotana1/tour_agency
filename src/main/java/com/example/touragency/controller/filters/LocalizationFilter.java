@@ -7,6 +7,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+
+/**
+ * Set locale from request. If it's not presented, set locale from session
+ */
 public class LocalizationFilter implements Filter {
 
     public final static Logger log = Logger.getLogger(LocalizationFilter.class);

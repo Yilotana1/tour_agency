@@ -18,7 +18,7 @@ public class ServiceTools {
     }
 
     public static boolean containsFreeTickets(Tour tour) {
-        return tour.getMaxPlaces() - tour.getTakenPlaces() > 0;
+        return tour.getMaxTickets() - tour.getTakenTickets() > 0;
     }
 
     public static boolean isOutDated(Tour tour) {

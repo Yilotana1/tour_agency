@@ -202,8 +202,8 @@
                 <fmt:message key="money_koef" var="koef"/>
                 <th>${tour.price/koef}<fmt:message key="money"/></th>
                 <th>${tour.hotel.name}</th>
-                <th>${tour.maxPlaces}</th>
-                <th>${tour.takenPlaces}</th>
+                <th>${tour.maxTickets}</th>
+                <th>${tour.takenTickets}</th>
                 <th>${tour.startDateFormat}</th>
                 <th>${tour.endDateFormat}</th>
                 <th><fmt:message key="${tour.category}"/></th>

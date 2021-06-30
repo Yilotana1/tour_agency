@@ -12,6 +12,11 @@ import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Order.*;
 
+
+/**
+ * Order dao implementation. Presents methods for access to Order table in database
+ * @author Anatoliy Zhilko
+ */
 public class JDBCOrderDao implements OrderDao {
 
     private final Connection connection;
@@ -80,6 +85,14 @@ public class JDBCOrderDao implements OrderDao {
         return list;
     }
 
+    /**
+     * Method returns list of orders in certain range, specified in sql script by "LIMIT ?, ?" instruction
+     *
+     * @param start
+     * @param count
+     * @return Order list
+     * @throws SQLException
+     */
     @Override
     public List<Order> findByLimit(int start, int count) throws SQLException{
         List<Order> list = new ArrayList<>();
@@ -141,6 +154,14 @@ public class JDBCOrderDao implements OrderDao {
         }
     }
 
+    /**
+     * Method returns list of orders in certain range,specified in sql script by "LIMIT ?, ?" instruction, with OPENED status at the top of the list.
+     *
+     * @param start
+     * @param count
+     * @return Order list
+     * @throws SQLException
+     */
     @Override
     public List<Order> findOrdersByLimitOpenedFirst(int start, int count) throws SQLException{
         List<Order> list = new ArrayList<>();
@@ -159,6 +180,16 @@ public class JDBCOrderDao implements OrderDao {
         return list;
     }
 
+
+
+    /**
+     * Method returns list of orders in certain range,specified in sql script by "LIMIT ?, ?" instruction, with PAID status at the top of the list.
+     *
+     * @param start
+     * @param count
+     * @return Order list
+     * @throws SQLException
+     */
     @Override
     public List<Order> findOrdersByLimitPaidFirst(int start, int count) throws SQLException{
         List<Order> list = new ArrayList<>();

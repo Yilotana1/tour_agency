@@ -1,6 +1,5 @@
 package com.example.touragency.model.dao.impl;
 
-import com.example.touragency.Tools;
 import com.example.touragency.model.dao.DiscountDao;
 import com.example.touragency.model.dao.mapper.DiscountMapper;
 import com.example.touragency.model.entity.Discount;
@@ -12,6 +11,13 @@ import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Discount.*;
 
+
+/**
+ * Discount dao implementation. Presents methods for access to Discount table in database
+ * In this project we have functionality only with one discount for all tours.
+ * So the table will always save only one discount item.
+ * @author Anatoliy Zhilko
+ */
 public class JDBCDiscountDao implements DiscountDao {
 
 
@@ -31,19 +37,6 @@ public class JDBCDiscountDao implements DiscountDao {
         return 1;
     }
 
-    @Override
-    public int create(Discount discount) throws SQLException{
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT_DISCOUNT, Statement.RETURN_GENERATED_KEYS);
-        ) {
-            statement.setInt(1, discount.getPercent());
-            statement.setInt(2, discount.getMaxPercent());
-            statement.executeUpdate();
-            return Tools.getGeneratedId(statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
 
     @Override
     public Optional<Discount> findById(int id) throws SQLException{
@@ -75,6 +68,13 @@ public class JDBCDiscountDao implements DiscountDao {
         return list;
     }
 
+    /**
+     * Method throw UnsupportedOperationException, because the entity table always save one record, so it doesn't make sense
+     * to implement it
+     * @param start
+     * @param count
+     * @return
+     */
     @Override
     public List<Discount> findByLimit(int start, int count) {
         throw new UnsupportedOperationException();
@@ -91,14 +91,30 @@ public class JDBCDiscountDao implements DiscountDao {
         }
     }
 
+
+    /**
+     * Method throw UnsupportedOperationException, because the entity table must at least save one record,
+     * so it doesn't make sense
+     * to implement it
+     *
+     */
     @Override
     public void delete(int id) throws SQLException{
-        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_DISCOUNT);
-        ) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        }
+        throw new UnsupportedOperationException();
     }
+
+
+    /**
+     * Method throw UnsupportedOperationException, because the entity table must at least save one record,
+     * so it doesn't make sense
+     * to implement it
+     *
+     */
+    @Override
+    public int create(Discount discount) throws SQLException{
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
     public void close() throws SQLException {

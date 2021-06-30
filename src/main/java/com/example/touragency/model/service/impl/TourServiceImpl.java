@@ -22,6 +22,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Tour Service implementation. Presents method to realize business process
+ */
 public class TourServiceImpl implements TourService, Comparator<Tour> {
 
 
@@ -54,11 +58,17 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
     }
 
 
+    /**
+     * Check if there are available tickets on the certain tour.
+     * @param tour
+     * @param tourDao
+     * @throws ServiceException
+     */
     private void throwExceptionIfNoTickets(Tour tour, TourDao tourDao) throws ServiceException {
         Optional<Tour> tourFromDb = null;
         try {
             tourFromDb = tourDao.findById(tour.getId());
-            if (tour.getMaxPlaces() < tourFromDb.get().getTakenPlaces()) {
+            if (tour.getMaxTickets() < tourFromDb.get().getTakenTickets()) {
                 throw new ServiceException(Messages.MAX_TICKETS_NOT_LESS_THAN_TAKEN_TICKETS);
             }
         } catch (SQLException throwables) {
@@ -116,7 +126,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         }
     }
 
-
+    /**
+     * Retrieve tour list for pagination in order as it's saved in db. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return Tour list
+     * @throws ServiceException
+     */
     @Override
     public List<Tour> getPage(int pageId, int pageSize) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
@@ -128,6 +144,14 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         }
     }
 
+
+    /**
+     * Retrieve tour list for pagination with specified country. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return Tour list
+     * @throws ServiceException
+     */
     @Override
     public List<Tour> getPageCountry(int pageId, int pageSize, String country) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
@@ -139,6 +163,13 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
         }
     }
 
+    /**
+     * Retrieve tour list for pagination with burning status at the top of the list. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return Tour list
+     * @throws ServiceException
+     */
     @Override
     public List<Tour> getPageBurningFirst(int pageId, int pageSize) throws ServiceException {
         try (TourDao tourDao = daoFactory.createTourDao()) {
@@ -160,6 +191,7 @@ public class TourServiceImpl implements TourService, Comparator<Tour> {
             throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
         }
     }
+
 
     @Override
     public List<Tour> getPageHighHotelStarsFirst(int pageId, int pageSize) throws ServiceException {

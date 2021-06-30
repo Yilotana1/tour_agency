@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-
+/**
+        * Shows tour list and presents functionality to block or unblock users.
+        */
 public class ManageUsersCommand implements Command, Paginator.NextPageSupplier<User> {
 
     public final static Logger log = Logger.getLogger(ManageUsersCommand.class);

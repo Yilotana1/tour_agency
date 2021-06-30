@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Makes order form that presents information about tour and hotel.
+ */
 public class OrderFormCommand implements Command {
 
     public final static Logger log = Logger.getLogger(OrderFormCommand.class);

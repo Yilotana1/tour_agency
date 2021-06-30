@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Prepares data to show on the main page and make redirect to main.jsp
+ */
 public class MainCommand implements Command, Paginator.NextPageSupplier<Tour> {
 
 

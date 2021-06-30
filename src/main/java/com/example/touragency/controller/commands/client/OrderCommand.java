@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Invoke applyForOrder method from service that implements tour order process
+ */
 public class OrderCommand implements Command {
 
     public final static Logger log = Logger.getLogger(OrderCommand.class);

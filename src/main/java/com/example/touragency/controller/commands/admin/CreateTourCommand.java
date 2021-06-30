@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+/**
+ * Command that creates new tour in the system
+ */
 public class CreateTourCommand implements Command {
 
     public final static Logger log = Logger.getLogger(CreateTourCommand.class);

@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Checks user role and make redirect to profile page
+ */
 public class ProfileViewCommand implements Command {
 
     public final static Logger log = Logger.getLogger(ProfileViewCommand.class);

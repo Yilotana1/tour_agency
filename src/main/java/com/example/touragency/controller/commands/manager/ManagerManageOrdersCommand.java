@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Shows order list and presents functionality to change and delete order.
+ */
 public class ManagerManageOrdersCommand implements Command, Paginator.NextPageSupplier<Order> {
 
     public final static Logger log = Logger.getLogger(ManagerManageOrdersCommand.class);

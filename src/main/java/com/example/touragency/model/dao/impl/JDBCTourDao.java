@@ -1,7 +1,6 @@
 package com.example.touragency.model.dao.impl;
 
 import com.example.touragency.Tools;
-import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.TourDao;
 import com.example.touragency.model.dao.mapper.TourMapper;
 import com.example.touragency.model.entity.Tour;
@@ -14,6 +13,11 @@ import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Tour.*;
 
+
+/**
+ * Tour dao implementation. Presents methods for access to Tour table in database
+ * @author Anatoliy Zhilko
+ */
 public class JDBCTourDao implements TourDao {
 
 
@@ -44,8 +48,8 @@ public class JDBCTourDao implements TourDao {
         statement.setString(1, tour.getName());
         statement.setString(2, tour.getCountry());
         statement.setBigDecimal(3, tour.getPrice());
-        statement.setInt(4, tour.getMaxPlaces());
-        statement.setInt(5, tour.getTakenPlaces());
+        statement.setInt(4, tour.getMaxTickets());
+        statement.setInt(5, tour.getTakenTickets());
         statement.setDate(6, new Date(tour.getStartDate().getTimeInMillis()));
         statement.setDate(7, new Date(tour.getEndDate().getTimeInMillis()));
         statement.setInt(8, tour.getCategory().getId());
@@ -86,7 +90,14 @@ public class JDBCTourDao implements TourDao {
         return Optional.empty();
     }
 
-
+    /**
+     * Method returns list of tours in certain range and with certain country field. Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     * @param country
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitCountry(int start, int count, String country) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -106,6 +117,14 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+    /**
+     * Method returns list of tours in certain range and with certain name field. Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     * @param name
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitName(int start, int count, String name) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -155,6 +174,15 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and only with status BURNING. Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitBurningFirst(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -173,6 +201,15 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and only with status NON_BURNING. Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitNonBurningFirst(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -191,6 +228,16 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and order by hotel stars in descending order.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitHighHotelStarsFirst(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -209,6 +256,16 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and order by hotel stars in ascending order.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitLowHotelStarsFirst(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -227,6 +284,16 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and order by price in descending order.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitHighPriceFirst(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -246,6 +313,16 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and order by price in ascending order.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitLowPriceFirst(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -264,6 +341,15 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+    /**
+     * Method returns list of tours in certain range and only with category EXCURSION.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitExcursion(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -283,6 +369,16 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and only with category REST.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitRest(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -302,6 +398,16 @@ public class JDBCTourDao implements TourDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of tours in certain range and only with category SHOPPING.
+     * Method's using sql script with "LIMIT ?,?"
+     * @param start
+     * @param count
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Tour> findByLimitShopping(int start, int count) throws SQLException {
         List<Tour> list = new ArrayList<>();
@@ -328,8 +434,8 @@ public class JDBCTourDao implements TourDao {
             statement.setString(1, tour.getName());
             statement.setString(2, tour.getCountry());
             statement.setBigDecimal(3, tour.getPrice());
-            statement.setInt(4, tour.getMaxPlaces());
-            statement.setInt(5, tour.getTakenPlaces());
+            statement.setInt(4, tour.getMaxTickets());
+            statement.setInt(5, tour.getTakenTickets());
             statement.setDate(6, new Date(tour.getStartDate().getTimeInMillis()));
             statement.setDate(7, new Date(tour.getEndDate().getTimeInMillis()));
             statement.setInt(8, tour.getCategory().getId());

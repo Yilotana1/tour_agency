@@ -15,6 +15,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
+
+/**
+ * User Service implementation. Presents method to realize business process
+ */
 public class UserServiceImpl implements UserService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
@@ -22,6 +26,13 @@ public class UserServiceImpl implements UserService {
     public final static Logger log = Logger.getLogger(Servlet.class);
 
 
+    /**
+     * Return User entity if user login and password matches, or throw ServiceException with respective message.
+     * @param login
+     * @param password
+     * @return User
+     * @throws ServiceException
+     */
     @Override
     public Optional<User> signIn(String login, String password) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -75,6 +86,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    /**
+     * Check if user data is already exists in the system. If it is, throw respective exception.
+     * Uses while login and registration process to prevent duplicates entries or error in db.
+     *
+     * @param currentLogin
+     * @param login
+     * @param email
+     * @param userDao
+     * @return User
+     * @throws ServiceException
+     */
     private void throwExceptionIfDataExist(String currentLogin, String login, String email, String phone, UserDao userDao) throws ServiceException, SQLException {
         Optional<User> userWithTheSameLogin = userDao.findUserByLogin(login);
         Optional<User> userWithTheSameEmail = userDao.findUserByEmail(email);
@@ -91,9 +114,12 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(Messages.PHONE_ALREADY_EXISTS);
     }
 
-    ;
 
-
+    /**
+     * Create user in the system if it's not presented yet
+     * @param user
+     * @throws ServiceException
+     */
     @Override
     public void signUp(User user) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -142,6 +168,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    /**
+     * Retrieve user list for pagination in order as it's saved in db. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return User list
+     * @throws ServiceException
+     */
     @Override
     public List<User> getPage(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -152,6 +186,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    /**
+     * Retrieve user list for pagination with clients at the top of the list. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public List<User> getPageClientsFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -164,6 +206,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    /**
+     * Retrieve user list for pagination with managers at the top of the list. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public List<User> getPageManagersFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -176,6 +226,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Retrieve user list for pagination with not blocked users first at the top of the list. pageId is page number, pageSize is max items on page.
+     * @param pageId
+     * @param pageSize
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public List<User> getPageNonBlockedFirst(int pageId, int pageSize) throws ServiceException {
         try (UserDao userDao = daoFactory.createUserDao()) {

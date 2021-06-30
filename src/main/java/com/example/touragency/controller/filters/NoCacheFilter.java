@@ -1,12 +1,15 @@
 package com.example.touragency.controller.filters;
 
-import com.example.touragency.controller.Servlet;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Reject browser page caching.
+ * Uses in order to do not give permission for users to get on page after logout
+ */
 public class NoCacheFilter implements Filter {
     public final static Logger log = Logger.getLogger(NoCacheFilter.class);
 

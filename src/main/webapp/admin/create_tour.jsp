@@ -62,10 +62,6 @@
             <th><input type="text" name="maxTickets"/></th>
         </tr>
         <tr>
-            <th><fmt:message key="min_tickets_1"/>:</th>
-            <th><input type="text" name="minTickets"/></th>
-        </tr>
-        <tr>
             <th><fmt:message key="start_date_1"/>:</th>
             <th><input type="date" name="startDate"/></th>
         </tr>

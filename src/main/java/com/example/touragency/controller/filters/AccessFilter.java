@@ -10,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,15 @@ import java.util.Map;
 
 import static com.example.touragency.model.entity.enums.Role.*;
 
+/**
+ *
+ * Access filter is used for authorization. It retrieves user role from the session and checks if this role has permissions
+ * to go on a request page. If it doesn't, makes redirect at error page.
+ * Also checks if user is presented in login cache. Otherwise delete user from session and makes redirect to main page.
+ *
+ *
+ * @author Anatoliy Zhilko
+ */
 public class AccessFilter implements Filter {
 
     private static final Map<Role, List<String>> accessMap = new HashMap<>();
@@ -25,6 +35,10 @@ public class AccessFilter implements Filter {
 
     private FilterConfig filterConfig;
 
+    /**
+     * Defines user roles and pages with permission to get into
+     * @param filterConfig
+     */
     @Override
     public void init(FilterConfig filterConfig){
         this.filterConfig = filterConfig;

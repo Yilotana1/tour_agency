@@ -16,6 +16,11 @@ import static com.example.touragency.constants.db.sql.Hotel.*;
 import static com.example.touragency.constants.db.sql.Order.SQL_FIND_ORDERS_BY_LIMIT;
 import static com.example.touragency.constants.db.sql.Tour.SQL_FIND_TOUR_NUMBER_AS_COUNT;
 
+
+/**
+ * Hotel dao implementation. Presents methods for access to Hotel table in database
+ * @author Anatoliy Zhilko
+ */
 public class JDBCHotelDao implements HotelDao {
 
 
@@ -95,6 +100,15 @@ public class JDBCHotelDao implements HotelDao {
         return list;
     }
 
+
+    /**
+     * Method returns list of hotel in certain range,specified in sql script by "LIMIT ?, ?".
+     *
+     * @param start
+     * @param count
+     * @return Hotel list
+     * @throws SQLException
+     */
     @Override
     public List<Hotel> findByLimit(int start, int count) throws SQLException{
         List<Hotel> list = new ArrayList<>();

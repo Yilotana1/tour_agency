@@ -13,11 +13,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Discount Service implementation. Presents method to realize business process
+ */
 public class DiscountServiceImpl implements DiscountService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public final static Logger log = Logger.getLogger(Servlet.class);
+
 
     public Optional<Discount> getDiscount() throws ServiceException {
         try (DiscountDao discountDao = daoFactory.createDiscountDao()) {

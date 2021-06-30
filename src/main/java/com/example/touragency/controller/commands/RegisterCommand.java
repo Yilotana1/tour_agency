@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/**
+ * Register command. Checks if user data is valid and then creates user in the system
+ */
 public class RegisterCommand implements Command {
 
     public final static Logger log = Logger.getLogger(RegisterCommand.class);

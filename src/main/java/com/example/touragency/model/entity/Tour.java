@@ -14,8 +14,8 @@ public class Tour extends Entity {
 
 
     private Hotel hotel;
-    private int maxPlaces;
-    private int takenPlaces;
+    private int maxTickets;
+    private int takenTickets;
     private Calendar startDate;
     private Calendar endDate;
     private TourCategory category;
@@ -27,7 +27,7 @@ public class Tour extends Entity {
     }
 
     public static Tour createTour(int id, String name, String country, BigDecimal price,
-                                  int maxPlaces, int takenPlaces,
+                                  int maxTickets, int takenTickets,
                                   Calendar startDate, Calendar endDate, TourCategory category, TourStatus status,
                                   Hotel hotel, String city) {
         Tour tour = new Tour();
@@ -35,8 +35,8 @@ public class Tour extends Entity {
         tour.setName(name);
         tour.setCountry(country);
         tour.setPrice(price);
-        tour.setMaxPlaces(maxPlaces);
-        tour.setTakenPlaces(takenPlaces);
+        tour.setMaxTickets(maxTickets);
+        tour.setTakenTickets(takenTickets);
         tour.setStartDate(startDate);
         tour.setEndDate(endDate);
         tour.setCategory(category);
@@ -54,8 +54,8 @@ public class Tour extends Entity {
         tour.setName(name);
         tour.setCountry(country);
         tour.setPrice(price);
-        tour.setMaxPlaces(maxTickets);
-        tour.setTakenPlaces(takenTickets);
+        tour.setMaxTickets(maxTickets);
+        tour.setTakenTickets(takenTickets);
         tour.setStartDate(startDate);
         tour.setEndDate(endDate);
         tour.setCategory(category);
@@ -73,8 +73,8 @@ public class Tour extends Entity {
                 ", country='" + country + '\'' +
                 ", price=" + price +
                 ", hotel=" + hotel.toString() +
-                ", maxPlaces=" + maxPlaces +
-                ", takenPlaces=" + takenPlaces +
+                ", maxPlaces=" + maxTickets +
+                ", takenPlaces=" + takenTickets +
                 ", startDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate.getTime()) +
                 ", endDate=" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate.getTime()) +
                 ", category=" + category +
@@ -99,13 +99,13 @@ public class Tour extends Entity {
         this.price = price;
     }
 
-    public void setMaxPlaces(int maxPlaces) {
-        this.maxPlaces = maxPlaces;
+    public void setMaxTickets(int maxPlaces) {
+        this.maxTickets = maxPlaces;
     }
 
 
-    public void setTakenPlaces(int takenPlaces) {
-        this.takenPlaces = takenPlaces;
+    public void setTakenTickets(int takenPlaces) {
+        this.takenTickets = takenPlaces;
     }
 
     public void setStartDate(Calendar startDate) {
@@ -151,12 +151,12 @@ public class Tour extends Entity {
         return price;
     }
 
-    public int getMaxPlaces() {
-        return maxPlaces;
+    public int getMaxTickets() {
+        return maxTickets;
     }
 
-    public int getTakenPlaces() {
-        return takenPlaces;
+    public int getTakenTickets() {
+        return takenTickets;
     }
 
     public Calendar getStartDate() {

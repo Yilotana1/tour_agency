@@ -207,8 +207,8 @@
                     <input type="text" name="hotelName" value="${tour.hotel.name}"/>
                     <input type="hidden" name="hotelId" value="${tour.hotel.id}"/>
                 </th>
-                <th><input type="text" name="maxTickets" value="${tour.maxPlaces}"/></th>
-                <th><input type="hidden" name="takenTickets" value="${tour.takenPlaces}"/>${tour.takenPlaces}</th>
+                <th><input type="text" name="maxTickets" value="${tour.maxTickets}"/></th>
+                <th><input type="hidden" name="takenTickets" value="${tour.takenTickets}"/>${tour.takenTickets}</th>
                 <th><input type="date" name="startDate" value="${tour.startDateFormat}"/></th>
                 <th><input type="date" name="endDate" value="${tour.endDateFormat}"/></th>
 

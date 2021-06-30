@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+
+/**
+ * Show information about client's orders
+ */
 public class MyOrdersCommand implements Command {
 
     public final static Logger log = Logger.getLogger(MyOrdersCommand.class);

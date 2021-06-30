@@ -18,6 +18,9 @@ import static com.example.touragency.model.entity.enums.Role.*;
 import java.io.IOException;
 
 
+/**
+ * Login command. Checks if user is valid, then write his role to session and login to loginCache
+ */
 public class LoginCommand implements Command {
 
     public final static Logger log = Logger.getLogger(LoginCommand.class);

@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 
+
+/**
+ * Hotel Service implementation. Presents method to realize business process
+ */
 public class HotelServiceImpl implements HotelService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
@@ -45,9 +49,15 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void update(Hotel entity) {
-
+    public void update(Hotel hotel) throws ServiceException{
+        try (HotelDao hotelDao = daoFactory.createHotelDao()) {
+            hotelDao.update(hotel);
+        } catch (SQLException throwables) {
+            log.error(throwables.getMessage());
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
+        }
     }
+
 
     @Override
     public List<Hotel> getPage(int pageId, int pageSize) throws ServiceException{

@@ -187,8 +187,8 @@
         <th>${tour.city}</th>
         <th>${tour.price}</th>
         <th>${tour.hotel.name}</th>
-        <th>${tour.maxPlaces}</th>
-        <th>${tour.takenPlaces}</th>
+        <th>${tour.maxTickets}</th>
+        <th>${tour.takenTickets}</th>
         <th>${tour.startDateFormat}</th>
         <th>${tour.endDateFormat}</th>
         <th>${tour.category}</th>

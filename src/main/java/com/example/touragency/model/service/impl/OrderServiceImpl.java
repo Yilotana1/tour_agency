@@ -19,6 +19,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * Order Service implementation. Presents method to realize business process
+ */
 public class OrderServiceImpl implements OrderService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
@@ -26,6 +30,12 @@ public class OrderServiceImpl implements OrderService {
     public final static Logger log = Logger.getLogger(Servlet.class);
 
 
+    /**
+     * Get all orders of user with specified id
+     * @param login
+     * @return Order list
+     * @throws ServiceException
+     */
     @Override
     public List<Order> getByLogin(String login) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
@@ -56,7 +66,13 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-
+    /**
+     * Get one page of order list. Uses in pagination. pageId is page identifier, pageSize is items number on one page
+     * @param pageId
+     * @param pageSize
+     * @return Order list
+     * @throws ServiceException
+     */
     @Override
     public List<Order> getPage(int pageId, int pageSize) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
@@ -67,6 +83,15 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+
+    /**
+     * Get one page of order list with opened orders at the top of the least. Uses in pagination.
+     * pageId is page identifier, pageSize is items number on one page
+     * @param pageId
+     * @param pageSize
+     * @return Order list
+     * @throws ServiceException
+     */
     @Override
     public List<Order> getPageOpenedFirst(int pageId, int pageSize) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
@@ -99,6 +124,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    /**
+     *
+     * Method creates new order and set status OPENED. Also increase takenTickets counter at the respective tour.
+     * If tour is not available or user is blocked, throw ServiceException.
+     *
+     * @param tourId
+     * @param login
+     * @throws ServiceException
+     */
     @Override
     public void applyForOrder(int tourId, String login) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
@@ -114,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
             Tour tour = tourDao.findById(tourId).orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
 
             throwExceptionIfTourIsNotAvailable(client, tour);
-            tour.setTakenPlaces(tour.getTakenPlaces() + 1);
+            tour.setTakenTickets(tour.getTakenTickets() + 1);
 
             List<Order> orders = orderDao.findOrdersByLogin(login);
             BigDecimal price = getPriceWithDiscount(orders, discountDao, tour.getPrice());
@@ -158,6 +192,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    /**
+     * Set order status CANCELED. Also decreased taken_tickets field at the respective tour.
+     * @param id
+     * @throws ServiceException
+     */
     public void cancel(int id) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (OrderDao orderDao = daoFactory.createOrderDao(connection);
@@ -171,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
             orderDao.update(order);
 
             Tour tour = tourDao.findById(order.getTourId()).orElseThrow(() -> new ServiceException(Messages.TOUR_DOESNT_EXIST));
-            tour.setTakenPlaces(tour.getTakenPlaces() - 1);
+            tour.setTakenTickets(tour.getTakenTickets() - 1);
             tourDao.update(tour);
 
             connection.commit();
@@ -187,6 +226,11 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * Set order status paid
+     * @param id
+     * @throws ServiceException
+     */
     public void confirmPaid(int id) throws ServiceException {
         try (OrderDao orderDao = daoFactory.createOrderDao()) {
 
@@ -227,6 +271,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    /**
+     * Calculate discount on tour depending on number of previous orders and specified discount percent.
+     * @param orders
+     * @param discountDao
+     * @param tourPrice
+     * @return price(BigDecimal)
+     * @throws ServiceException
+     */
     private BigDecimal getPriceWithDiscount(List<Order> orders, DiscountDao discountDao, BigDecimal tourPrice) throws ServiceException {
         try {
             Discount discount = discountDao.findById(1).get();

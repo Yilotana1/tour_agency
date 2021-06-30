@@ -12,9 +12,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * Custom tag handler that counts opened orders number to show on manager profile page
+ */
 public class GetOpenedOrdersTagHandler extends TagSupport {
     public final static Logger log = Logger.getLogger(LoginCommand.class);
 

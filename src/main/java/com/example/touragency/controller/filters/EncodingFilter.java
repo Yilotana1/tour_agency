@@ -5,6 +5,9 @@ import org.apache.log4j.Logger;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Set content type and encoding
+ */
 public class EncodingFilter implements Filter {
     public final static Logger log = Logger.getLogger(EncodingFilter.class);
     @Override

@@ -18,6 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Edit user profile from profile page
+ */
 public class EditProfileCommand implements Command {
 
     public final static Logger log = Logger.getLogger(EditProfileCommand.class);

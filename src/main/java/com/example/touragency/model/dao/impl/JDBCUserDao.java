@@ -14,6 +14,12 @@ import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.User.*;
 
+
+/**
+ * User dao implementation. Presents methods for access to User table in database
+ * @author Anatoliy Zhilko
+ */
+
 public class JDBCUserDao implements UserDao {
 
 
@@ -86,6 +92,14 @@ public class JDBCUserDao implements UserDao {
         return list;
     }
 
+    /**
+     * Methods return list of users from database in certain range, specified by sql script using "LIMIT ?, ?"
+     *
+     * @param start
+     * @param count
+     * @return User list
+     * @throws SQLException
+     */
     @Override
     public List<User> findByLimit(int start, int count) throws SQLException{
         List<User> list = new ArrayList<>();

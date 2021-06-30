@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Delete user data from session and login cache and makes redirect to main page.
+ * After that user cannot make any orders.
+ */
 public class LogOutCommand implements Command {
     public final static Logger log = Logger.getLogger(LogOutCommand.class);
 
