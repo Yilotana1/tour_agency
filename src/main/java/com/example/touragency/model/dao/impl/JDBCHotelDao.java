@@ -3,7 +3,9 @@ package com.example.touragency.model.dao.impl;
 import com.example.touragency.Tools;
 import com.example.touragency.model.dao.HotelDao;
 import com.example.touragency.model.dao.mapper.HotelMapper;
+import com.example.touragency.model.dao.mapper.OrderMapper;
 import com.example.touragency.model.entity.Hotel;
+import com.example.touragency.model.entity.Order;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.example.touragency.constants.db.sql.Hotel.*;
+import static com.example.touragency.constants.db.sql.Order.SQL_FIND_ORDERS_BY_LIMIT;
 import static com.example.touragency.constants.db.sql.Tour.SQL_FIND_TOUR_NUMBER_AS_COUNT;
 
 public class JDBCHotelDao implements HotelDao {
@@ -94,7 +97,20 @@ public class JDBCHotelDao implements HotelDao {
 
     @Override
     public List<Hotel> findByLimit(int start, int count) throws SQLException{
-        return null;
+        List<Hotel> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_HOTELS_BY_LIMIT);
+        ) {
+
+            statement.setInt(1, start - 1);
+            statement.setInt(2, count);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(new HotelMapper().extractFromResultSet(rs));
+            }
+
+        }
+        return list;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.example.touragency.controller.Servlet;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.dao.Factory.DaoFactory;
 import com.example.touragency.model.dao.HotelDao;
+import com.example.touragency.model.dao.OrderDao;
 import com.example.touragency.model.entity.Hotel;
 import com.example.touragency.model.service.HotelService;
 import org.apache.log4j.Logger;
@@ -49,8 +50,13 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<Hotel> getPage(int pageId, int pageSize) {
-        return null;
+    public List<Hotel> getPage(int pageId, int pageSize) throws ServiceException{
+        try (HotelDao hotelDao = daoFactory.createHotelDao()) {
+            return hotelDao.findByLimit(pageId * pageSize - pageSize + 1, pageSize);
+        } catch (SQLException throwables) {
+            log.error(throwables.getMessage());
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
+        }
     }
 
 

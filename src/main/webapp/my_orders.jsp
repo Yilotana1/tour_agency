@@ -42,7 +42,7 @@
             <th>${order.dateFormat}</th>
             <th>${order.price/koef}
                 <fmt:message key="money"/></th>
-            <th>${order.status}</th>
+            <th><fmt:message key="${order.status}"/></th>
         </tr>
     </c:forEach>
 </table>

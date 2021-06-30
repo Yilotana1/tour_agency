@@ -14,6 +14,8 @@ public interface OrderService extends Service<Order>{
 
     void confirmPaid(int id) throws ServiceException;
 
+    long getOpenedCount() throws ServiceException;
+
     List<Order> getPageOpenedFirst(int start, int count) throws ServiceException;
 
     List<Order> getPagePaidFirst(int start, int count) throws ServiceException;

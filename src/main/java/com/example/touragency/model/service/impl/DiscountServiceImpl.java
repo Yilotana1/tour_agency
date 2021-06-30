@@ -28,16 +28,6 @@ public class DiscountServiceImpl implements DiscountService {
         }
     }
 
-    @Override
-    public Optional<Discount> getById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Discount> getAll() {
-        return null;
-    }
-
 
     public void update(int percentStep, int maxPercent) throws ServiceException {
         try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
@@ -63,18 +53,35 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public List<Discount> getPage(int pageId, int pageSize) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 
-    //TODO make this method
     @Override
-    public int add(Discount entity) {
-        return 0;
+    public int add(Discount discount) throws ServiceException {
+        try (DiscountDao discountDao = DaoFactory.getInstance().createDiscountDao()) {
+            return discountDao.create(discount);
+
+        } catch (SQLException throwables) {
+            log.error(throwables.getMessage());
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
+        }
     }
+
 
     @Override
     public int getCount() {
-        return 0;
+        return 1;
+    }
+
+    @Override
+    public Optional<Discount> getById(int id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Discount> getAll() {
+        throw new UnsupportedOperationException();
+
     }
 }

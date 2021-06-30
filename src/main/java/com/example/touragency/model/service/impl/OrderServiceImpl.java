@@ -147,14 +147,18 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-//TODO insert create() from dao
     @Override
-    public int add(Order entity) {
-        return 0;
+    public int add(Order entity) throws ServiceException {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.create(entity);
+        } catch (SQLException throwables) {
+            log.error(throwables.getMessage());
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
+        }
     }
 
 
-    public void cancel(int id) throws ServiceException{
+    public void cancel(int id) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (OrderDao orderDao = daoFactory.createOrderDao(connection);
              TourDao tourDao = daoFactory.createTourDao(connection)) {
@@ -189,6 +193,19 @@ public class OrderServiceImpl implements OrderService {
             Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException(Messages.ORDER_DOESNT_EXIST));
             order.setStatus(OrderStatus.PAID);
             orderDao.update(order);
+
+        } catch (SQLException throwables) {
+            log.error(throwables.getMessage());
+            throw new ServiceException(Messages.UNDEFINED_EXCEPTION);
+        }
+    }
+
+    @Override
+    public long getOpenedCount() throws ServiceException {
+        try (OrderDao orderDao = daoFactory.createOrderDao()) {
+            return orderDao.findAll()
+                    .stream().filter(order -> order.getStatus()
+                            .equals(OrderStatus.OPENED)).count();
 
         } catch (SQLException throwables) {
             log.error(throwables.getMessage());

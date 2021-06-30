@@ -2,8 +2,8 @@ package com.example.touragency.controller.commands.admin;
 
 import com.example.touragency.Tools;
 import com.example.touragency.constants.Path;
-import com.example.touragency.controller.commands.Paginator;
-import com.example.touragency.controller.commands.manager.ManageToursCommand;
+import com.example.touragency.controller.commands.utils.Paginator;
+import com.example.touragency.controller.commands.manager.ManagerManageToursCommand;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.entity.enums.TourStatus;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-public class AdminManageToursCommand extends ManageToursCommand {
+public class AdminManageToursCommand extends ManagerManageToursCommand {
 
     public final static Logger log = Logger.getLogger(AdminManageToursCommand.class);
 

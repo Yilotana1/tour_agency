@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.touragency.model.entity.enums.UserStatus" %>
 <%@ page import="com.example.touragency.model.entity.enums.Role" %>
-<%@ page import="com.example.touragency.controller.commands.Paginator" %>
+<%@ page import="com.example.touragency.controller.commands.utils.Paginator" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik

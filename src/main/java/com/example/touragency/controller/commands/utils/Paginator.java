@@ -1,4 +1,4 @@
-package com.example.touragency.controller.commands;
+package com.example.touragency.controller.commands.utils;
 
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.service.Service;
@@ -26,7 +26,7 @@ public class Paginator<Item> {
 
     private final Service<Item> service;
 
-    private int maxPageSize = 4;
+    private int maxPageSize = 3;
 
 
     public Paginator(HttpServletRequest request, Service<Item> service, int maxPageSize) {

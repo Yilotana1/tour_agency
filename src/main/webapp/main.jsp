@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.example.touragency.model.entity.enums.Role" %>
-<%@ page import="com.example.touragency.controller.commands.Paginator" %>
+<%@ page import="com.example.touragency.controller.commands.utils.Paginator" %>
 <!DOCTYPE html>
 
 
@@ -206,8 +206,8 @@
                 <th>${tour.takenPlaces}</th>
                 <th>${tour.startDateFormat}</th>
                 <th>${tour.endDateFormat}</th>
-                <th>${tour.category}</th>
-                <th>${tour.status}</th>
+                <th><fmt:message key="${tour.category}"/></th>
+                <th><fmt:message key="${tour.status}"/></th>
                 <fmt:message key="order" var="order"/>
                 <th><input type="submit" value="${order}"/></th>
             </tr>

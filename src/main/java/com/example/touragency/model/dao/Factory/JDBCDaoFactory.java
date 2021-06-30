@@ -12,7 +12,6 @@ public class JDBCDaoFactory extends DaoFactory {
 
     private final DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
-
     @Override
     public UserDao createUserDao() {
         return new JDBCUserDao(getConnection());

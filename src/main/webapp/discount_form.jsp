@@ -22,7 +22,7 @@
 
 <fieldset style="width: 20%">
     <legend><fmt:message key="discount_settings"/></legend>
-    <form action="${pageContext.request.contextPath}/admin/edit_discount">
+    <form action="${pageContext.request.contextPath}/manager/edit_discount">
 
         <table>
 

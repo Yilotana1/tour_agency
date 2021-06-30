@@ -2,7 +2,6 @@ package com.example.touragency.controller.commands.manager;
 
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
-import com.example.touragency.controller.commands.LogOutCommand;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.service.DiscountService;
 import com.example.touragency.model.service.factory.ServiceFactory;
@@ -28,7 +27,6 @@ public class EditDiscountCommand implements Command {
         try {
             discountService.update(percentStep, maxPercent);
         } catch (ServiceException e) {
-            e.printStackTrace();
             request.setAttribute("error", e.getMessage());
             log.error(e.getMessage());
             request.getRequestDispatcher(Path.MANAGER_MANAGE_ORDERS).forward(request, response);

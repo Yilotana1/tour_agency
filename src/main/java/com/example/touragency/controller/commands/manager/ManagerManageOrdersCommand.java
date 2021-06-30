@@ -2,8 +2,7 @@ package com.example.touragency.controller.commands.manager;
 
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
-import com.example.touragency.controller.commands.LogOutCommand;
-import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.controller.commands.utils.Paginator;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Discount;
 import com.example.touragency.model.entity.Order;
@@ -21,9 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageOrdersCommand implements Command, Paginator.NextPageSupplier<Order> {
+public class ManagerManageOrdersCommand implements Command, Paginator.NextPageSupplier<Order> {
 
-    public final static Logger log = Logger.getLogger(ManageOrdersCommand.class);
+    public final static Logger log = Logger.getLogger(ManagerManageOrdersCommand.class);
 
 
     @Override

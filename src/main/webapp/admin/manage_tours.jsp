@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.touragency.model.entity.enums.TourCategory" %>
 <%@ page import="com.example.touragency.model.entity.enums.TourStatus" %>
-<%@ page import="com.example.touragency.controller.commands.Paginator" %>
+<%@ page import="com.example.touragency.controller.commands.utils.Paginator" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -215,19 +215,19 @@
                 <th>
                     <select name="category">
                         <c:if test="${tour.category.equals(TourCategory.EXCURSION)}">
-                            <option selected value="${TourCategory.EXCURSION.id}">${TourCategory.EXCURSION}</option>
-                            <option value="${TourCategory.REST.id}">${TourCategory.REST}</option>
-                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.SHOPPING}</option>
+                            <option selected value="${TourCategory.EXCURSION.id}"><fmt:message key="EXCURSION"/></option>
+                            <option value="${TourCategory.REST.id}"><fmt:message key="REST"/></option>
+                            <option value="${TourCategory.SHOPPING.id}"><fmt:message key="SHOPPING"/></option>
                         </c:if>
                         <c:if test="${tour.category.equals(TourCategory.REST)}">
-                            <option selected value="${TourCategory.REST.id}">${TourCategory.REST}</option>
-                            <option value="${TourCategory.EXCURSION.id}">${TourCategory.EXCURSION}</option>
-                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.SHOPPING}</option>
+                            <option selected value="${TourCategory.REST.id}"><fmt:message key="REST"/></option>
+                            <option value="${TourCategory.EXCURSION.id}"><fmt:message key="EXCURSION"/></option>
+                            <option value="${TourCategory.SHOPPING.id}"><fmt:message key="SHOPPING"/></option>
                         </c:if>
                         <c:if test="${tour.category.equals(TourCategory.SHOPPING)}">
-                            <option selected value="${TourCategory.SHOPPING.id}">${TourCategory.SHOPPING}</option>
-                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.EXCURSION}</option>
-                            <option value="${TourCategory.SHOPPING.id}">${TourCategory.REST}</option>
+                            <option selected value="${TourCategory.SHOPPING.id}"><fmt:message key="SHOPPING"/></option>
+                            <option value="${TourCategory.SHOPPING.id}"><fmt:message key="EXCURSION"/></option>
+                            <option value="${TourCategory.SHOPPING.id}"><fmt:message key="REST"/></option>
                         </c:if>
                     </select>
                 </th>
@@ -235,12 +235,12 @@
                 <th>
                     <select name="status">
                         <c:if test="${tour.status.equals(TourStatus.BURNING)}">
-                            <option selected value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
-                            <option value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
+                            <option selected value="${TourStatus.BURNING.id}"><fmt:message key="BURNING"/></option>
+                            <option value="${TourStatus.NON_BURNING.id}"><fmt:message key="NON_BURNING"/></option>
                         </c:if>
                         <c:if test="${tour.status.equals(TourStatus.NON_BURNING)}">
-                            <option selected value="${TourStatus.NON_BURNING.id}">${TourStatus.NON_BURNING}</option>
-                            <option value="${TourStatus.BURNING.id}">${TourStatus.BURNING}</option>
+                            <option selected value="${TourStatus.NON_BURNING.id}"><fmt:message key="NON_BURNING"/></option>
+                            <option value="${TourStatus.BURNING.id}"><fmt:message key="BURNING"/></option>
                         </c:if>
                     </select>
                 </th>

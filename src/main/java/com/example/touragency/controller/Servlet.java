@@ -3,14 +3,11 @@ package com.example.touragency.controller;
 
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.*;
-import com.example.touragency.controller.commands.admin.CreateTourCommand;
-import com.example.touragency.controller.commands.admin.AdminManageOrdersCommand;
-import com.example.touragency.controller.commands.admin.AdminManageToursCommand;
-import com.example.touragency.controller.commands.admin.ManageUsersCommand;
+import com.example.touragency.controller.commands.admin.*;
 import com.example.touragency.controller.commands.client.*;
 import com.example.touragency.controller.commands.manager.EditDiscountCommand;
-import com.example.touragency.controller.commands.manager.ManageOrdersCommand;
-import com.example.touragency.controller.commands.manager.ManageToursCommand;
+import com.example.touragency.controller.commands.manager.ManagerManageOrdersCommand;
+import com.example.touragency.controller.commands.manager.ManagerManageToursCommand;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -37,10 +34,10 @@ public class Servlet extends HttpServlet {
         commands.put(Path.ADMIN_MANAGE_USERS, new ManageUsersCommand());
         commands.put(Path.ADMIN_MANAGE_ORDERS, new AdminManageOrdersCommand());
         commands.put(Path.ADMIN_MANAGE_TOURS, new AdminManageToursCommand());
-        commands.put(Path.ADMIN_CREATE_TOUR, new CreateTourCommand());
         commands.put(Path.ADMIN_EDIT_DISCOUNT, new EditDiscountCommand());
-        commands.put(Path.MANAGER_MANAGE_ORDERS, new ManageOrdersCommand());
-        commands.put(Path.MANAGER_MANAGE_TOURS, new ManageToursCommand());
+        commands.put(Path.ADMIN_CREATE_TOUR, new CreateTourCommand());
+        commands.put(Path.MANAGER_MANAGE_ORDERS, new ManagerManageOrdersCommand());
+        commands.put(Path.MANAGER_MANAGE_TOURS, new ManagerManageToursCommand());
         commands.put(Path.MANAGER_EDIT_DISCOUNT, new EditDiscountCommand());
         commands.put(Path.MAIN, new MainCommand());
         commands.put(Path.ORDER_FORM, new OrderFormCommand());
@@ -48,7 +45,6 @@ public class Servlet extends HttpServlet {
         commands.put(Path.MY_ORDERS, new MyOrdersCommand());
         commands.put(Path.EDIT_PROFILE, new EditProfileCommand());
         commands.put(Path.PROFILE_VIEW, new ProfileViewCommand());
-
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

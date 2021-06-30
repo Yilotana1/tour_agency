@@ -2,7 +2,6 @@ package com.example.touragency.controller.commands.client;
 
 import com.example.touragency.constants.Path;
 import com.example.touragency.controller.commands.Command;
-import com.example.touragency.controller.commands.manager.EditDiscountCommand;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.User;
 import com.example.touragency.model.service.UserService;

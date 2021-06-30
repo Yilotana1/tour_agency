@@ -1,12 +1,10 @@
 package com.example.touragency.controller.commands.manager;
 
 import com.example.touragency.constants.Path;
-import com.example.touragency.controller.commands.LogOutCommand;
-import com.example.touragency.controller.commands.Paginator;
+import com.example.touragency.controller.commands.utils.Paginator;
 import com.example.touragency.controller.commands.Command;
 import com.example.touragency.exceptions.ServiceException;
 import com.example.touragency.model.entity.Tour;
-import com.example.touragency.model.entity.enums.TourCategory;
 import com.example.touragency.model.entity.enums.TourStatus;
 import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.TourService;
@@ -20,11 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-public class ManageToursCommand implements Command, Paginator.NextPageSupplier<Tour> {
+public class ManagerManageToursCommand implements Command, Paginator.NextPageSupplier<Tour> {
 
-    public final static Logger log = Logger.getLogger(ManageToursCommand.class);
+    public final static Logger log = Logger.getLogger(ManagerManageToursCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

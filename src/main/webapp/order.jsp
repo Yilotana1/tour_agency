@@ -42,10 +42,10 @@
         <th><fmt:message key="end_1"/></th>
         <th>${requestScope.tour.endDateFormat}</th>
     </tr>
-
     <tr>
+        <fmt:message key="money_koef" var="koef"/>
         <th><fmt:message key="price_1"/></th>
-        <th>${requestScope.tour.price}</th>
+        <th>${requestScope.tour.price/koef}<fmt:message key="money"/></th>
     </tr>
 </table>
 

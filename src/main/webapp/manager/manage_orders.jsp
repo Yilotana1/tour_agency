@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.touragency.model.entity.enums.OrderStatus" %>
-<%@ page import="com.example.touragency.controller.commands.Paginator" %>
+<%@ page import="com.example.touragency.controller.commands.utils.Paginator" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -9,6 +9,7 @@
   Time: 13:36
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -23,7 +24,7 @@
 </head>
 <body>
 <%--Path that defines either request is from admin or manager--%>
-<c:set var="manage_orders_page" scope="page" value="${requestScope.path}"/>
+<c:set var="request_author" scope="page" value="${requestScope.path}"/>
 
 <jsp:include page="/locale_buttons.jsp"/>
 <fmt:setLocale value="${sessionScope.locale}"/>
@@ -50,7 +51,7 @@
 <table>
     <tr>
         <td style="border:none">
-            <form action="${manage_orders_page}">
+            <form action="${request_author}">
                 <fmt:message key="opened" var="opened"/>
                 <c:if test="${requestScope.order.equals('opened')}">
                     <input style="color: red" type="submit" value="${opened}"/>
@@ -63,7 +64,7 @@
         </td>
         <td style="border:none">
             <fmt:message key="paid" var="paid"/>
-            <form action="${manage_orders_page}">
+            <form action="${request_author}">
                 <c:if test="${requestScope.order.equals('paid')}">
                     <input style="color: red" type="submit" value="${paid}"/>
                 </c:if>
@@ -95,7 +96,7 @@
     </tr>
 
     <c:forEach var="order" items="${requestScope.items}">
-    <form action="${manage_orders_page}">
+    <form action="${request_author}">
 
 
         <tr>
@@ -113,20 +114,20 @@
             <th>
                 <select name="status" style="width: 100%">
                     <c:if test="${order.status.equals(OrderStatus.OPENED)}">
-                        <option selected="selected" value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
-                        <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
-                        <option value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
+                        <option selected="selected" value="${OrderStatus.OPENED.id}"><fmt:message key="OPENED"/></option>
+                        <option value="${OrderStatus.PAID.id}"><fmt:message key="PAID"/></option>
+                        <option value="${OrderStatus.CANCELED.id}"><fmt:message key="CANCELED"/></option>
                     </c:if>
                     <c:if test="${order.status.equals(OrderStatus.PAID)}">
-                        <option selected="selected" value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
-                        <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
-                        <option value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
+                        <option selected="selected" value="${OrderStatus.PAID.id}"><fmt:message key="PAID"/></option>
+                        <option value="${OrderStatus.OPENED.id}"><fmt:message key="OPENED"/></option>
+                        <option value="${OrderStatus.CANCELED.id}"><fmt:message key="CANCELED"/></option>
                     </c:if>
                     <c:if test="${order.status.equals(OrderStatus.CANCELED)}">
                         <option selected="selected"
-                                value="${OrderStatus.CANCELED.id}">${OrderStatus.CANCELED}</option>
-                        <option value="${OrderStatus.PAID.id}">${OrderStatus.PAID}</option>
-                        <option value="${OrderStatus.OPENED.id}">${OrderStatus.OPENED}</option>
+                                value="${OrderStatus.CANCELED.id}"><fmt:message key="CANCELED"/></option>
+                        <option value="${OrderStatus.PAID.id}"><fmt:message key="PAID"/></option>
+                        <option value="${OrderStatus.OPENED.id}"><fmt:message key="OPENED"/></option>
                     </c:if>
                 </select>
             </th>
@@ -153,7 +154,7 @@
         <fmt:message key="next" var="next"/>
         <tr>
             <th style="border: none">
-                <form action="${manage_orders_page}">
+                <form action="${request_author}">
                     <input type="hidden" name="${Paginator.PREVIOUS_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
                     <input type="submit" value="${previous}">
@@ -161,7 +162,7 @@
             </th>
             <c:forEach begin="1" end="${requestScope.page_count}" step="1" var="i">
                 <th style="border: none">
-                    <form action="${manage_orders_page}">
+                    <form action="${request_author}">
                         <input type="hidden" name="page" value="${i}"/>
                         <input type="hidden" name="order" value="${requestScope.order}"/>
                         <c:if test="${requestScope.page.equals(i)}">
@@ -176,7 +177,7 @@
                 </th>
             </c:forEach>
             <th style="border: none">
-                <form action="${manage_orders_page}">
+                <form action="${request_author}">
                     <input type="hidden" name="${Paginator.NEXT_PAGE}" value="${requestScope.page}"/>
                     <input type="hidden" name="order" value="${requestScope.order}"/>
                     <input type="submit" value="${next}">

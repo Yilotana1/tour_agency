@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="javatpoint" %>
 <%--
   Created by IntelliJ IDEA.
   User: tolik
@@ -36,27 +37,32 @@
 
 <br/><br/><br/>
 
-
+<span style="color: red"><c:openedOrdersNum/> <fmt:message key="opened_orders"/></span>
+<br/>
 <table>
     <tr>
         <th><fmt:message key="manage_tours" var="manage_tours"/>
             <form action="${pageContext.request.contextPath}/manager/manage_tours">
                 <input type="submit" value="${manage_tours}"/>
-            </form></th>
+            </form>
+        </th>
 
-        <th><form action="${pageContext.request.contextPath}">
-            <fmt:message key="main" var="main"/>
-            <input type="submit" value="${main}">
-        </form></th>
+        <th>
+            <fmt:message key="manage_orders" var="manage_orders"/>
+            <form action="${pageContext.request.contextPath}/manager/manage_orders">
+                <input type="submit" value="${manage_orders}"/>
+            </form>
+        </th>
+
     </tr>
 
 </table>
 
-
-<fmt:message key="manage_orders" var="manage_orders"/>
-<form action="${pageContext.request.contextPath}/manager/manage_orders">
-    <input type="submit" value="${manage_orders}"/>
+<form action="${pageContext.request.contextPath}">
+    <fmt:message key="main" var="main"/>
+    <input type="submit" value="${main}">
 </form>
+
 
 <br/>
 

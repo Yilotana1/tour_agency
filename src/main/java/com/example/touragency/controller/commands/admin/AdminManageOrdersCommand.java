@@ -1,16 +1,11 @@
 package com.example.touragency.controller.commands.admin;
 
 import com.example.touragency.constants.Path;
-import com.example.touragency.controller.commands.Command;
-import com.example.touragency.controller.commands.Paginator;
-import com.example.touragency.controller.commands.manager.ManageOrdersCommand;
+import com.example.touragency.controller.commands.utils.Paginator;
+import com.example.touragency.controller.commands.manager.ManagerManageOrdersCommand;
 import com.example.touragency.exceptions.ServiceException;
-import com.example.touragency.model.entity.Discount;
 import com.example.touragency.model.entity.Order;
-import com.example.touragency.model.entity.enums.OrderStatus;
-import com.example.touragency.model.service.DiscountService;
 import com.example.touragency.model.service.OrderService;
-import com.example.touragency.model.service.Service;
 import com.example.touragency.model.service.factory.ServiceFactory;
 import org.apache.log4j.Logger;
 
@@ -18,11 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
 
-public class AdminManageOrdersCommand extends ManageOrdersCommand implements Paginator.NextPageSupplier<Order> {
+public class AdminManageOrdersCommand extends ManagerManageOrdersCommand implements Paginator.NextPageSupplier<Order> {
 
     public final static Logger log = Logger.getLogger(AdminManageToursCommand.class);
 
